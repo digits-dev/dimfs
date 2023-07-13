@@ -169,7 +169,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         crocodicstudio\crudbooster\CRUDBoosterServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
-        Laravel\Dusk\DuskServiceProvider::class,
+        // Laravel\Dusk\DuskServiceProvider::class,
         /*
          * Application Service Providers...
          */

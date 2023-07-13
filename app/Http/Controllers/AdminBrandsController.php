@@ -37,6 +37,7 @@
 			$this->col = [];
 			$this->col[] = ["label"=>"Brand Code","name"=>"brand_code"];
 			$this->col[] = ["label"=>"Brand Description","name"=>"brand_description"];
+			$this->col[] = ["label"=>"Brand Group","name"=>"brand_group"];
 			$this->col[] = ["label"=>"Contact Email","name"=>"contact_email"];
 			$this->col[] = ["label"=>"Contact Name","name"=>"contact_name"];
 			$this->col[] = ["label"=>"Brand Status","name"=>"status","visible"=>CRUDBooster::myColumnView()->brand_status ? true:false];
@@ -64,6 +65,14 @@
 				'name'=>'brand_description',
 				'type'=>'text',
 				'validation'=>'required|alpha_num_spaces|min:2|max:30|unique:brands',
+				'width'=>'col-sm-6'
+			];
+			$this->form[] = [
+				'label'=>'Brand Group',
+				'name'=>'brand_group',
+				'type'=>'select',
+				'validation'=>'required',
+				'dataenum'=>'APPLE & BEATS;NON APPLE',
 				'width'=>'col-sm-6'
 			];
 			$this->form[] = [

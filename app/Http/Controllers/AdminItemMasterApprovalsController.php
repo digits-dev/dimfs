@@ -78,6 +78,9 @@
     		$this->col[] = ["label"=>"MODEL NUMBER","name"=>"model_number"];
     		$this->col[] = ["label"=>"INITIAL WRR DATE (YYYY-MM-DD)","name"=>"initial_wrr_date","visible"=>CRUDBooster::myColumnView()->initial_wrr_date ? true:false];
     		$this->col[] = ["label"=>"LATEST WRR DATE (YYYY-MM-DD)","name"=>"latest_wrr_date","visible"=>CRUDBooster::myColumnView()->latest_wrr_date ? true:false];
+			$this->col[] = ["label"=>"APPLE LOB","name"=>"apple_lobs_id","join"=>"apple_lobs,apple_lob_description"];
+			$this->col[] = ["label"=>"APPLE REPORT INCLUSION","name"=>"apple_report_inclusion"];
+			$this->col[] = ["label"=>"BRAND GROUP","name"=>"brands_id","join"=>"brands,brand_group","visible"=>CRUDBooster::myColumnView()->brand_description ? true:false];
     		$this->col[] = ["label"=>"BRAND DESCRIPTION","name"=>"brands_id","join"=>"brands,brand_description","visible"=>CRUDBooster::myColumnView()->brand_description ? true:false];
     		$this->col[] = ["label"=>"BRAND STATUS","name"=>"brands_id","join"=>"brands,status","visible"=>CRUDBooster::myColumnView()->brand_status ? true:false];
     		$this->col[] = ["label"=>"SKU STATUS","name"=>"sku_statuses_id","join"=>"sku_statuses,sku_status_description","visible"=>CRUDBooster::myColumnView()->sku_status ? true:false];
@@ -189,6 +192,20 @@
     			
     			'visible'=>self::getAllAccess('supplier_item_code')
     		];
+			$this->form[] = ['label'=>'APPLE LOBS','name'=>'apple_lobs_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
+				'datatable'=>'apple_lobs,apple_lob_description',
+				'datatable_where'=>"status!='INACTIVE'",
+				'readonly'=>self::getEditAccessReadOnly('brand_description'),
+				'visible'=>self::getAllAccess('brand_description')
+			];
+			$this->form[] = [
+				'label'=>'APPLE REPORT INCLUSION',
+				'name'=>'apple_report_inclusion',
+				'type'=>'select2',
+				'validation'=>'required',
+				'dataenum'=>'0;1',
+				'width'=>'col-sm-6'
+			];
     		$this->form[] = ['label'=>'BRAND DESCRIPTION','name'=>'brands_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
     			'datatable'=>'brands,brand_description',
     			'datatable_where'=>"status!='INACTIVE'",

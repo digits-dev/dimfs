@@ -16,6 +16,7 @@ class CreateAppleLobsTable extends Migration
         Schema::create('apple_lobs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('apple_lob_description')->nullable();
+            $table->enum('status', ['ACTIVE', 'INACTIVE'])->default('ACTIVE')->nullable();
             $table->integer('created_by')->length(10)->unsigned()->nullable();
             $table->integer('updated_by')->length(10)->unsigned()->nullable();
             $table->timestamps();
