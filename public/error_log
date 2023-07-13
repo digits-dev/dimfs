@@ -1,0 +1,628 @@
+[09-Sep-2021 02:28:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:28:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:28:13 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:30:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:30:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:34:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:34:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:34:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:35:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:36:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:36:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:36:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:37:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:37:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:37:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:37:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:37:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:37:49 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:37:54 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:37:56 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:38:00 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:38:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:38:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:38:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:39:01 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:39:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:39:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:39:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:39:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:40:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:40:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:42:04 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:42:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:49:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 02:49:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:03:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:03:37 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:03:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:03:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:04:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:04:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:04:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:04:37 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:04:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:04:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:04:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:04:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:05:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:05:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:05:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:05:37 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:05:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:05:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:06:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:06:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:06:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:06:37 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:06:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:06:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:07:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:07:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 03:07:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php:500
+Stack trace:
+#0 /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/bootstrap.php(34): Symfony\Polyfill\Mbstring\Mbstring::mb_strpos(NULL, '/json', 0, 'UTF-8')
+#1 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Str.php(94): mb_strpos(NULL, '/json')
+#2 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php(34): Illuminate\Support\Str::contains(NULL, Array)
+#3 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(333): Illuminate\Http\Request->isJson()
+#4 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(361): Illuminate\Http\Request->getInputSource()
+#5 /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Http/Request.php(59): Illuminate\Http\Request::createFromBase(Object(Ill in /home/dtc/public_html/dimfs/vendor/symfony/polyfill-mbstring/Mbstring.php on line 500
+[09-Sep-2021 15:40:44 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[13-Sep-2021 14:32:25 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[13-Sep-2021 15:32:04 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[14-Sep-2021 08:14:32 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 4096 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[14-Sep-2021 12:57:33 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[16-Sep-2021 14:41:58 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[21-Sep-2021 08:24:21 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 177
+[21-Sep-2021 08:24:28 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 177
+[21-Sep-2021 08:24:32 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 177
+[21-Sep-2021 08:25:47 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 177
+[21-Sep-2021 08:25:51 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 177
+[21-Sep-2021 08:25:53 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 177
+[21-Sep-2021 08:29:04 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 177
+[21-Sep-2021 10:15:08 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 177
+[21-Sep-2021 10:18:16 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 177
+[21-Sep-2021 10:19:39 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 177
+[21-Sep-2021 10:24:15 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 2097160 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/CacheBase.php on line 164
+[27-Sep-2021 08:06:27 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[27-Sep-2021 08:07:38 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[27-Sep-2021 08:07:58 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[28-Sep-2021 09:35:04 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[28-Sep-2021 17:59:07 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[14-Oct-2021 13:08:45 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 4096 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/Worksheet.php on line 1213
+[17-Oct-2021 11:43:50 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[21-Oct-2021 20:29:44 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 1578
+[21-Oct-2021 20:29:50 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 1578
+[21-Oct-2021 20:31:21 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 1578
+[21-Oct-2021 20:33:47 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 4096 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/Worksheet.php on line 1213
+[21-Oct-2021 20:53:54 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 1578
+[28-Oct-2021 12:01:06 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[28-Oct-2021 12:01:50 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[28-Oct-2021 12:02:13 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[29-Oct-2021 13:20:38 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[29-Oct-2021 13:20:56 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[29-Oct-2021 13:21:06 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[29-Oct-2021 13:21:20 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[17-Nov-2021 09:31:21 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[17-Nov-2021 09:31:44 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[25-Nov-2021 10:22:32 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[25-Nov-2021 10:24:19 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[23-Dec-2021 18:46:39 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[04-Jan-2022 09:12:53 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[10-Jan-2022 07:57:30 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[11-Jan-2022 14:34:02 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[31-Jan-2022 13:24:19 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[31-Jan-2022 13:25:01 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[07-Feb-2022 23:05:30 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[03-Mar-2022 18:42:52 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 266240 bytes) in /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 1510
+[03-Mar-2022 18:46:06 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 266240 bytes) in /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 1510
+[07-Mar-2022 14:26:18 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 4907688 bytes) in /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php on line 49
+[07-Mar-2022 14:26:23 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 4907688 bytes) in /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php on line 49
+[07-Mar-2022 14:26:55 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 4888120 bytes) in /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php on line 49
+[10-Mar-2022 00:22:07 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[05-Apr-2022 10:40:29 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[05-Apr-2022 10:40:49 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[05-Apr-2022 10:41:05 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[05-Apr-2022 11:48:34 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[06-Apr-2022 16:05:32 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[06-Apr-2022 16:06:00 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[22-Apr-2022 15:16:51 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 2359296 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/Memory.php on line 49
+[22-Apr-2022 15:17:45 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 2359296 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorage/Memory.php on line 49
+[27-Apr-2022 08:31:09 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[27-Apr-2022 08:31:27 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[27-Apr-2022 08:31:50 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[16-May-2022 10:52:18 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[24-May-2022 16:55:20 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[24-May-2022 16:55:41 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[27-May-2022 16:20:14 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[27-May-2022 16:20:32 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[27-May-2022 16:20:56 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[31-May-2022 13:33:56 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[31-May-2022 13:34:14 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[31-May-2022 14:14:45 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[14-Jun-2022 08:33:14 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[14-Jun-2022 08:34:26 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[14-Jun-2022 08:34:57 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[14-Jun-2022 08:37:13 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[16-Jun-2022 14:50:56 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[28-Jun-2022 18:25:11 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[28-Jun-2022 18:26:37 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[13-Jul-2022 10:27:06 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[13-Jul-2022 10:27:20 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[13-Jul-2022 10:29:49 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[18-Jul-2022 17:53:15 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[18-Jul-2022 17:53:30 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[18-Jul-2022 17:54:43 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[21-Jul-2022 08:06:21 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[23-Jul-2022 17:26:57 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[01-Aug-2022 13:21:37 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[01-Aug-2022 13:23:36 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[01-Aug-2022 13:53:05 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[15-Aug-2022 13:46:48 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[15-Aug-2022 13:47:12 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[15-Aug-2022 13:47:35 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[23-Aug-2022 09:16:02 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[22-Sep-2022 14:47:31 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[22-Sep-2022 14:51:34 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[04-Oct-2022 11:08:47 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 250
+[04-Oct-2022 11:09:19 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 250
+[04-Oct-2022 11:10:53 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 250
+[04-Oct-2022 11:12:52 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 250
+[04-Oct-2022 11:14:27 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 244
+[04-Oct-2022 11:14:57 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 244
+[04-Oct-2022 11:15:56 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 244
+[04-Oct-2022 11:52:23 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 244
+[04-Oct-2022 11:59:29 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 244
+[04-Oct-2022 12:15:52 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 244
+[04-Oct-2022 12:24:08 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 244
+[04-Oct-2022 12:27:02 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/symfony/debug/Exception/FlattenException.php on line 244
+[26-Jan-2023 11:39:42 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[30-Jan-2023 15:13:59 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[30-Jan-2023 15:14:41 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[30-Jan-2023 15:14:56 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[06-Feb-2023 09:31:32 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[06-Feb-2023 09:32:54 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[06-Feb-2023 09:52:31 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[06-Feb-2023 09:52:45 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[06-Feb-2023 09:55:53 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[06-Feb-2023 09:56:18 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[06-Feb-2023 09:56:31 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[06-Feb-2023 11:46:38 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[09-Feb-2023 10:39:20 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[13-Feb-2023 15:29:26 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[27-Feb-2023 18:18:28 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 4096 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/Worksheet.php on line 1213
+[27-Feb-2023 18:19:00 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 4096 bytes) in /home/dtc/public_html/dimfs/vendor/phpoffice/phpexcel/Classes/PHPExcel/Worksheet.php on line 1213
+[27-Feb-2023 18:30:55 Asia/Manila] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 1578
+[21-Mar-2023 18:18:59 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[21-Mar-2023 18:21:14 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[04-Apr-2023 09:14:03 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[04-Apr-2023 09:14:49 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[04-Apr-2023 09:35:33 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128
+[04-Apr-2023 09:35:39 Asia/Manila] PHP Fatal error:  Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /home/dtc/public_html/dimfs/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php on line 128

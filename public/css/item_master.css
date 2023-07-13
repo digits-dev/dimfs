@@ -1,0 +1,13 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 768px) {
+    #pos-format, #bar-format{
+        display: none;
+    }
+}
+.box-body{
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+.form-group {
+    margin-bottom: 5px !important;
+}
