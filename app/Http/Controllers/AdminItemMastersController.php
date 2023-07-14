@@ -2021,7 +2021,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			$sql_query .="`latest_wrr_date`,";
 		}
 
-		$sql_query .="`apple_lobs.apple_lob_description`,";
+		$sql_query .="`apple_lobs`.apple_lob_description,";
 		$sql_query .="`apple_report_inclusion`,";
 
 		if(CRUDBooster::myColumnView()->brand_description){
