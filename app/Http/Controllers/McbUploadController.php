@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use CRUDBooster;
 use Excel;
+use App\AppleLob;
 use App\Brand;
 use App\Category;
 use App\Subclass;
@@ -145,6 +146,8 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'SUPPLIER ITEM CODE',
 						'MODEL NUMBER',
 						'ITEM DESCRIPTION',
+						'APPLE LOB',
+    					'APPLE REPORT INCLUSION',
 						'BRAND DESCRIPTION',
 						'MARGIN CATEGORY',
 						'CATEGORY DESCRIPTION',
@@ -236,6 +239,8 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 				'SUPPLIER ITEM CODE',
 				'MODEL NUMBER',
 				'ITEM DESCRIPTION',
+				'APPLE LOB',
+				'APPLE REPORT INCLUSION',
 				'BRAND DESCRIPTION',
 				'MARGIN CATEGORY',
 				'CATEGORY DESCRIPTION',
@@ -309,7 +314,10 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$line_item = $key+1;
 					//checking of all submasters
 					$existingUPC = ItemMaster::where('upc_code', trim($value->upc_code))->first();
-                    
+
+					$apple_lobs_id = AppleLob::where('apple_lob_description', $value->apple_lob)
+						->where('status', 'ACTIVE')->first();
+
 					$brand_id = Brand::where('brand_description', $value->brand_description)
 						->where('status','ACTIVE')->first();
 
@@ -403,6 +411,12 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					}
 					if(strlen($value->item_description) > 60){
 						array_push($errors, 'Line '.$line_item.': item description exceed 60 characters.');
+					}
+					if(empty($apple_lobs_id)){
+						array_push($errors, 'Line '.$line_item.': with apple lob "'.$value->apple_lob.'" is not found in submaster.');
+					}
+					if(empty($value->apple_report_inclusion)){
+						array_push($errors, 'Line '.$line_item.': apple report inclusion can\'t be null or blank.');
 					}
 					if(empty($brand_id)){
 						array_push($errors, 'Line '.$line_item.': with brand "'.$value->brand_description.'" is not found in submaster.');
@@ -503,6 +517,8 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'supplier_item_code' => $value->supplier_item_code,
 						'model_number' => $value->model_number,
 						'item_description' => $value->item_description,
+						'apple_lobs_id' => $apple_lobs_id->id,
+						'apple_report_inclusion' => $value->apple_report_inclusion,
 						'brands_id' => $brand_id->id,
 						'categories_id' => $category_id->id,
 						'subcategories_id' => 0,
