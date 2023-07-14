@@ -1703,6 +1703,13 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		if(CRUDBooster::myColumnView()->latest_wrr_date){
 			array_push($item_header, 'LATEST WRR DATE (YYYY-MM-DD)');
 		}
+		
+		array_push($item_header, 'APPLE LOB');
+		array_push($item_header, 'APPLE REPORT INCLUSION');
+
+		if(CRUDBooster::myColumnView()->brand_description){
+			array_push($item_header, 'BRAND GROUP');
+		}
 
 		if(CRUDBooster::myColumnView()->brand_description){
 			array_push($item_header, 'BRAND DESCRIPTION');
@@ -2014,6 +2021,13 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			$sql_query .="`latest_wrr_date`,";
 		}
 
+		$sql_query .="`apple_lobs.apple_lob_description`,";
+		$sql_query .="`apple_report_inclusion`,";
+
+		if(CRUDBooster::myColumnView()->brand_description){
+			$sql_query .= "`brands`.brand_group,";
+		}
+
 		if(CRUDBooster::myColumnView()->brand_description){
 			$sql_query .= "`brands`.brand_description,";
 		}
@@ -2232,6 +2246,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		$sql_query = rtrim($sql_query, ',');
 
 		$sql_query .=" FROM `item_masters` 
+			LEFT JOIN `apple_lobs` ON `item_masters`.apple_lobs_id = `apple_lobs`.id 
 			LEFT JOIN `brands` ON `item_masters`.brands_id = `brands`.id 
 			LEFT JOIN `margin_categories` ON `item_masters`.margin_categories_id = `margin_categories`.id 
 			LEFT JOIN `categories` ON `item_masters`.categories_id = `categories`.id 
