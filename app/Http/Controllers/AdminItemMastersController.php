@@ -1656,11 +1656,11 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		$platforms = Platform::where('status','ACTIVE')->orderBy('platform_description','ASC')->get();
 		
 		$db_con = mysqli_connect(
-			env('DB_HOST','localhost'), 
-			env('DB_USERNAME','dtc_imfs_v3'), 
-			env('DB_PASSWORD','Cl}Me!0-^v2+'), 
-			env('DB_DATABASE','dtc_digits_imfs_v3'), 
-			env('DB_PORT','3306')
+			env('DB_HOST'), 
+			env('DB_USERNAME'), 
+			env('DB_PASSWORD'), 
+			env('DB_DATABASE'), 
+			env('DB_PORT')
 		);
 
 		if(!$db_con) {
@@ -2828,11 +2828,11 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 	public function exportMargin(){
 	    
 	    $db_con = mysqli_connect(
-			env('DB_HOST','localhost'), 
-			env('DB_USERNAME','dtc_imfs_v3'), 
-			env('DB_PASSWORD','Cl}Me!0-^v2+'), 
-			env('DB_DATABASE','dtc_digits_imfs_v3'), 
-			env('DB_PORT','3306')
+			env('DB_HOST'), 
+			env('DB_USERNAME'), 
+			env('DB_PASSWORD'), 
+			env('DB_DATABASE'), 
+			env('DB_PORT')
 		);
 
 		if(!$db_con) {
