@@ -415,8 +415,8 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					if(empty($apple_lobs_id)){
 						array_push($errors, 'Line '.$line_item.': with apple lob "'.$value->apple_lob.'" is not found in submaster.');
 					}
-					if(empty($value->apple_report_inclusion)){
-						array_push($errors, 'Line '.$line_item.': apple report inclusion can\'t be null or blank.');
+					if($value->apple_report_inclusion != 0 && $value->apple_report_inclusion != 1){
+						array_push($errors, 'Line '.$line_item.': Invalid value: apple report inclusion.');
 					}
 					if(empty($brand_id)){
 						array_push($errors, 'Line '.$line_item.': with brand "'.$value->brand_description.'" is not found in submaster.');
