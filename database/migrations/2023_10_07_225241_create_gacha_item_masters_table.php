@@ -65,6 +65,6 @@ class CreateGachaItemMastersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('gacha_item_masters');
     }
 }
