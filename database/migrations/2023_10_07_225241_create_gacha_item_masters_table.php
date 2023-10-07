@@ -20,7 +20,6 @@ class CreateGachaItemMastersTable extends Migration
             $table->date('initial_wrr_date')->nullable();
             $table->date('latest_wrr_date')->nullable();
             $table->integer('gacha_brands_id')->length(10)->unsigned()->nullable();
-            $table->integer('gacha_brand_statuses_id')->length(10)->unsigned()->nullable();
             $table->integer('gacha_sku_statuses_id')->length(10)->unsigned()->nullable();
             $table->string('item_description')->nullable();
             $table->integer('gacha_models_id')->length(10)->unsigned()->nullable();
