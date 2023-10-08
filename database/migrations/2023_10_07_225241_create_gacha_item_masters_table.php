@@ -45,7 +45,6 @@ class CreateGachaItemMastersTable extends Migration
             $table->integer('gacha_inventory_types_id')->length(10)->unsigned()->nullable();
             $table->integer('gacha_vendor_types_id')->length(10)->unsigned()->nullable();
             $table->integer('gacha_vendor_groups_id')->length(10)->unsigned()->nullable();
-            $table->integer('gacha_vendor_group_statuses_id')->length(10)->unsigned()->nullable();
             $table->string('age_grade')->length(10)->nullable();
             $table->string('battery')->length(50)->nullable();
             $table->integer('approved_by')->length(10)->unsigned()->nullable();
