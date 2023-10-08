@@ -400,5 +400,13 @@
 
         }
 
+		public function getAdd() {
+			if (!CRUDBooster::isCreate()) CRUDBooster::redirect(
+				CRUDBooster::adminPath(),
+				trans('crudbooster.denied_access')
+			);
+
+			return view('gacha/item-masters/add-item', []);
+		}
 
 	}
