@@ -16,6 +16,7 @@ class CreateGachaVendorGroupsTable extends Migration
         Schema::create('gacha_vendor_groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('vendor_group_description')->nullable();
+            $table->integer('gacha_vendor_group_statuses_id')->length(10)->unsigned()->nullable();
             $table->enum('status', ['ACTIVE', 'INACTIVE'])->nullable()->default('ACTIVE');
             $table->integer('created_by')->length(10)->unsigned()->nullable();
             $table->integer('updated_by')->length(10)->unsigned()->nullable();
