@@ -15,8 +15,10 @@ class CreateGachaItemMastersTable extends Migration
     {
         Schema::create('gacha_item_masters', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('jan_no')->length(120)->nullable();
             $table->string('digits_code')->length(10)->nullable();
-            $table->string('item_no')->length(10)->nullable();
+            $table->string('item_no')->length(120)->nullable();
+            $table->string('sap_no')->length(10)->nullable();
             $table->date('initial_wrr_date')->nullable();
             $table->date('latest_wrr_date')->nullable();
             $table->integer('gacha_brands_id')->length(10)->unsigned()->nullable();
