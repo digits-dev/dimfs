@@ -100,16 +100,16 @@
                             </tr>
                             @endif
                             <tr>
-                                <th>JAN Number</th>
-                                <td><input value="{{ $item->jan_no }}" type="text" name="jan_no" id="jan_no" class="form-control"></td>
+                                <th><span class="required-star">*</span> JAN Number</th>
+                                <td><input value="{{ $item->jan_no }}" type="text" name="jan_no" id="jan_no" class="form-control" required></td>
                             </tr>
                             <tr>
-                                <th>Item Number</th>
-                                <td><input value="{{ $item->item_no }}" type="text" name="item_no" id="item_no" class="form-control"></td>
+                                <th><span class="required-star">*</span> Item Number</th>
+                                <td><input value="{{ $item->item_no }}" type="text" name="item_no" id="item_no" class="form-control" required></td>
                             </tr>
                             <tr>
-                                <th>SAP Number</th>
-                                <td><input value="{{ $item->sap_no }}" type="text" name="sap_no" id="sap_no" class="form-control"></td>
+                                <th><span class="required-star">*</span> SAP Number</th>
+                                <td><input value="{{ $item->sap_no }}" type="text" name="sap_no" id="sap_no" class="form-control" required></td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span>  Brand Description</th>
@@ -160,25 +160,25 @@
                             <tr>
                                 <th><span class="required-star">*</span> MSRP</th>
                                 <td>
-                                    <input type="number" value="{{ $item->msrp }}" class="form-control" name="msrp" id="msrp">
+                                    <input type="number" value="{{ $item->msrp }}" class="form-control" name="msrp" id="msrp" required>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Current SRP</th>
                                 <td>
-                                    <input type="number" value="{{ $item->current_srp }}" class="form-control" name="current_srp" id="current_srp">
+                                    <input type="number" value="{{ $item->current_srp }}" class="form-control" name="current_srp" id="current_srp" required>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> No. of Tokens</th>
                                 <td>
-                                    <input type="number" value="{{ $item->no_of_tokens }}" class="form-control" name="no_of_tokens" id="no_of_tokens">
+                                    <input type="number" value="{{ $item->no_of_tokens }}" class="form-control" name="no_of_tokens" id="no_of_tokens" required>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> DP / CTN</th>
                                 <td>
-                                    <input type="number" value="{{ $item->dp_ctn }}" class="form-control" name="dp_ctn" id="dp_ctn">
+                                    <input type="number" value="{{ $item->dp_ctn }}" class="form-control" name="dp_ctn" id="dp_ctn" required>
                                 </td>
                             </tr>
                         </tbody>
@@ -190,19 +190,19 @@
                             <tr>
                                 <th><span class="required-star">*</span> PCS / DP</th>
                                 <td>
-                                    <input type="number" value="{{ $item->pcs_dp }}" class="form-control" name="pcs_dp" id="pcs_dp">
+                                    <input type="number" value="{{ $item->pcs_dp }}" class="form-control" name="pcs_dp" id="pcs_dp" required>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> MOQ</th>
                                 <td>
-                                    <input type="number" value="{{ $item->moq }}" class="form-control" name="moq" id="moq">
+                                    <input type="number" value="{{ $item->moq }}" class="form-control" name="moq" id="moq" required>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Number of Assort</th>
                                 <td>
-                                    <input type="number" value="{{ $item->no_of_assort }}" class="form-control" name="no_of_assort" id="no_of_assort">
+                                    <input type="number" value="{{ $item->no_of_assort }}" class="form-control" name="no_of_assort" id="no_of_assort" required>
                                 </td>
                             </tr>
                             <tr>
@@ -247,7 +247,7 @@
                             <tr>
                                 <th><span class="required-star">*</span> Supplier Cost</th>
                                 <td>
-                                    <input type="number" value="{{ $item->supplier_cost }}" class="form-control" name="supplier_cost" id="supplier_cost">
+                                    <input type="number" value="{{ $item->supplier_cost }}" class="form-control" name="supplier_cost" id="supplier_cost" required>
                                 </td>
                             </tr>
                             <tr>
@@ -292,7 +292,7 @@
                             <tr>
                                 <th><span class="required-star">*</span> Vendor Group</th>
                                 <td>
-                                    <select style="width: 100%" name="gacha_vendor_group" id="gacha_vendor_group" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_vendor_group_id" id="gacha_vendor_group_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($vendor_groups)
                                         @foreach ($vendor_groups as $vendor_group)
@@ -305,13 +305,13 @@
                             <tr>
                                 <th><span class="required-star">*</span> Age Grade</th>
                                 <td>
-                                    <input type="text" value="{{ $item->age_grade }}" class="form-control" name="age_grade" id="age_grade">
+                                    <input type="text" value="{{ $item->age_grade }}" class="form-control" name="age_grade" id="age_grade" required>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Battery</th>
                                 <td>
-                                    <input type="text" value="{{ $item->battery }}" class="form-control" name="battery" id="battery">
+                                    <input type="text" value="{{ $item->battery }}" class="form-control" name="battery" id="battery" required>
                                 </td>
                             </tr>
                         </tbody>
