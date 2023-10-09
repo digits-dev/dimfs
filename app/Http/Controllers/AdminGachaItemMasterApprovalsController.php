@@ -455,19 +455,64 @@
 				'gacha_vendor_groups_id' => $request['gacha_vendor_groups_id'],
 				'age_grade' => $request['age_grade'],
 				'battery' => $request['battery'],
+				'created_at' => $time_stamp,
+				'created_by' => $action_by,
 			];
 
 
-			if (!$gacha_item_master_approvals_id) {
-				GachaItemApproval::insert($data);
-			}
+			GachaItemApproval::insert($data);
 
-			$message = "✔️ New Item: $item_description Added for Approval";
+			$message = "✔️ New Item: $item_description added pending for Approval";
 
 			return redirect(CRUDBooster::adminPath('gacha_item_masters'))->with([
 				'message_type' => 'success',
 				'message' => $message,
 			]);
+		}
+
+		public function submitEditItem(Request $request) {
+			$request = $request->all();
+			$time_stamp = date('Y-m-d H:i:s');
+			$action_by = CRUDBooster::myId();
+			$digits_code = $request['digits_code'];
+			$gacha_item_master_approvals_id = $request['gacha_item_master_approvals_id'];
+			$item_description = $request['item_description'];
+
+			$data = [
+				'approval_status' => 202,
+				'jan_no' => $request['jan_no'],
+				'digits_code' => $request['digits_code'],
+				'item_no' => $request['item_no'],
+				'sap_no' => $request['sap_no'],
+				'gacha_brands_id' => $request['gacha_brands_id'],
+				'gacha_sku_statuses_id' => $request['gacha_sku_statuses_id'],
+				'item_description' => $item_description,
+				'gacha_models' => $request['gacha_models'],
+				'gacha_wh_categories_id' => $request['gacha_wh_categories_id'],
+				'msrp' => $request['msrp'],
+				'current_srp' => $request['current_srp'],
+				'no_of_tokens' => $request['no_of_tokens'],
+				'dp_ctn' => $request['dp_ctn'],
+				'pcs_dp' => $request['pcs_dp'],
+				'moq' => $request['moq'],
+				'no_of_assort' => $request['no_of_assort'],
+				'gacha_countries_id' => $request['gacha_countries_id'],
+				'gacha_incoterms_id' => $request['gacha_incoterms_id'],
+				'currencies_id' => $request['currencies_id'],
+				'supplier_cost' => $request['supplier_cost'],
+				'gacha_uoms_id' => $request['gacha_uoms_id'],
+				'gacha_inventory_types_id' => $request['gacha_inventory_types_id'],
+				'gacha_vendor_types_id' => $request['gacha_vendor_types_id'],
+				'gacha_vendor_groups_id' => $request['gacha_vendor_groups_id'],
+				'age_grade' => $request['age_grade'],
+				'battery' => $request['battery'],
+				'updated_at' => $time_stamp,
+				'updated_by' => $action_by,
+			];
+
+			GachaItemApproval::updateOrInsert(['id' => $gacha_item_master_approvals_id], $data);
+
+
 		}
 
 

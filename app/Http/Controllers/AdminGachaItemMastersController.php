@@ -1,11 +1,11 @@
 <?php namespace App\Http\Controllers;
 
-	use App\GachaItemMaster;
 	use Session;
 	use Request;
 	use DB;
 	use CRUDBooster;
 	use App\GachaItemApproval;
+	use App\GachaItemMaster;
 
 	class AdminGachaItemMastersController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -381,15 +381,33 @@
 
 			$data = [];
 			$data['page_title'] = 'Add Item';
-			$submasters = self::getSubmaster();
+			$data['action'] = 'add';
 
-			$data = array_merge($data, $submasters);
+			$data = array_merge($data, self::getSubmaster());
 
 			return view('gacha/item-masters/add-item', $data);
 		}
 
-		public function importItemView()
-		{
+		public function getEdit($id) {
+			if (!CRUDBooster::isUpdate()) CRUDBooster::redirect(
+				CRUDBooster::adminPath(),
+				trans('crudbooster.denied_access')
+			);
+
+			$digits_code = GachaItemMaster::find($id)->pluck('digits_code')->first();
+
+			$data = [];
+			$data['item'] = (object) GachaItemApproval::where('digits_code', $digits_code)->first()->toArray();
+			$data['gacha_item_master_approvals_id'] = $data['item']->id;
+			$test = DB::table('gacha_item_master_approvals')->where('digits_code',$digits_code)->first();
+			$data['page_title'] = 'Edit Item';
+			$data['action'] = 'edit';
+			$data = array_merge($data, self::getSubmaster());
+
+			return view('gacha/item-masters/add-item',$data);
+		}
+
+		public function importItemView() {
 			if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE || $this->button_add==FALSE) {    
 				CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
 			}

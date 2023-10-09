@@ -85,9 +85,9 @@
         <i class="fa fa-pencil"></i><strong> Add {{CRUDBooster::getCurrentModule()->name}}</strong>
     </div>
     <div class="panel-body">
-        <form action="{{ route('submit_new_gacha_item') }}" method="POST" autocomplete="off">
+        <form action="{{ $action == 'add' ? route('submit_new_gacha_item') : route('submit_edit_gacha_item') }} " method="POST" autocomplete="off">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="gacha_item_masters_approvals_id" value="{{ $item->id }}">
+            <input type="hidden" name="gacha_item_master_approvals_id" value="{{ $gacha_item_master_approvals_id }}">
             <h3 class="text-center text-bold">ITEM DETAILS</h3>
             <div class="row">
                 <div class="col-md-6">
@@ -138,7 +138,7 @@
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Item Description</th>
-                                <td><input value="{{ $item->item_description ?: '' }}" type="text" name="item_description" id="item_description" class="form-control" required oninput="this.value = this.value.toUpperCase()"></td>
+                                <td><input value="{{ $item->item_description ?: '' }}" type="text" name="item_description" id="item_description" class="form-control" required oninput="this.value = this.value.toUpperCase()" {{ $item->digits_code ? 'readonly' : '' }}></td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Model</th>
@@ -151,7 +151,7 @@
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($warehouse_categories)
                                         @foreach ($warehouse_categories as $warehouse_category)
-                                        <option value="{{ $warehouse_category->id }}" {{ $warehouse_category->id == $item->gacha_warehouse_categories_id ? 'selected' : '' }}>{{ $warehouse_category->category_description }}</option>
+                                        <option value="{{ $warehouse_category->id }}" {{ $warehouse_category->id == $item->gacha_wh_categories_id ? 'selected' : '' }}>{{ $warehouse_category->category_description }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -283,7 +283,7 @@
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($vendor_types)
                                         @foreach ($vendor_types as $vendor_type)
-                                        <option value="{{ $vendor_type->id }}" {{ $vendor_type->id == $item->gacha_vendor_type ? 'selected' : '' }}>{{ $vendor_type->vendor_type_description }}</option>
+                                        <option value="{{ $vendor_type->id }}" {{ $vendor_type->id == $item->gacha_vendor_types_id ? 'selected' : '' }}>{{ $vendor_type->vendor_type_description }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -296,7 +296,7 @@
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($vendor_groups)
                                         @foreach ($vendor_groups as $vendor_group)
-                                        <option value="{{ $vendor_group->id }}" {{ $vendor_group->id == $item->gacha_vendor_group ? 'selected' : '' }}>{{ $vendor_group->vendor_group_description }}</option>
+                                        <option value="{{ $vendor_group->id }}" {{ $vendor_group->id == $item->gacha_vendor_groups_id ? 'selected' : '' }}>{{ $vendor_group->vendor_group_description }}</option>
                                         @endforeach
                                         @endif
                                     </select>
