@@ -201,6 +201,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th><span class="required-star">*</span> Number of Carton</th>
+                                <td>
+                                    <input type="number" value="{{ $item->no_of_ctn }}" class="form-control" name="no_of_ctn" id="no_of_ctn" required>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th><span class="required-star">*</span> Number of Assort</th>
                                 <td>
                                     <input type="number" value="{{ $item->no_of_assort }}" class="form-control" name="no_of_assort" id="no_of_assort" required>
