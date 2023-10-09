@@ -12,6 +12,8 @@
         {
             DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 			$this->approver = [];
+			$this->main_controller = new AdminGachaItemMastersController;
+
         }
 
 	    public function cbInit() {
@@ -462,7 +464,7 @@
 
 			GachaItemApproval::insert($data);
 
-			$message = "✔️ New Item: $item_description added pending for Approval";
+			$message = "✔️ New Item: $item_description is added pending for approval";
 
 			return redirect(CRUDBooster::adminPath('gacha_item_masters'))->with([
 				'message_type' => 'success',
@@ -512,7 +514,30 @@
 
 			GachaItemApproval::updateOrInsert(['id' => $gacha_item_master_approvals_id], $data);
 
+			$message = "✔️ Item: $item_description is added pending for approval";
 
+			return redirect(CRUDBooster::adminPath($request['path']))->with([
+				'message_type' => 'success',
+				'message' => $message,
+			]);
+
+		}
+
+		public function getEdit($id) {
+			if (!CRUDBooster::isUpdate()) CRUDBooster::redirect(
+				CRUDBooster::adminPath(),
+				trans('crudbooster.denied_access')
+			);
+
+			$data = [];
+			$data['item'] = (object) GachaItemApproval::where('id', $id)->first()->toArray();
+			$data['gacha_item_master_approvals_id'] = $data['item']->id;
+			$data['page_title'] = 'Edit Item';
+			$data['action'] = 'edit';
+			$data['path'] = 'gacha_item_master_approvals';
+			$data = array_merge($data, $this->main_controller->getSubmaster());
+
+			return view('gacha/item-masters/add-item',$data);
 		}
 
 

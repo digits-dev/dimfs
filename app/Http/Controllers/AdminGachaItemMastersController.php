@@ -399,9 +399,9 @@
 			$data = [];
 			$data['item'] = (object) GachaItemApproval::where('digits_code', $digits_code)->first()->toArray();
 			$data['gacha_item_master_approvals_id'] = $data['item']->id;
-			$test = DB::table('gacha_item_master_approvals')->where('digits_code',$digits_code)->first();
 			$data['page_title'] = 'Edit Item';
 			$data['action'] = 'edit';
+			$data['path'] = 'gacha_item_masters';
 			$data = array_merge($data, self::getSubmaster());
 
 			return view('gacha/item-masters/add-item',$data);

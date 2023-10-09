@@ -87,6 +87,7 @@
     <div class="panel-body">
         <form action="{{ $action == 'add' ? route('submit_new_gacha_item') : route('submit_edit_gacha_item') }} " method="POST" autocomplete="off">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="path" value="{{ $path }}">
             <input type="hidden" name="gacha_item_master_approvals_id" value="{{ $gacha_item_master_approvals_id }}">
             <h3 class="text-center text-bold">ITEM DETAILS</h3>
             <div class="row">
@@ -114,7 +115,7 @@
                             <tr>
                                 <th><span class="required-star">*</span>  Brand Description</th>
                                 <td>
-                                    <select style="width: 100%" name="brands_id" id="brands_id" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_brands_id" id="gacha_brands_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($brands)
                                         @foreach ($brands as $brand)
@@ -292,7 +293,7 @@
                             <tr>
                                 <th><span class="required-star">*</span> Vendor Group</th>
                                 <td>
-                                    <select style="width: 100%" name="gacha_vendor_group_id" id="gacha_vendor_group_id" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_vendor_groups_id" id="gacha_vendor_groups_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($vendor_groups)
                                         @foreach ($vendor_groups as $vendor_group)
