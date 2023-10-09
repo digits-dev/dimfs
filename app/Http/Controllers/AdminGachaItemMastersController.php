@@ -390,4 +390,69 @@ use Session;
 			return view('gacha/item-masters/upload',$data);
 		}
 
+		public function getSubmaster() {
+			$data = [];
+			$data['brands'] = DB::table('gacha_brands')
+				->where('status', 'ACTIVE')
+				->orderBy('brand_description')
+				->get()
+				->toArray();
+
+			$data['sku_statuses'] = DB::table('gacha_sku_statuses')
+				->where('status', 'ACTIVE')
+				->orderBy('status_description')
+				->get()
+				->toArray();
+			
+			$data['warehouse_categories'] = DB::table('gacha_wh_categories')
+				->where('status', 'ACTIVE')
+				->orderBy('category_description')
+				->get()
+				->toArray();
+
+			$data['countries'] = DB::table('gacha_countries')
+				->where('status', 'ACTIVE')
+				->orderBy('country_name')
+				->get()
+				->toArray();
+
+			$data['incoterms'] = DB::table('gacha_incoterms')
+				->where('status', 'ACTIVE')
+				->orderBy('incoterm_description')
+				->get()
+				->toArray();
+
+			$data['currencies'] = DB::table('currencies')
+				->where('status', 'ACTIVE')
+				->orderBy('currency_description')
+				->get()
+				->toArray();
+
+			$data['uoms'] = DB::table('gacha_uoms')
+				->where('status', 'ACTIVE')
+				->orderBy('uom_code')
+				->get()
+				->toArray();
+
+			$data['inventory_types'] = DB::table('gacha_inventory_types')
+				->where('status', 'ACTIVE')
+				->orderBy('inventory_type_description')
+				->get()
+				->toArray();
+
+			$data['vendor_types'] = DB::table('gacha_vendor_types')
+				->where('status', 'ACTIVE')
+				->orderBy('vendor_type_description')
+				->get()
+				->toArray();
+
+			$data['vendor_groups'] = DB::table('gacha_vendor_groups')
+				->where('status', 'ACTIVE')
+				->orderBy('vendor_group_description')
+				->get()
+				->toArray();
+
+			return $data;
+		}
+
 	}
