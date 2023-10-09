@@ -3,7 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.7.0/math.js" integrity="sha512-jVMFsAksn8aljb9IJ+3OCAq38dJpquMBjgEuz7Q5Oqu5xenfin/jxdbKw4P5eKjUF4xiG/GPT5CvCX3Io54gyA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 <style>
     select {
         width: 100%;
@@ -85,7 +85,9 @@
         <i class="fa fa-pencil"></i><strong> Add {{CRUDBooster::getCurrentModule()->name}}</strong>
     </div>
     <div class="panel-body">
-        <form action="">
+        <form action="{{ route('submit_new_gacha_item') }}" method="POST">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="gacha_item_masters_approvals_id" value="{{ $item->id }}">
             <h3 class="text-center text-bold">ITEM DETAILS</h3>
             <div class="row">
                 <div class="col-md-6">
@@ -271,9 +273,9 @@
                                 <td>
                                     <select style="width: 100%" name="gacha_vendor_type" id="gacha_vendor_type" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
-                                        @if ($vendor_type)
-                                        @foreach ($vendor_type as $inventory_type)
-                                        <option value="{{ $inventory_type->id }}" {{ $inventory_type->id == $item->gacha_vendor_type ? 'selected' : '' }}>{{ $inventory_type->inventory_type_description }}</option>
+                                        @if ($vendor_types)
+                                        @foreach ($vendor_types as $vendor_type)
+                                        <option value="{{ $vendor_type->id }}" {{ $vendor_type->id == $item->gacha_vendor_type ? 'selected' : '' }}>{{ $vendor_type->vendor_type_description }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -308,6 +310,7 @@
                     </table>
                 </div>
             </div>
+            <button type="submit" id="submit-btn" class="hide">Submit</button>
         </form>
     </div>
     <div class="panel-footer">
@@ -317,8 +320,24 @@
 </div>
 
 <script type="application/javascript">
-    $('select').select2();
-    $('#gacha_sku_statuses_id').select2();
+        $('select').select2();
+        $('#gacha_sku_statuses_id').select2();
+
+        $('#save-btn').click(function() {
+            Swal.fire({
+                title: 'Do you want to save this item?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Save',
+                returnFocus: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#submit-btn').click();
+                }
+            });
+        });
 
 </script>
 @endsection
