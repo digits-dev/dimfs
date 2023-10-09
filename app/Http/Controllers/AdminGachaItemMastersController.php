@@ -1,10 +1,11 @@
 <?php namespace App\Http\Controllers;
 
-use App\GachaItemMaster;
-use Session;
+	use App\GachaItemMaster;
+	use Session;
 	use Request;
 	use DB;
 	use CRUDBooster;
+	use App\GachaItemApproval;
 
 	class AdminGachaItemMastersController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -25,7 +26,7 @@ use Session;
 			$this->button_action_style = "button_icon";
 			$this->button_add = true;
 			$this->button_edit = true;
-			$this->button_delete = true;
+			$this->button_delete = false;
 			$this->button_detail = true;
 			$this->button_show = true;
 			$this->button_filter = true;
