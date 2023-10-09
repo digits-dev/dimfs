@@ -378,7 +378,12 @@ use Session;
 				trans('crudbooster.denied_access')
 			);
 
-			return view('gacha/item-masters/add-item', []);
+			$data = [];
+			$submasters = self::getSubmaster();
+
+			$data = array_merge($data, $submasters);
+
+			return view('gacha/item-masters/add-item', $data);
 		}
 
 		public function importItemView()
