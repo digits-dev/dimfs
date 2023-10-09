@@ -5,6 +5,9 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.7.0/math.js" integrity="sha512-jVMFsAksn8aljb9IJ+3OCAq38dJpquMBjgEuz7Q5Oqu5xenfin/jxdbKw4P5eKjUF4xiG/GPT5CvCX3Io54gyA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
+    select {
+        width: 100%;
+    }
     .required-star {
         color: red;
     }
@@ -101,7 +104,7 @@
                             <tr>
                                 <th><span class="required-star">*</span>  Brand Description</th>
                                 <td>
-                                    <select name="brands_id" id="brands_id" class="form-control" required>
+                                    <select style="width: 100%" name="brands_id" id="brands_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($brands)
                                         @foreach ($brands as $brand)
@@ -114,11 +117,10 @@
                             <tr>
                                 <th><span class="required-star">*</span>  SKU Status</th>
                                 <td>
-                                    <select name="gacha_sku_statuses_id" id="gacha_sku_statuses_id" class="form-control" required>
-                                        <option value="" disabled selected>None selected...</option>
+                                    <select style="width: 100%" name="gacha_sku_statuses_id" id="gacha_sku_statuses_id" class="form-control" required>
                                         @if ($sku_statuses)
                                         @foreach ($sku_statuses as $sku_status)
-                                        <option value="{{ $sku_status->id }}" {{ $sku_status->id == $item->gacha_sku_statuses_id ? 'selected' : '' }}>{{ $brand->brand_description }}</option>
+                                        <option value="{{ $sku_status->id }}" {{ $sku_status->id == $item->gacha_sku_statuses_id ? 'selected' : '' }}>{{ $sku_status->status_description }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -135,11 +137,11 @@
                             <tr>
                                 <th><span class="required-star">*</span> Warehouse Category Description</th>
                                 <td>
-                                    <select name="gacha_sku_statuses_id" id="gacha_sku_statuses_id" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_wh_categories_id" id="gacha_wh_categories_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($warehouse_categories)
-                                        @foreach ($warehouse_categories as $sku_status)
-                                        <option value="{{ $sku_status->id }}" {{ $sku_status->id == $item->gacha_warehouse_categories_id ? 'selected' : '' }}>{{ $brand->brand_description }}</option>
+                                        @foreach ($warehouse_categories as $warehouse_category)
+                                        <option value="{{ $warehouse_category->id }}" {{ $warehouse_category->id == $item->gacha_warehouse_categories_id ? 'selected' : '' }}>{{ $warehouse_category->category_description }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -196,7 +198,7 @@
                             <tr>
                                 <th><span class="required-star">*</span> Country of Origin</th>
                                 <td>
-                                    <select name="gacha_countries_id" id="gacha_countries_id" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_countries_id" id="gacha_countries_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($countries)
                                         @foreach ($countries as $country)
@@ -209,11 +211,24 @@
                             <tr>
                                 <th><span class="required-star">*</span> Incoterms</th>
                                 <td>
-                                    <select name="gacha_incoterms_id" id="gacha_incoterms_id" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_incoterms_id" id="gacha_incoterms_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($incoterms)
                                         @foreach ($incoterms as $incoterm)
                                         <option value="{{ $incoterm->id }}" {{ $incoterm->id == $item->gacha_incoterms_id ? 'selected' : '' }}>{{ $incoterm->incoterm_description }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><span class="required-star">*</span> Currency</th>
+                                <td>
+                                    <select style="width: 100%" name="currencies_id" id="currencies_id" class="form-control" required>
+                                        <option value="" disabled selected>None selected...</option>
+                                        @if ($currencies)
+                                        @foreach ($currencies as $currency)
+                                        <option value="{{ $currency->id }}" {{ $currency->id == $item->currencies_id ? 'selected' : '' }}>{{ $currency->currency_code }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -228,7 +243,7 @@
                             <tr>
                                 <th><span class="required-star">*</span> UOM</th>
                                 <td>
-                                    <select name="gacha_uoms_id" id="gacha_uoms_id" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_uoms_id" id="gacha_uoms_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($uoms)
                                         @foreach ($uoms as $uom)
@@ -241,7 +256,7 @@
                             <tr>
                                 <th><span class="required-star">*</span> Inventory Type</th>
                                 <td>
-                                    <select name="gacha_inventory_types" id="gacha_inventory_types" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_inventory_types" id="gacha_inventory_types" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($inventory_types)
                                         @foreach ($inventory_types as $inventory_type)
@@ -254,7 +269,7 @@
                             <tr>
                                 <th><span class="required-star">*</span> Vendor Type</th>
                                 <td>
-                                    <select name="gacha_vendor_type" id="gacha_vendor_type" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_vendor_type" id="gacha_vendor_type" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($vendor_type)
                                         @foreach ($vendor_type as $inventory_type)
@@ -267,7 +282,7 @@
                             <tr>
                                 <th><span class="required-star">*</span> Vendor Group</th>
                                 <td>
-                                    <select name="gacha_vendor_group" id="gacha_vendor_group" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_vendor_group" id="gacha_vendor_group" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($vendor_groups)
                                         @foreach ($vendor_groups as $vendor_group)
@@ -302,6 +317,8 @@
 </div>
 
 <script type="application/javascript">
+    $('select').select2();
+    $('#gacha_sku_statuses_id').select2();
 
 </script>
 @endsection

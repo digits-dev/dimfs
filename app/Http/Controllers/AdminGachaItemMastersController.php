@@ -379,6 +379,7 @@ use Session;
 			);
 
 			$data = [];
+			$data['page_title'] = 'Add Item';
 			$submasters = self::getSubmaster();
 
 			$data = array_merge($data, $submasters);
