@@ -142,7 +142,7 @@
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Model</th>
-                                <td><input value="{{ $item->models ?: '' }}" type="text" name="models" id="item_description" class="form-control" required oninput="this.value = this.value.toUpperCase()"></td>
+                                <td><input value="{{ $item->gacha_models ?: '' }}" type="text" name="gacha_models" id="item_description" class="form-control" required oninput="this.value = this.value.toUpperCase()"></td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Warehouse Category Description</th>
@@ -266,11 +266,11 @@
                             <tr>
                                 <th><span class="required-star">*</span> Inventory Type</th>
                                 <td>
-                                    <select style="width: 100%" name="gacha_inventory_types" id="gacha_inventory_types" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_inventory_types_id" id="gacha_inventory_types_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($inventory_types)
                                         @foreach ($inventory_types as $inventory_type)
-                                        <option value="{{ $inventory_type->id }}" {{ $inventory_type->id == $item->gacha_inventory_types ? 'selected' : '' }}>{{ $inventory_type->inventory_type_description }}</option>
+                                        <option value="{{ $inventory_type->id }}" {{ $inventory_type->id == $item->gacha_inventory_types_id ? 'selected' : '' }}>{{ $inventory_type->inventory_type_description }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -279,7 +279,7 @@
                             <tr>
                                 <th><span class="required-star">*</span> Vendor Type</th>
                                 <td>
-                                    <select style="width: 100%" name="gacha_vendor_type" id="gacha_vendor_type" class="form-control" required>
+                                    <select style="width: 100%" name="gacha_vendor_types_id" id="gacha_vendor_types_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($vendor_types)
                                         @foreach ($vendor_types as $vendor_type)
