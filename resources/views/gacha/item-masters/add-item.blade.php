@@ -348,5 +348,10 @@
             });
         });
 
+        $(document).on('input', '#jan_no', function(event) {
+            const value = $(this).val().replace(/[^a-z0-9]/gi, '');
+            $(this).val(value);
+        })
+
 </script>
 @endsection
