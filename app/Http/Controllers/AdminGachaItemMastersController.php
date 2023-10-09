@@ -394,7 +394,7 @@
 				trans('crudbooster.denied_access')
 			);
 
-			$digits_code = GachaItemMaster::find($id)->pluck('digits_code')->first();
+			$digits_code = DB::table('gacha_item_masters')->where('id', $id)->pluck('digits_code')->first();
 
 			$data = [];
 			$data['item'] = (object) GachaItemApproval::where('digits_code', $digits_code)->first()->toArray();

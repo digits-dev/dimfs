@@ -161,13 +161,13 @@
                             <tr>
                                 <th><span class="required-star">*</span> MSRP</th>
                                 <td>
-                                    <input type="number" value="{{ $item->msrp }}" class="form-control" name="msrp" id="msrp" required>
+                                    <input type="number" value="{{ $item->msrp }}" class="form-control" name="msrp" id="msrp" step="0.01" required>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Current SRP</th>
                                 <td>
-                                    <input type="number" value="{{ $item->current_srp }}" class="form-control" name="current_srp" id="current_srp" required>
+                                    <input type="number" value="{{ $item->current_srp }}" class="form-control" name="current_srp" id="current_srp" step="0.01" required>
                                 </td>
                             </tr>
                             <tr>
@@ -254,7 +254,7 @@
                             <tr>
                                 <th><span class="required-star">*</span> Supplier Cost</th>
                                 <td>
-                                    <input type="number" value="{{ $item->supplier_cost }}" class="form-control" name="supplier_cost" id="supplier_cost" required>
+                                    <input type="number" value="{{ $item->supplier_cost }}" class="form-control" name="supplier_cost" id="supplier_cost" step="0.01" required>
                                 </td>
                             </tr>
                             <tr>

@@ -5,6 +5,8 @@
 	use DB;
 	use CRUDBooster;
 	use App\GachaItemApproval;
+	use App\GachaItemMaster;
+	use Schema;
 
 	class AdminGachaItemMasterApprovalsController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -27,7 +29,7 @@
 			$this->button_bulk_action = true;
 			$this->button_action_style = "button_icon";
 			$this->button_add = false;
-			$this->button_edit = true;
+			$this->button_edit = false;
 			$this->button_delete = false;
 			$this->button_detail = true;
 			$this->button_show = true;
@@ -123,6 +125,17 @@
 	        | 
 	        */
 	        $this->addaction = array();
+
+			if (CRUDBooster::isUpdate()) {
+				$this->addaction[] = [
+					'title'=>'Edit',
+					'url'=>CRUDBooster::mainpath('edit/[id]'),
+					'icon'=>'fa fa-pencil',
+					'color' => ' ',
+					"showIf"=>"[approval_status] == 400",
+				];
+			}
+
 
 
 	        /* 
@@ -270,8 +283,7 @@
 	    |
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
-	        
-	            
+	        return self::approveOrReject($id_selected, $button_name);     
 	    }
 
 
@@ -384,7 +396,7 @@
 			$action_by = CRUDBooster::myId();
 			$digits_code = $request['digits_code'];
 			$gacha_item_master_approvals_id = $request['gacha_item_master_approvals_id'];
-			$item_description = $request['item_description'];
+			$item_description = trim(strtoupper(preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $request['item_description'])));
 
 			$data = [
 				'approval_status' => 202,
@@ -403,6 +415,7 @@
 				'dp_ctn' => $request['dp_ctn'],
 				'pcs_dp' => $request['pcs_dp'],
 				'moq' => $request['moq'],
+				'no_of_ctn' => $request['no_of_ctn'],
 				'no_of_assort' => $request['no_of_assort'],
 				'gacha_countries_id' => $request['gacha_countries_id'],
 				'gacha_incoterms_id' => $request['gacha_incoterms_id'],
@@ -435,7 +448,7 @@
 			$action_by = CRUDBooster::myId();
 			$digits_code = $request['digits_code'];
 			$gacha_item_master_approvals_id = $request['gacha_item_master_approvals_id'];
-			$item_description = $request['item_description'];
+			$item_description = trim(strtoupper(preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $request['item_description'])));
 
 			$data = [
 				'approval_status' => 202,
@@ -454,6 +467,7 @@
 				'dp_ctn' => $request['dp_ctn'],
 				'pcs_dp' => $request['pcs_dp'],
 				'moq' => $request['moq'],
+				'no_of_ctn' => $request['no_of_ctn'],
 				'no_of_assort' => $request['no_of_assort'],
 				'gacha_countries_id' => $request['gacha_countries_id'],
 				'gacha_incoterms_id' => $request['gacha_incoterms_id'],
@@ -497,5 +511,121 @@
 			return view('gacha/item-masters/add-item',$data);
 		}
 
+		public function approveOrReject($ids, $action) {
+			if (!is_array($ids)) $ids = [$ids];
+
+			foreach($ids as $id) {
+				$item = DB::table('gacha_item_master_approvals')
+					->where('id', $id)
+					->first();
+				
+				if ($item->approval_status == 200) return;
+
+				if ($action == 'approve') {
+					$digits_code = $item->digits_code;
+					if (!$digits_code) {
+						$digits_code = self::createDigitsCode();
+					}
+					$differences = self::getDifferences($id);
+					if ($differences) self::createHistory($differences, $digits_code);
+					$item = DB::table('gacha_item_master_approvals')
+						->where('id', $id);
+					$update = $item->update([
+						'approval_status' => 200,
+						'digits_code' => $digits_code,
+						'approved_at' => date('Y-m-d H:i:s'),
+						'approved_by' => CRUDBooster::myId(),
+					]);
+					$item = $item->first();
+					unset($item->id);
+
+					DB::table('gacha_item_masters')->updateOrInsert(['digits_code' => $digits_code], (array) $item);
+					$message = "✔️ Successfully approved Item: $digits_code";
+					$message_type = "success";
+					
+				} else if ($action == 'reject') {
+					DB::table('gacha_item_master_approvals')
+						->where('id', $id)
+						->update(['approval_status' => 400]);
+
+					$message = "👎🏽 Successfully rejected Item.";
+					$message_type = "info";
+				}
+			}
+			return redirect(CRUDBooster::mainPath())->with([
+				'message_type' => $message_type,
+				'message' => $message,
+			]);
+		}
+
+		public function createDigitsCode() {
+			$current_max_digits_code = DB::table('gacha_item_masters')
+				->max('digits_code');
+			
+			return $current_max_digits_code + 1;
+		}
+
+		public function getDifferences($id) {
+			$new_values = DB::table('gacha_item_master_approvals')
+				->where('id', $id)
+				->first();
+
+			if (!$new_values->digits_code) {
+				return false;
+			}
+
+			$old_values = DB::table('gacha_item_masters')
+				->where('digits_code', $new_values->digits_code)
+				->first();
+
+			$column_names = array_keys((array) $old_values);
+			$differences = [];
+			$column_differences = [];
+
+			foreach ($column_names as $column) {
+				$old_value = $old_values->{$column};
+				$new_value = $new_values->{$column};
+				if ($new_value != $old_value) {
+					$differences[$column]['old'] = $old_value;
+					$differences[$column]['new'] = $new_value;
+					$column_differences[] = $column;
+				}
+			}
+
+			$data = [
+				'differences' => $differences,
+				'column_differences' => $column_differences,
+			];
+
+			return $data;
+		}
+
+		public function createHistory($differences, $digits_code) {
+			$to_be_recorded = [
+				'msrp',
+				'current_srp',
+				'store_cost',
+				'sc_margin',
+				'lc_per_pc',
+				'lc_margin_per_pc',
+				'lc_per_carton',
+				'lc_margin_per_carton'
+			];
+
+			$data = [];
+
+			foreach ($differences['column_differences'] as $column) {
+				if (in_array($column, $to_be_recorded)) {
+					$data['old_' . $column] = $differences['differences'][$column]['old'];
+					$data['new_' . $column] = $differences['differences'][$column]['new'];
+				}
+			}
+			$data['digits_code'] = $digits_code;
+			$data['history_json'] = json_encode($differences['differences']);
+			$data['created_at'] = date('Y-m-d H:i:s');
+			$data['created_by'] = CRUDBooster::myId();
+
+			DB::table('gacha_item_histories')->insert($data);
+		}
 
 	}
