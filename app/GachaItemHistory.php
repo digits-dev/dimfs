@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class GachaItemHistory extends Model
 {
-    protected $table = 'gacha_item_history';
+    protected $table = 'gacha_item_histories';
 }

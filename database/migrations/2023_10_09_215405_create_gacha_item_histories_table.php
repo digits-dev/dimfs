@@ -15,7 +15,10 @@ class CreateGachaItemHistoriesTable extends Migration
     {
         Schema::create('gacha_item_histories', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('digits_code')->length(10)->nullable();
             $table->json('history_json')->nullable();
+            $table->decimal('old_msrp', 18, 2)->nullable();
+            $table->decimal('new_msrp', 18, 2)->nullable();
             $table->decimal('old_current_srp', 18, 2)->nullable();
             $table->decimal('new_current_srp', 18, 2)->nullable();
             $table->decimal('old_store_cost', 18, 2)->nullable();
