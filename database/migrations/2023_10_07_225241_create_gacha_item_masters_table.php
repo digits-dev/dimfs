@@ -30,11 +30,11 @@ class CreateGachaItemMastersTable extends Migration
             $table->decimal('current_srp', 18, 2)->unsigned()->nullable();
             $table->decimal('no_of_tokens', 18, 2)->unsigned()->nullable();
             $table->decimal('store_cost', 18, 2)->unsigned()->nullable();
-            $table->decimal('sc_margin', 18, 2)->unsigned()->nullable();
+            $table->decimal('sc_margin', 18, 2)->nullable();
             $table->decimal('lc_per_pc', 18, 2)->unsigned()->nullable();
-            $table->decimal('lc_margin_per_pc', 18, 2)->unsigned()->nullable();
+            $table->decimal('lc_margin_per_pc', 18, 2)->nullable();
             $table->decimal('lc_per_carton', 18, 2)->unsigned()->nullable();
-            $table->decimal('lc_margin_per_carton', 18, 2)->unsigned()->nullable();
+            $table->decimal('lc_margin_per_carton', 18, 2)->nullable();
             $table->decimal('dp_ctn', 18, 2)->unsigned()->nullable();
             $table->decimal('pcs_dp', 18, 2)->unsigned()->nullable();
             $table->decimal('moq', 18, 2)->unsigned()->nullable();
