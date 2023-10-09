@@ -81,6 +81,7 @@ return [
         'DP PER CTN',
         'PCS PER DP',
         'MOQ',
+        'NUMBER OF CTN',
         'NUMBER OF ASSORT',
         'COUNTRY OF ORIGIN',
         'INCOTERMS',

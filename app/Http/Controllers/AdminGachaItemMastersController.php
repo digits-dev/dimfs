@@ -412,7 +412,7 @@
 				CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
 			}
 			$data['page_title'] = 'Import New Item';
-			return view('gacha/item-masters/upload',$data);
+			return view('gacha/item-masters/new-item-upload',$data);
 		}
 
 		public function getSubmaster() {
