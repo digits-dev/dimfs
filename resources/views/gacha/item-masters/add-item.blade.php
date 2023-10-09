@@ -85,7 +85,7 @@
         <i class="fa fa-pencil"></i><strong> Add {{CRUDBooster::getCurrentModule()->name}}</strong>
     </div>
     <div class="panel-body">
-        <form action="{{ route('submit_new_gacha_item') }}" method="POST">
+        <form action="{{ route('submit_new_gacha_item') }}" method="POST" autocomplete="off">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="gacha_item_masters_approvals_id" value="{{ $item->id }}">
             <h3 class="text-center text-bold">ITEM DETAILS</h3>
@@ -100,8 +100,16 @@
                             </tr>
                             @endif
                             <tr>
-                                <th>Item No.</th>
+                                <th>JAN Number</th>
+                                <td><input value="{{ $item->jan_no }}" type="text" name="jan_no" id="jan_no" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <th>Item Number</th>
                                 <td><input value="{{ $item->item_no }}" type="text" name="item_no" id="item_no" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <th>SAP Number</th>
+                                <td><input value="{{ $item->sap_no }}" type="text" name="sap_no" id="sap_no" class="form-control"></td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span>  Brand Description</th>
@@ -173,6 +181,12 @@
                                     <input type="number" value="{{ $item->dp_ctn }}" class="form-control" name="dp_ctn" id="dp_ctn">
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-responsive">
+                        <tbody>
                             <tr>
                                 <th><span class="required-star">*</span> PCS / DP</th>
                                 <td>
@@ -185,12 +199,6 @@
                                     <input type="number" value="{{ $item->moq }}" class="form-control" name="moq" id="moq">
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-6">
-                    <table class="table table-responsive">
-                        <tbody>
                             <tr>
                                 <th><span class="required-star">*</span> Number of Assort</th>
                                 <td>
