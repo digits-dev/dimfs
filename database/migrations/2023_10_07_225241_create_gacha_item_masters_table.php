@@ -22,7 +22,7 @@ class CreateGachaItemMastersTable extends Migration
             $table->integer('gacha_brands_id')->length(10)->unsigned()->nullable();
             $table->integer('gacha_sku_statuses_id')->length(10)->unsigned()->nullable();
             $table->string('item_description')->nullable();
-            $table->integer('gacha_models_id')->length(10)->unsigned()->nullable();
+            $table->string('gacha_models')->nullable();
             $table->integer('gacha_wh_categories_id')->length(10)->unsigned()->nullable();
             $table->decimal('msrp', 18, 2)->unsigned()->nullable();
             $table->decimal('current_srp', 18, 2)->unsigned()->nullable();

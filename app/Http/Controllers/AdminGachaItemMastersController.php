@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
-	use Session;
+use App\GachaItemMaster;
+use Session;
 	use Request;
 	use DB;
 	use CRUDBooster;
@@ -39,9 +40,13 @@
 			$this->col[] = ["label"=>"Item No","name"=>"item_no"];
 			$this->col[] = ["label"=>"Initial Wrr Date","name"=>"initial_wrr_date"];
 			$this->col[] = ["label"=>"Latest Wrr Date","name"=>"latest_wrr_date"];
-			$this->col[] = ["label"=>"Gacha Brands Id","name"=>"gacha_brands_id","join"=>"gacha_brands,id"];
-			$this->col[] = ["label"=>"Gacha Sku Statuses Id","name"=>"gacha_sku_statuses_id","join"=>"gacha_sku_statuses,id"];
+			$this->col[] = ["label"=>"Brand","name"=>"gacha_brands_id","join"=>"gacha_brands,brand_description"];
+			$this->col[] = ["label"=>"Sku Status","name"=>"gacha_sku_statuses_id","join"=>"gacha_sku_statuses,status_description"];
 			$this->col[] = ["label"=>"Item Description","name"=>"item_description"];
+			$this->col[] = ['label'=>'Model','name'=>'gacha_models'];
+			$this->col[] = ['label'=>'WH Category','name'=>'gacha_wh_categories_id','join'=>'gacha_wh_categories,category_description'];
+			$this->col[] = ['label'=>'MSRP (JPY)','name'=>'msrp'];
+			$this->col[] = ['label'=>'Current SRP','name'=>'current_srp'];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -50,81 +55,35 @@
 			$this->form[] = ['label'=>'Item No','name'=>'item_no','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Initial Wrr Date','name'=>'initial_wrr_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Latest Wrr Date','name'=>'latest_wrr_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Gacha Brands Id','name'=>'gacha_brands_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_brands,id'];
-			$this->form[] = ['label'=>'Gacha Sku Statuses Id','name'=>'gacha_sku_statuses_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_sku_statuses,id'];
+			$this->form[] = ['label'=>'Brand','name'=>'gacha_brands_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_brands,brand_description'];
+			$this->form[] = ['label'=>'Sku Status','name'=>'gacha_sku_statuses_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_sku_statuses,status_description'];
 			$this->form[] = ['label'=>'Item Description','name'=>'item_description','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Gacha Models Id','name'=>'gacha_models_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_models,id'];
-			$this->form[] = ['label'=>'Gacha Wh Categories Id','name'=>'gacha_wh_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_wh_categories,id'];
-			$this->form[] = ['label'=>'Msrp','name'=>'msrp','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Current Srp','name'=>'current_srp','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Model','name'=>'gacha_models','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'WH Category','name'=>'gacha_wh_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_wh_categories,category_description'];
+			$this->form[] = ['label'=>'MSRP (JPY)','name'=>'msrp','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Current SRP','name'=>'current_srp','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'No Of Tokens','name'=>'no_of_tokens','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Store Cost','name'=>'store_cost','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Sc Margin','name'=>'sc_margin','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Lc Per Pc','name'=>'lc_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Lc Margin Per Pc','name'=>'lc_margin_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Lc Per Carton','name'=>'lc_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Lc Margin Per Carton','name'=>'lc_margin_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'SC Margin','name'=>'sc_margin','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'LC Per Pc','name'=>'lc_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'LC Margin Per Pc','name'=>'lc_margin_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'LC Per Carton','name'=>'lc_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'LC Margin Per Carton','name'=>'lc_margin_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Dp Ctn','name'=>'dp_ctn','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Pcs Dp','name'=>'pcs_dp','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Moq','name'=>'moq','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'No Of Assort','name'=>'no_of_assort','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Gacha Countries Id','name'=>'gacha_countries_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_countries,country_name'];
-			$this->form[] = ['label'=>'Gacha Incoterms Id','name'=>'gacha_incoterms_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_incoterms,id'];
-			$this->form[] = ['label'=>'Currencies Id','name'=>'currencies_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'currencies,id'];
+			$this->form[] = ['label'=>'Country','name'=>'gacha_countries_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_countries,country_name'];
+			$this->form[] = ['label'=>'Incoterm','name'=>'gacha_incoterms_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_incoterms,id'];
+			$this->form[] = ['label'=>'Currency','name'=>'currencies_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'currencies,id'];
 			$this->form[] = ['label'=>'Supplier Cost','name'=>'supplier_cost','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Gacha Uoms Id','name'=>'gacha_uoms_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_uoms,id'];
-			$this->form[] = ['label'=>'Gacha Inventory Types Id','name'=>'gacha_inventory_types_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_inventory_types,id'];
-			$this->form[] = ['label'=>'Gacha Vendor Types Id','name'=>'gacha_vendor_types_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_vendor_types,id'];
-			$this->form[] = ['label'=>'Gacha Vendor Groups Id','name'=>'gacha_vendor_groups_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_vendor_groups,id'];
+			$this->form[] = ['label'=>'Uom','name'=>'gacha_uoms_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_uoms,id'];
+			$this->form[] = ['label'=>'Inventory Type','name'=>'gacha_inventory_types_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_inventory_types,id'];
+			$this->form[] = ['label'=>'Vendor Type','name'=>'gacha_vendor_types_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_vendor_types,id'];
+			$this->form[] = ['label'=>'Vendor Group','name'=>'gacha_vendor_groups_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'gacha_vendor_groups,id'];
 			$this->form[] = ['label'=>'Age Grade','name'=>'age_grade','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Battery','name'=>'battery','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Approved By','name'=>'approved_by','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Approved At','name'=>'approved_at','type'=>'datetime','validation'=>'required|date_format:Y-m-d H:i:s','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Created By','name'=>'created_by','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Updated By','name'=>'updated_by','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
-
-			# OLD START FORM
-			//$this->form = [];
-			//$this->form[] = ["label"=>"Digits Code","name"=>"digits_code","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Item No","name"=>"item_no","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Initial Wrr Date","name"=>"initial_wrr_date","type"=>"date","required"=>TRUE,"validation"=>"required|date"];
-			//$this->form[] = ["label"=>"Latest Wrr Date","name"=>"latest_wrr_date","type"=>"date","required"=>TRUE,"validation"=>"required|date"];
-			//$this->form[] = ["label"=>"Gacha Brands Id","name"=>"gacha_brands_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_brands,id"];
-			//$this->form[] = ["label"=>"Gacha Sku Statuses Id","name"=>"gacha_sku_statuses_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_sku_statuses,id"];
-			//$this->form[] = ["label"=>"Item Description","name"=>"item_description","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Gacha Models Id","name"=>"gacha_models_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_models,id"];
-			//$this->form[] = ["label"=>"Gacha Wh Categories Id","name"=>"gacha_wh_categories_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_wh_categories,id"];
-			//$this->form[] = ["label"=>"Msrp","name"=>"msrp","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Current Srp","name"=>"current_srp","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"No Of Tokens","name"=>"no_of_tokens","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Store Cost","name"=>"store_cost","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Sc Margin","name"=>"sc_margin","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Lc Per Pc","name"=>"lc_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Lc Margin Per Pc","name"=>"lc_margin_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Lc Per Carton","name"=>"lc_per_carton","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Lc Margin Per Carton","name"=>"lc_margin_per_carton","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Dp Ctn","name"=>"dp_ctn","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Pcs Dp","name"=>"pcs_dp","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Moq","name"=>"moq","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"No Of Assort","name"=>"no_of_assort","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Gacha Countries Id","name"=>"gacha_countries_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_countries,country_name"];
-			//$this->form[] = ["label"=>"Gacha Incoterms Id","name"=>"gacha_incoterms_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_incoterms,id"];
-			//$this->form[] = ["label"=>"Currencies Id","name"=>"currencies_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"currencies,id"];
-			//$this->form[] = ["label"=>"Supplier Cost","name"=>"supplier_cost","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Gacha Uoms Id","name"=>"gacha_uoms_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_uoms,id"];
-			//$this->form[] = ["label"=>"Gacha Inventory Types Id","name"=>"gacha_inventory_types_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_inventory_types,id"];
-			//$this->form[] = ["label"=>"Gacha Vendor Types Id","name"=>"gacha_vendor_types_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_vendor_types,id"];
-			//$this->form[] = ["label"=>"Gacha Vendor Groups Id","name"=>"gacha_vendor_groups_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_vendor_groups,id"];
-			//$this->form[] = ["label"=>"Age Grade","name"=>"age_grade","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Battery","name"=>"battery","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Approved By","name"=>"approved_by","type"=>"number","required"=>TRUE,"validation"=>"required|integer|min:0"];
-			//$this->form[] = ["label"=>"Approved At","name"=>"approved_at","type"=>"datetime","required"=>TRUE,"validation"=>"required|date_format:Y-m-d H:i:s"];
-			//$this->form[] = ["label"=>"Created By","name"=>"created_by","type"=>"number","required"=>TRUE,"validation"=>"required|integer|min:0"];
-			//$this->form[] = ["label"=>"Updated By","name"=>"updated_by","type"=>"number","required"=>TRUE,"validation"=>"required|integer|min:0"];
-			//$this->form[] = ["label"=>"Status","name"=>"status","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			# OLD END FORM
 
 			/* 
 	        | ---------------------------------------------------------------------- 
@@ -193,8 +152,11 @@
 	        | 
 	        */
 	        $this->index_button = array();
-
-
+			if(CRUDBooster::getCurrentMethod() == 'getIndex') {
+				if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['MCB TM','MCB TL'])){
+					$this->index_button[] = ["title"=>"Import Items","label"=>"Import Items",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-view')];
+				}
+			}
 
 	        /* 
 	        | ---------------------------------------------------------------------- 
@@ -337,6 +299,8 @@
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
             $postdata["created_by"]=CRUDBooster::myId();
+			
+			
 	    }
 
 	    /* 
@@ -348,7 +312,15 @@
 	    */
 	    public function hook_after_add($id) {        
 	        //Your code here
+			// $item = GachaItemMaster::where('id', $id)->first();
+			// $item['gacha_item_masters_id'] = $id;
+			// //insert to approval table
+			// ItemMasterApproval::insert($item->toArray());
 
+			// $module_id = CRUDBooster::getCurrentModule()->id;
+			// if(!is_null($item) && (CRUDBooster::isSuperadmin() || CRUDBooster::myPrivilegeName() == 'ADVANCED')){
+			// 	Counter::where('cms_moduls_id',$module_id)->increment('code_6');
+			// }
 	    }
 
 	    /* 
@@ -407,6 +379,15 @@
 			);
 
 			return view('gacha/item-masters/add-item', []);
+		}
+
+		public function importItemView()
+		{
+			if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE || $this->button_add==FALSE) {    
+				CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
+			}
+			$data['page_title'] = 'Import New Item';
+			return view('gacha/item-masters/upload',$data);
 		}
 
 	}
