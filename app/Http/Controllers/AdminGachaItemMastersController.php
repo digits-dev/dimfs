@@ -38,16 +38,28 @@
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
 			$this->col[] = ["label"=>"Digits Code","name"=>"digits_code"];
+			$this->col[] = ["label"=>"JAN Number","name"=>"jan_no"];
+			$this->col[] = ["label"=>"SAP Number","name"=>"sap_no"];
 			$this->col[] = ["label"=>"Item No","name"=>"item_no"];
-			$this->col[] = ["label"=>"Initial Wrr Date","name"=>"initial_wrr_date"];
-			$this->col[] = ["label"=>"Latest Wrr Date","name"=>"latest_wrr_date"];
+			$this->col[] = ["label"=>"Initial WRR Date","name"=>"initial_wrr_date"];
+			$this->col[] = ["label"=>"Latest WRR Date","name"=>"latest_wrr_date"];
 			$this->col[] = ["label"=>"Brand","name"=>"gacha_brands_id","join"=>"gacha_brands,brand_description"];
-			$this->col[] = ["label"=>"Sku Status","name"=>"gacha_sku_statuses_id","join"=>"gacha_sku_statuses,status_description"];
+			$this->col[] = ["label"=>"SKU Status","name"=>"gacha_sku_statuses_id","join"=>"gacha_sku_statuses,status_description"];
 			$this->col[] = ["label"=>"Item Description","name"=>"item_description"];
 			$this->col[] = ['label'=>'Model','name'=>'gacha_models'];
 			$this->col[] = ['label'=>'WH Category','name'=>'gacha_wh_categories_id','join'=>'gacha_wh_categories,category_description'];
 			$this->col[] = ['label'=>'MSRP (JPY)','name'=>'msrp'];
 			$this->col[] = ['label'=>'Current SRP','name'=>'current_srp'];
+			$this->col[] = ['label'=>'MOQ','name'=>'moq'];
+			$this->col[] = ['label'=>'Country of Origin','name'=>'gacha_countries_id','join'=>'gacha_countries,country_code'];
+			$this->col[] = ['label'=>'Incoterms','name'=>'gacha_incoterms_id','join'=>'gacha_incoterms,incoterm_description'];
+			$this->col[] = ['label'=>'Currency','name'=>'currencies_id','join'=>'currencies,currency_code'];
+			$this->col[] = ['label'=>'UOM','name'=>'gacha_uoms_id','join'=>'gacha_uoms,uom_code'];
+			$this->col[] = ['label'=>'Inventory Type','name'=>'gacha_inventory_types_id','join'=>'gacha_inventory_types,inventory_type_description'];
+			$this->col[] = ['label'=>'Vendor Type','name'=>'gacha_vendor_types_id','join'=>'gacha_vendor_types,vendor_type_description'];
+			$this->col[] = ['label'=>'Vendor Group','name'=>'gacha_vendor_groups_id','join'=>'gacha_vendor_groups,vendor_group_description'];
+			$this->col[] = ['label'=>'Age Grade','name'=>'age_grade'];
+			$this->col[] = ['label'=>'Battery','name'=>'battery'];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
