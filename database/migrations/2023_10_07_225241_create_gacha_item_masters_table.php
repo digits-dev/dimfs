@@ -38,6 +38,7 @@ class CreateGachaItemMastersTable extends Migration
             $table->integer('dp_ctn')->length(10)->unsigned()->nullable();
             $table->integer('pcs_dp')->length(10)->unsigned()->nullable();
             $table->decimal('moq', 18, 2)->unsigned()->nullable();
+            $table->integer('pcs_ctn')->length(10)->unsigned()->nullable();
             $table->integer('no_of_ctn')->length(10)->unsigned()->nullable();
             $table->integer('no_of_assort')->length(10)->unsigned()->nullable();
             $table->integer('gacha_countries_id')->length(10)->unsigned()->nullable();
