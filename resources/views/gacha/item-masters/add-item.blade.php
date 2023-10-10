@@ -177,9 +177,15 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th><span class="required-star">*</span> DP / CTN</th>
+                                <th><span class="required-star">*</span> DP Per CTN</th>
                                 <td>
                                     <input type="number" value="{{ $item->dp_ctn }}" class="form-control" name="dp_ctn" id="dp_ctn" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><span class="required-star">*</span> PCS Per DP</th>
+                                <td>
+                                    <input type="number" value="{{ $item->pcs_dp }}" class="form-control" name="pcs_dp" id="pcs_dp" required>
                                 </td>
                             </tr>
                         </tbody>
@@ -189,19 +195,19 @@
                     <table class="table table-responsive">
                         <tbody>
                             <tr>
-                                <th><span class="required-star">*</span> PCS / DP</th>
-                                <td>
-                                    <input type="number" value="{{ $item->pcs_dp }}" class="form-control" name="pcs_dp" id="pcs_dp" required>
-                                </td>
-                            </tr>
-                            <tr>
                                 <th><span class="required-star">*</span> MOQ</th>
                                 <td>
                                     <input type="number" value="{{ $item->moq }}" class="form-control" name="moq" id="moq" required>
                                 </td>
                             </tr>
                             <tr>
-                                <th><span class="required-star">*</span> Number of Carton</th>
+                                <th><span class="required-star">*</span> PCS Per CTN</th>
+                                <td>
+                                    <input type="number" value="{{ $item->pcs_ctn }}" class="form-control" name="pcs_ctn" id="pcs_ctn" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><span class="required-star">*</span> Order CTN</th>
                                 <td>
                                     <input type="number" value="{{ $item->no_of_ctn }}" class="form-control" name="no_of_ctn" id="no_of_ctn" required>
                                 </td>

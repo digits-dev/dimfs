@@ -435,6 +435,7 @@
 				'dp_ctn' => $request['dp_ctn'],
 				'pcs_dp' => $request['pcs_dp'],
 				'moq' => $request['moq'],
+				'pcs_ctn' => $request['pcs_ctn'],
 				'no_of_ctn' => $request['no_of_ctn'],
 				'no_of_assort' => $request['no_of_assort'],
 				'gacha_countries_id' => $request['gacha_countries_id'],
@@ -456,7 +457,7 @@
 
 			$message = "✔️ New Item: $item_description is added pending for approval";
 
-			return redirect(CRUDBooster::adminPath('gacha_item_masters'))->with([
+			return redirect(CRUDBooster::adminPath('gasha_item_masters'))->with([
 				'message_type' => 'success',
 				'message' => $message,
 			]);
@@ -486,6 +487,7 @@
 				'dp_ctn' => $request['dp_ctn'],
 				'pcs_dp' => $request['pcs_dp'],
 				'moq' => $request['moq'],
+				'pcs_ctn' => $request['pcs_ctn'],
 				'no_of_ctn' => $request['no_of_ctn'],
 				'no_of_assort' => $request['no_of_assort'],
 				'gacha_countries_id' => $request['gacha_countries_id'],
@@ -517,8 +519,6 @@
 				GachaItemApproval::updateOrInsert(['id' => $gacha_item_master_approvals_id], $data);
 				$message = "✔️ Item: $item_description is added pending for approval";
 			}
-
-
 
 			return redirect(CRUDBooster::adminPath($request['path']))->with([
 				'message_type' => 'success',
