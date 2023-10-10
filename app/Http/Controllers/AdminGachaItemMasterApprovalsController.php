@@ -16,7 +16,7 @@
         public function __construct()
         {
             DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
-			$this->approver = [];
+			$this->approver = ['MCB TL'];
 			$this->main_controller = new AdminGachaItemMastersController;
 
         }
