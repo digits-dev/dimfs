@@ -463,7 +463,6 @@
 			$item_description = trim(strtoupper(preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $request['item_description'])));
 
 			$data = [
-				'approval_status' => 202,
 				'jan_no' => $request['jan_no'],
 				'digits_code' => $request['digits_code'],
 				'item_no' => $request['item_no'],
@@ -495,9 +494,20 @@
 				'updated_by' => $action_by,
 			];
 
-			GachaItemApproval::updateOrInsert(['id' => $gacha_item_master_approvals_id], $data);
+			if ($digits_code) {
+				// means already approved... just updating the details
+				$message = "✔️ Item Details: $item_description successfully updated.";
+				GachaItemApproval::where('digits_code', $digits_code)->update($data);
+				GachaItemMaster::where('digits_code', $digits_code)->update($data);
+				
+			} else {
+				// means rejected newly created item but updating the item
+				$data['approval_status'] = 202;
+				GachaItemApproval::updateOrInsert(['id' => $gacha_item_master_approvals_id], $data);
+				$message = "✔️ Item: $item_description is added pending for approval";
+			}
 
-			$message = "✔️ Item: $item_description is added pending for approval";
+
 
 			return redirect(CRUDBooster::adminPath($request['path']))->with([
 				'message_type' => 'success',
@@ -517,7 +527,7 @@
 			$data['gacha_item_master_approvals_id'] = $data['item']->id;
 			$data['page_title'] = 'Edit Item';
 			$data['action'] = 'edit';
-			$data['path'] = 'gacha_item_master_approvals';
+			$data['path'] = 'gasha_item_master_approvals';
 			$data = array_merge($data, $this->main_controller->getSubmaster());
 
 			return view('gacha/item-masters/add-item',$data);

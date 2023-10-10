@@ -413,7 +413,7 @@
 			$data['gacha_item_master_approvals_id'] = $data['item']->id;
 			$data['page_title'] = 'Edit Item';
 			$data['action'] = 'edit';
-			$data['path'] = 'gacha_item_masters';
+			$data['path'] = 'gasha_item_masters';
 			$data = array_merge($data, self::getSubmaster());
 
 			return view('gacha/item-masters/add-item',$data);
