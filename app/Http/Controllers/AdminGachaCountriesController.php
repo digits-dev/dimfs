@@ -5,7 +5,7 @@
 	use DB;
 	use CRUDBooster;
 
-	class AdminGachaBrandsController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class AdminGachaCountriesController extends \crocodicstudio\crudbooster\controllers\CBController {
 
         public function __construct()
         {
@@ -13,10 +13,11 @@
         }
 
 	    public function cbInit() {
-	    	# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "brand_description";
+
+			# START CONFIGURATION DO NOT REMOVE THIS LINE
+			$this->title_field = "country_name";
 			$this->limit = "20";
-			$this->orderby = "brand_description,asc";
+			$this->orderby = "id,desc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
 			$this->button_bulk_action = true;
@@ -29,30 +30,29 @@
 			$this->button_filter = true;
 			$this->button_import = false;
 			$this->button_export = true;
-			$this->table = "gacha_brands";
-			# END CONFIGURATION DO NOT REMOVE THIS LINE						      
+			$this->table = "gacha_countries";
+			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
-	        $this->col = [];
-			$this->col[] = ["label"=>"Brand Description","name"=>"brand_description" ];
-			$this->col[] = ["label"=>"Brand Status","name"=>"gacha_brand_statuses_id","join"=>"gacha_brand_statuses,status_description"];
-			$this->col[] = ["label"=>"Status","name"=>"status" ];
+			$this->col = [];
+			$this->col[] = ["label"=>"Country Code","name"=>"country_code"];
+			$this->col[] = ["label"=>"Country Name","name"=>"country_name"];
+			$this->col[] = ["label"=>"Status","name"=>"status"];
 			if(CRUDBooster::isSuperadmin() || CRUDBooster::myPrivilegeName()=="ADMIN") {
 				$this->col[] = ["label"=>"Created By","name"=>"created_by","join"=>"cms_users,name"];
 				$this->col[] = ["label"=>"Created Date","name"=>"created_at"];
 				$this->col[] = ["label"=>"Updated By","name"=>"updated_by","join"=>"cms_users,name"];
 				$this->col[] = ["label"=>"Updated Date","name"=>"updated_at"];
 			}
-
 			# END COLUMNS DO NOT REMOVE THIS LINE
+
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ["label"=>"Brand Description","name"=>"brand_description","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:150",'width'=>'col-sm-5'];
-			$this->form[] = ["label"=>"Brand Status","name"=>"gacha_brand_statuses_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"gacha_brand_statuses,status_description",'width'=>'col-sm-5'];
+			$this->form[] = ['label'=>'Country Code','name'=>'country_code','type'=>'text','validation'=>'required|min:2|max:3','width'=>'col-sm-5'];
+			$this->form[] = ['label'=>'Country Name','name'=>'country_name','type'=>'text','validation'=>'required|min:2|max:150','width'=>'col-sm-5'];
 			if(in_array(CRUDBooster::getCurrentMethod(),["getEdit","postEditSave","getDetail"])) {
 				$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select','validation'=>'required','width'=>'col-sm-5','dataenum'=>'ACTIVE;INACTIVE'];
-			}
-			# END FORM DO NOT REMOVE THIS LINE     
+			}# END FORM DO NOT REMOVE THIS LINE
 
 			/* 
 	        | ---------------------------------------------------------------------- 
