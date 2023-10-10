@@ -48,7 +48,7 @@
 			$this->col[] = ["label"=>"Item Description","name"=>"item_description"];
 			$this->col[] = ['label'=>'Model','name'=>'gacha_models'];
 			$this->col[] = ['label'=>'WH Category','name'=>'gacha_wh_categories_id','join'=>'gacha_wh_categories,category_description'];
-			$this->col[] = ['label'=>'MSRP (JPY)','name'=>'msrp'];
+			$this->col[] = ['label'=>'MSRP JPY','name'=>'msrp'];
 			$this->col[] = ['label'=>'Current SRP','name'=>'current_srp'];
 			$this->col[] = ['label'=>'MOQ','name'=>'moq'];
 			$this->col[] = ['label'=>'Country of Origin','name'=>'gacha_countries_id','join'=>'gacha_countries,country_code'];
