@@ -10,6 +10,9 @@
 
 	class AdminGachaItemMasterApprovalsController extends \crocodicstudio\crudbooster\controllers\CBController {
 
+		private $approver;
+		private $main_controller;
+
         public function __construct()
         {
             DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
