@@ -17,9 +17,7 @@ class GachaponItemMasterImportController extends Controller
     }
 
     public function importItems(Request $request){
-      $errors = array();
       $cnt_success = 0;
-      $cnt_fail = 0;
       $file = $request->file('import_file');
 			
 		$validator = \Validator::make(
@@ -36,7 +34,6 @@ class GachaponItemMasterImportController extends Controller
 			
 			$csv = array_map('str_getcsv', file($path));
 			$dataExcel = Excel::load($path, function($reader) {})->get()->toArray();
-			// dd($dataExcel);
 			$unMatch = [];
 			$header = config('excel-template.gashapon-item-master');
 
@@ -58,14 +55,14 @@ class GachaponItemMasterImportController extends Controller
 					$data = array();
 					$line_item = 0;	
 					$line_item = $key+1;
-					$test = (array)$value;
 					
 					$nullItems = array_filter($value, function ($obj) {
 						return $obj == null;
 					});
 
 					if(!empty($nullItems)){
-						array_push($this->errors, 'Line '.$line_item.': '.strtoupper(str_replace("_"," ",array_keys($nullItems)[0])).' is blank ');
+						$nullColumns = strtoupper(str_replace('_',' ',array_keys($nullItems)[0]));
+						array_push($this->errors, "Line $line_item : $nullColumns is blank!");
 					}
 					
 					$brand = self::filterValues($submasters,'brands',$value,'brand_description','brand_description',$line_item,'Brand');
@@ -85,6 +82,7 @@ class GachaponItemMasterImportController extends Controller
 					}
 
 					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
+					$item_description = trim(strtoupper(preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $value['item_description'])));
 					
 					$data = [
 						'approval_status' => 202,
@@ -93,7 +91,7 @@ class GachaponItemMasterImportController extends Controller
 						'sap_no' => $value['sap_number'],
 						'gacha_brands_id' => $brand[array_keys($brand)[0]]->id,
 						'gacha_sku_statuses_id' => $skuStatus[array_keys($skuStatus)[0]]->id,
-						'item_description' => trim(strtoupper(preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $value['item_description']))),
+						'item_description' => $item_description,
 						'gacha_models' => trim(strtoupper($value['model'])),
 						'gacha_wh_categories_id' => $whCategory[array_keys($whCategory)[0]]->id,
 						'msrp' => $value['msrp_jpy'],
@@ -102,7 +100,8 @@ class GachaponItemMasterImportController extends Controller
 						'dp_ctn' => $value['dp_per_ctn'],
 						'pcs_dp' => $value['pcs_per_dp'],
 						'moq' => $value['moq'],
-						'no_of_ctn' => $value['number_of_ctn'],
+						'pcs_ctn' => $value['pcs_per_ctn'],
+						'no_of_ctn' => $value['order_ctn'],
 						'no_of_assort' => $value['number_of_assort'],
 						'gacha_countries_id' => $country[array_keys($country)[0]]->id,
 						'gacha_incoterms_id' => $incoterm[array_keys($incoterm)[0]]->id,
@@ -121,41 +120,42 @@ class GachaponItemMasterImportController extends Controller
 					try {
 						if(empty($this->errors)){
 							$cnt_success++;
-							$itemCreated = GachaItemApproval::updateOrInsert(['jan_no' => $jan_number],$data);
+							GachaItemApproval::updateOrInsert(['jan_no' => $jan_number],$data);
 						}
 
 					} catch (\Exception $e) {
-						array_push($this->errors, 'Line '.$line_item.': test with error '.json_encode($e));
+						array_push($this->errors, "Line $line_item : with error ".json_encode($e));
 					}
 				}
 			}
 		}
 
 		if(empty($this->errors)){
-			return back()->with('success_import', 'Success ! ' . $cnt_success . ' item(s) were updated successfully.🤩🤩🤩');
+			return back()->with('success_import', "Success ! $cnt_success item(s) were created/updated successfully.🤩🤩🤩");
 		}
 		else{
 			return back()->with('error_import', implode("<br>", $this->errors));
 		}
     }
 
-	private function filterValues($submasters,$submasterValue,$excelValue,$valueObject,$arrayObject,$lineItem,$errorMessage){
+	private function filterValues($submasters,$submasterValue,$excelValue,$valueObject,$arrayObject,$lineItem,$errorColumn){
 		$itemExists = array_filter($submasters[$submasterValue], function($obj) use($excelValue,$valueObject,$arrayObject){
 			return $obj->$arrayObject == $excelValue[$valueObject];
 		});
 
 		if(empty($itemExists)){
-			array_push($this->errors, 'Line '.$lineItem.': '.$errorMessage.' with value "'.$excelValue[$valueObject].'" is not found in submaster.');
+			$errorValue = $excelValue[$valueObject];
+			array_push($this->errors, "Line $lineItem : $errorColumn with value $errorValue is not found in submaster.");
 		}
 
 		return $itemExists;
 	}
 
     public function importItemTemplate(){
-      Excel::create('gashapon-item-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) {
-        $excel->sheet('item', function ($sheet) {
-          $sheet->row(1, config('excel-template.gashapon-item-master'));
-        });
-      })->download('csv');
+		Excel::create('gashapon-item-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) {
+			$excel->sheet('item', function ($sheet) {
+			$sheet->row(1, config('excel-template.gashapon-item-master'));
+			});
+		})->download('csv');
     }
 }
