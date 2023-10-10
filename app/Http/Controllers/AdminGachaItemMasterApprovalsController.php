@@ -65,6 +65,12 @@
 			$this->col[] = ['label'=>'Vendor Group','name'=>'gacha_vendor_groups_id','join'=>'gacha_vendor_groups,vendor_group_description'];
 			$this->col[] = ['label'=>'Age Grade','name'=>'age_grade'];
 			$this->col[] = ['label'=>'Battery','name'=>'battery'];
+			$this->col[] = ['label'=>'Created By','name'=>'created_by','join'=>'cms_users,name'];
+			$this->col[] = ['label'=>'Created Date','name'=>'created_at'];
+			$this->col[] = ['label'=>'Updated By','name'=>'updated_by','join'=>'cms_users,name'];
+			$this->col[] = ['label'=>'Updated Date','name'=>'updated_at'];
+			$this->col[] = ['label'=>'Approved By','name'=>'approved_by','join'=>'cms_users,name'];
+			$this->col[] = ['label'=>'Approved Date','name'=>'approved_at'];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -499,7 +505,10 @@
 			if ($digits_code) {
 				// means already approved... just updating the details
 				$message = "✔️ Item Details: $item_description successfully updated.";
-				GachaItemApproval::where('digits_code', $digits_code)->update($data);
+				$approval_item = GachaItemApproval::where('digits_code', $digits_code);
+				$approval_item->update($data);
+				$differences = self::getDifferences($approval_item->first()->id);
+				if ($differences) self::createHistory($differences, $digits_code);
 				GachaItemMaster::where('digits_code', $digits_code)->update($data);
 				
 			} else {
@@ -637,7 +646,8 @@
 				'lc_per_pc',
 				'lc_margin_per_pc',
 				'lc_per_carton',
-				'lc_margin_per_carton'
+				'lc_margin_per_carton',
+				'supplier_cost',
 			];
 
 			$data = [];

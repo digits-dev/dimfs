@@ -60,6 +60,12 @@
 			$this->col[] = ['label'=>'Vendor Group','name'=>'gacha_vendor_groups_id','join'=>'gacha_vendor_groups,vendor_group_description'];
 			$this->col[] = ['label'=>'Age Grade','name'=>'age_grade'];
 			$this->col[] = ['label'=>'Battery','name'=>'battery'];
+			$this->col[] = ['label'=>'Created By','name'=>'created_by','join'=>'cms_users,name'];
+			$this->col[] = ['label'=>'Created Date','name'=>'created_at'];
+			$this->col[] = ['label'=>'Updated By','name'=>'updated_by','join'=>'cms_users,name'];
+			$this->col[] = ['label'=>'Updated Date','name'=>'updated_at'];
+			$this->col[] = ['label'=>'Approved By','name'=>'approved_by','join'=>'cms_users,name'];
+			$this->col[] = ['label'=>'Approved Date','name'=>'approved_at'];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
