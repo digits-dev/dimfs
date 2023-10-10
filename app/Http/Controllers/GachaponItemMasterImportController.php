@@ -65,7 +65,7 @@ class GachaponItemMasterImportController extends Controller
 					});
 
 					if(!empty($nullItems)){
-						array_push($this->errors, 'Line '.$line_item.': '. array_keys($nullItems)[0].' is blank ');
+						array_push($this->errors, 'Line '.$line_item.': '.strtoupper(str_replace("_"," ",array_keys($nullItems)[0])).' is blank ');
 					}
 					
 					$brand = self::filterValues($submasters,'brands',$value,'brand_description','brand_description',$line_item,'Brand');
@@ -83,10 +83,12 @@ class GachaponItemMasterImportController extends Controller
 					if(!empty($this->errors)){
 						return back()->with('error_import', implode("<br>", $this->errors));
 					}
+
+					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
 					
 					$data = [
 						'approval_status' => 202,
-						'jan_no' => preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']),
+						'jan_no' => $jan_number,
 						'item_no' => $value['item_number'],
 						'sap_no' => $value['sap_number'],
 						'gacha_brands_id' => $brand[array_keys($brand)[0]]->id,
@@ -119,7 +121,7 @@ class GachaponItemMasterImportController extends Controller
 					try {
 						if(empty($this->errors)){
 							$cnt_success++;
-							$itemCreated = GachaItemApproval::updateOrInsert(['item_no' => $value['item_number']],$data);
+							$itemCreated = GachaItemApproval::updateOrInsert(['jan_no' => $jan_number],$data);
 						}
 
 					} catch (\Exception $e) {
