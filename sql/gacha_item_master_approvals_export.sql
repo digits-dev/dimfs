@@ -12,6 +12,7 @@ select
     gacha_item_master_approvals.initial_wrr_date,
     gacha_item_master_approvals.latest_wrr_date,
     gacha_brands.brand_description,
+    gacha_brand_statuses.status_description as brand_status,
     gacha_sku_statuses.status_description,
     gacha_item_master_approvals.item_description,
     gacha_item_master_approvals.gacha_models,
@@ -39,6 +40,7 @@ select
     gacha_inventory_types.inventory_type_description,
     gacha_vendor_types.vendor_type_code,
     gacha_vendor_groups.vendor_group_description,
+    gacha_vendor_group_statuses.status_description as vendor_group_status,
     gacha_item_master_approvals.age_grade,
     gacha_item_master_approvals.battery,
     gacha_item_master_approvals.created_at,
@@ -50,6 +52,7 @@ select
 from
     gacha_item_master_approvals
     left join gacha_brands on gacha_brands.id = gacha_item_master_approvals.gacha_brands_id
+    left join gacha_brand_statuses on gacha_brands.gacha_brand_statuses_id = gacha_brand_statuses.id
     left join gacha_sku_statuses on gacha_sku_statuses.id = gacha_item_master_approvals.gacha_sku_statuses_id
     left join gacha_wh_categories on gacha_wh_categories.id = gacha_item_master_approvals.gacha_wh_categories_id
     left join gacha_countries on gacha_countries.id = gacha_item_master_approvals.gacha_countries_id
@@ -59,6 +62,7 @@ from
     left join gacha_inventory_types on gacha_inventory_types.id = gacha_item_master_approvals.gacha_inventory_types_id
     left join gacha_vendor_types on gacha_vendor_types.id = gacha_item_master_approvals.gacha_vendor_types_id
     left join gacha_vendor_groups on gacha_vendor_groups.id = gacha_item_master_approvals.gacha_vendor_groups_id
+    left join gacha_vendor_group_statuses on gacha_vendor_groups.gacha_vendor_group_statuses_id = gacha_vendor_group_statuses.id
     left join cms_users as created_by on created_by.id = gacha_item_master_approvals.created_by
     left join cms_users as updated_by on updated_by.id = gacha_item_master_approvals.updated_by
     left join cms_users as approved_by on approved_by.id = gacha_item_master_approvals.approved_by
