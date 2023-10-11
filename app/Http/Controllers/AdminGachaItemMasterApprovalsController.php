@@ -44,7 +44,7 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Approval Status","name"=>"approval_status"];
+			$this->col[] = ["label"=>"Approval Status","name"=>"approval_status","join"=>"gacha_approval_statuses,status_description","join_id"=>"approval_status_id"];
 			$this->col[] = ["label"=>"JAN Number","name"=>"jan_no"];
 			$this->col[] = ["label"=>"Digits Code","name"=>"digits_code"];
 			$this->col[] = ["label"=>"Item Number","name"=>"item_no"];
@@ -343,9 +343,9 @@
 	    */    
 	    public function hook_row_index($column_index,&$column_value) {
 			$approval_status_badges = [
-				202 => '<span class="label label-warning">PENDING</span>',
-				200 => '<span class="label label-success">APPROVED</span>',
-				400 => '<span class="label label-danger">REJECTED</span>',
+				'PENDING' => '<span class="label label-warning">PENDING</span>',
+				'APPROVED' => '<span class="label label-success">APPROVED</span>',
+				'REJECTED' => '<span class="label label-danger">REJECTED</span>',
 			];
 
 	    	if ($column_index == 2) {
