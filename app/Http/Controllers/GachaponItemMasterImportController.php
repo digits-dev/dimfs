@@ -84,6 +84,13 @@ class GachaponItemMasterImportController extends Controller
 					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
 					$item_description = trim(strtoupper(preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $value['item_description'])));
 					
+					$itemExists = GachaItemApproval::where('jan_no',$jan_number)->first();
+					
+					if(!empty($itemExists)){
+						array_push($this->errors, "Line $line_item : $jan_number already exists!");
+						return back()->with('error_import', implode("<br>", $this->errors));
+					}
+					
 					$data = [
 						'approval_status' => 202,
 						'jan_no' => $jan_number,
@@ -116,6 +123,8 @@ class GachaponItemMasterImportController extends Controller
 						'created_at' => date('Y-m-d H:i:s'),
 						'created_by' => CRUDBooster::myId(),
 					];
+
+					
 					
 					try {
 						if(empty($this->errors)){
