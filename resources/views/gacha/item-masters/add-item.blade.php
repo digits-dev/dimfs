@@ -177,6 +177,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th><span class="required-star">*</span> PCS Per CTN</th>
+                                <td>
+                                    <input type="number" value="{{ $item->pcs_ctn }}" class="form-control" name="pcs_ctn" id="pcs_ctn" required>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th><span class="required-star">*</span> DP Per CTN</th>
                                 <td>
                                     <input type="number" value="{{ $item->dp_ctn }}" class="form-control" name="dp_ctn" id="dp_ctn" required>
@@ -198,12 +204,6 @@
                                 <th><span class="required-star">*</span> MOQ</th>
                                 <td>
                                     <input type="number" value="{{ $item->moq }}" class="form-control" name="moq" id="moq" required>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th><span class="required-star">*</span> PCS Per CTN</th>
-                                <td>
-                                    <input type="number" value="{{ $item->pcs_ctn }}" class="form-control" name="pcs_ctn" id="pcs_ctn" required>
                                 </td>
                             </tr>
                             <tr>
