@@ -330,9 +330,9 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	        if(!CRUDBooster::isSuperAdmin()){
-				$query->where('approval_status','!=',200);
-			}    
+	        // if(!CRUDBooster::isSuperAdmin()){
+			// 	$query->where('approval_status','!=',200);
+			// }    
 	    }
 
 	    /*
