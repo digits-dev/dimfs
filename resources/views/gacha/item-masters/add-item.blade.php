@@ -159,7 +159,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th><span class="required-star">*</span> MSRP</th>
+                                <th><span class="required-star">*</span> MSRP JPY</th>
                                 <td>
                                     <input type="number" value="{{ $item->msrp }}" class="form-control" name="msrp" id="msrp" step="0.01" required>
                                 </td>
@@ -264,7 +264,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th><span class="required-star">*</span> UOM</th>
+                                <th><span class="required-star">*</span> UOM Code</th>
                                 <td>
                                     <select style="width: 100%" name="gacha_uoms_id" id="gacha_uoms_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
@@ -303,7 +303,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th><span class="required-star">*</span> Vendor Group</th>
+                                <th><span class="required-star">*</span> Vendor Group Name</th>
                                 <td>
                                     <select style="width: 100%" name="gacha_vendor_groups_id" id="gacha_vendor_groups_id" class="form-control" required>
                                         <option value="" disabled selected>None selected...</option>
