@@ -170,6 +170,10 @@
                                 <td>{{ $item->lc_margin_per_pc }}</td>
                             </tr>
                             <tr>
+                                <th>SC Per PC</th>
+                                <td>{{ $item->store_cost }}</td>
+                            </tr>
+                            <tr>
                                 <th>SC Margin Per PC (%)</th>
                                 <td>{{ $item->sc_margin }}</td>
                             </tr>
