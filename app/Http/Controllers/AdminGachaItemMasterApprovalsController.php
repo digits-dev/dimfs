@@ -565,6 +565,12 @@
 			return view('gacha/item-masters/add-item',$data);
 		}
 
+		public function getDetail($id) {
+			$data = [];
+			$data['item'] = $this->main_controller->getItemDetails($id, 'gacha_item_master_approvals_export');
+			return view('gacha/item-masters/detail-item', $data);
+		}
+
 		public function approveOrReject($ids, $action) {
 			if (!is_array($ids)) $ids = [$ids];
 

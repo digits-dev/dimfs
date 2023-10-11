@@ -449,6 +449,12 @@
 			return view('gacha/item-masters/add-item',$data);
 		}
 
+		public function getDetail($id) {
+			$data = [];
+			$data['item'] = self::getItemDetails($id, 'gacha_item_masters_export');
+			return view('gacha/item-masters/detail-item', $data);
+		}
+
 		public function importItemView() {
 			if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE || $this->button_add==FALSE) {    
 				CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
@@ -520,6 +526,16 @@
 				->toArray();
 
 			return $data;
+		}
+
+		public function getItemDetails($id, $view_name) {
+			if ($view_name == 'gacha_item_masters_export') {
+				$primary_key = 'gacha_item_masters_id';
+			} else if ($view_name == 'gacha_item_master_approvals_export') {
+				$primary_key = 'gacha_item_master_approvals_id';
+			}
+			$item = DB::table($view_name)->where($primary_key, $id)->get()->first();
+			return $item;
 		}
 
 	}
