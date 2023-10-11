@@ -142,7 +142,7 @@
                                 <td>{{ $item->category_description }}</td>
                             </tr>
                             <tr>
-                                <th>MSRP</th>
+                                <th>MSRP JPY</th>
                                 <td>{{ $item->msrp }}</td>
                             </tr>
                             <tr>
@@ -220,7 +220,7 @@
                                 <td>{{ $item->supplier_cost }}</td>
                             </tr>
                             <tr>
-                                <th>UOM</th>
+                                <th>UOM Code</th>
                                 <td>{{ $item->uom_code }}</td>
                             </tr>
                             <tr>
@@ -232,7 +232,7 @@
                                 <td>{{ $item->vendor_type_code }}</td>
                             </tr>
                             <tr>
-                                <th>Vendor Group</th>
+                                <th>Vendor Group Name</th>
                                 <td>{{ $item->vendor_group_description }}</td>
                             </tr>
                             <tr>
