@@ -225,7 +225,7 @@
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($countries)
                                         @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}" {{ $country->id == $item->gacha_countries_id ? 'selected' : '' }}>{{ $country->country_name }}</option>
+                                        <option value="{{ $country->id }}" {{ $country->id == $item->gacha_countries_id ? 'selected' : '' }}>{{ $country->country_code }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -270,7 +270,7 @@
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($uoms)
                                         @foreach ($uoms as $uom)
-                                        <option value="{{ $uom->id }}" {{ $uom->id == $item->gacha_uoms_id ? 'selected' : '' }}>{{ $uom->uom_description }}</option>
+                                        <option value="{{ $uom->id }}" {{ $uom->id == $item->gacha_uoms_id ? 'selected' : '' }}>{{ $uom->uom_code }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -296,7 +296,7 @@
                                         <option value="" disabled selected>None selected...</option>
                                         @if ($vendor_types)
                                         @foreach ($vendor_types as $vendor_type)
-                                        <option value="{{ $vendor_type->id }}" {{ $vendor_type->id == $item->gacha_vendor_types_id ? 'selected' : '' }}>{{ $vendor_type->vendor_type_description }}</option>
+                                        <option value="{{ $vendor_type->id }}" {{ $vendor_type->id == $item->gacha_vendor_types_id ? 'selected' : '' }}>{{ $vendor_type->vendor_type_code }}</option>
                                         @endforeach
                                         @endif
                                     </select>
