@@ -9,9 +9,14 @@
 
 	class AdminGachaItemMastersController extends \crocodicstudio\crudbooster\controllers\CBController {
 
+		private $editor_details;
+		private $editor_accounting;
+
         public function __construct()
         {
             DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
+			$this->editor_details = [];
+			$this->editor_accounting = [];
         }
 
 	    public function cbInit() {
@@ -25,7 +30,7 @@
 			$this->button_bulk_action = true;
 			$this->button_action_style = "button_icon";
 			$this->button_add = true;
-			$this->button_edit = true;
+			$this->button_edit = false;
 			$this->button_delete = false;
 			$this->button_detail = true;
 			$this->button_show = true;
@@ -155,6 +160,27 @@
 	        | 
 	        */
 	        $this->addaction = array();
+			if (CRUDBooster::isUpdate()) {
+				if (in_array(CRUDBooster::myPrivilegeName(), $this->editor_details) || CRUDBooster::isSuperAdmin()) {
+					$this->addaction[] = [
+						'title'=>'Edit',
+						'url'=>CRUDBooster::mainpath('edit/[id]'),
+						'icon'=>'fa fa-pencil',
+						'color' => ' ',
+					];
+				}
+
+				if (in_array(CRUDBooster::myPrivilegeName(), $this->editor_details) || CRUDBooster::isSuperAdmin()) {
+					$this->addaction[] = [
+						'title'=>'Edit Accounting Details',
+						'url'=>CRUDBooster::mainpath('edit-item-accounting-detail/[id]'),
+						'icon'=>'fa fa-pencil',
+						'color' => ' ',
+					];
+				}
+
+
+			}
 
 
 	        /* 

@@ -693,4 +693,54 @@
 			DB::table('gacha_item_histories')->insert($data);
 		}
 
+		public function getEditAccounting($id) {
+			if (!CRUDBooster::isUpdate()) CRUDBooster::redirect(
+				CRUDBooster::adminPath(),
+				trans('crudbooster.denied_access')
+			);
+
+			$digits_code = DB::table('gacha_item_masters')->where('id', $id)->pluck('digits_code')->first();
+
+			$data = [];
+			$data['item'] = (object) GachaItemApproval::where('digits_code', $digits_code)->first()->toArray();
+			$data['gacha_item_master_approvals_id'] = $data['item']->id;
+			$data['page_title'] = 'Edit Item';
+			$data['action'] = 'edit';
+			$data['path'] = 'gasha_item_masters';
+			$data = array_merge($data, $this->main_controller->getSubmaster());
+
+			return view('gacha/item-masters/edit-item-accounting',$data);
+		}
+
+		public function submitEditAccounting(Request $request) {
+			$request = $request->all();
+			$digits_code = $request['digits_code'];
+			$data = [
+				'msrp' => $request['msrp'],
+				'current_srp' => $request['current_srp'],
+				'lc_per_carton' => $request['lc_per_carton'],
+				'lc_margin_per_carton' => $request['lc_margin_per_carton'],
+				'lc_margin_per_carton' => $request['lc_margin_per_carton'],
+				'lc_per_pc' => $request['lc_per_pc'],
+				'lc_margin_per_pc' => $request['lc_margin_per_pc'],
+				'store_cost' => $request['store_cost'],
+				'sc_margin' => $request['sc_margin'],
+				'supplier_cost' => $request['supplier_cost'],
+				'updated_by' => CRUDBooster::myId(),
+				'updated_at' => date('Y-m-d H:i:s'),
+			];
+
+			$approval_item = GachaItemApproval::where('digits_code', $digits_code);
+			$approval_item->update($data);
+			$differences = self::getDifferences($approval_item->first()->id);
+			if ($differences) self::createHistory($differences, $digits_code);
+			GachaItemMaster::where('digits_code', $digits_code)->update($data);
+
+			return redirect(CRUDBooster::adminPath('gasha_item_masters'))->with([
+				'message_type' => 'success',
+				'message' => '✔️ Item details updated successfully.',
+			]);
+			
+		}
+
 	}
