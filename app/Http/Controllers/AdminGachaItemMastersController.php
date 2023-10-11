@@ -37,18 +37,18 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"JAN Number","name"=>"jan_no"];
 			$this->col[] = ["label"=>"Digits Code","name"=>"digits_code"];
+			$this->col[] = ["label"=>"JAN Number","name"=>"jan_no"];
 			$this->col[] = ["label"=>"Item Number","name"=>"item_no"];
 			$this->col[] = ["label"=>"SAP Number","name"=>"sap_no"];
-			$this->col[] = ["label"=>"Initial WRR Date","name"=>"initial_wrr_date"];
-			$this->col[] = ["label"=>"Latest WRR Date","name"=>"latest_wrr_date"];
-			$this->col[] = ["label"=>"Brand","name"=>"gacha_brands_id","join"=>"gacha_brands,brand_description"];
+			$this->col[] = ["label"=>"Initial WRR Date (YYYY-MM-DD)","name"=>"initial_wrr_date"];
+			$this->col[] = ["label"=>"Latest WRR Date (YYYY-MM-DD)","name"=>"latest_wrr_date"];
+			$this->col[] = ["label"=>"Brand Description","name"=>"gacha_brands_id","join"=>"gacha_brands,brand_description"];
 			$this->col[] = ["label"=>"Brand Status","name"=>"gacha_brands_id","join"=>"gacha_brand_statuses,status_description","join_id"=>"id"];
 			$this->col[] = ["label"=>"SKU Status","name"=>"gacha_sku_statuses_id","join"=>"gacha_sku_statuses,status_description"];
 			$this->col[] = ["label"=>"Item Description","name"=>"item_description"];
 			$this->col[] = ['label'=>'Model','name'=>'gacha_models'];
-			$this->col[] = ['label'=>'WH Category','name'=>'gacha_wh_categories_id','join'=>'gacha_wh_categories,category_description'];
+			$this->col[] = ['label'=>'WH Category Description','name'=>'gacha_wh_categories_id','join'=>'gacha_wh_categories,category_description'];
 			$this->col[] = ['label'=>'MSRP JPY','name'=>'msrp'];
 			$this->col[] = ['label'=>'Current SRP','name'=>'current_srp'];
 			$this->col[] = ['label'=>'Number of Tokens','name'=>'no_of_tokens'];
@@ -68,21 +68,25 @@
 			$this->col[] = ['label'=>'Incoterms','name'=>'gacha_incoterms_id','join'=>'gacha_incoterms,incoterm_description'];
 			$this->col[] = ['label'=>'Currency','name'=>'currencies_id','join'=>'currencies,currency_code'];
 			$this->col[] = ['label'=>'Supplier Cost','name'=>'supplier_cost'];
-			$this->col[] = ['label'=>'UOM','name'=>'gacha_uoms_id','join'=>'gacha_uoms,uom_code'];
+			$this->col[] = ['label'=>'UOM Code','name'=>'gacha_uoms_id','join'=>'gacha_uoms,uom_code'];
 			$this->col[] = ['label'=>'Inventory Type','name'=>'gacha_inventory_types_id','join'=>'gacha_inventory_types,inventory_type_description'];
 			$this->col[] = ['label'=>'Vendor Type','name'=>'gacha_vendor_types_id','join'=>'gacha_vendor_types,vendor_type_description'];
-			$this->col[] = ["label"=>"Vendor Group","name"=>"gacha_vendor_groups_id","join"=>"gacha_vendor_groups,vendor_group_description"];
+			$this->col[] = ["label"=>"Vendor Group Name","name"=>"gacha_vendor_groups_id","join"=>"gacha_vendor_groups,vendor_group_description"];
 			$this->col[] = ["label"=>"Vendor Group Status","name"=>"gacha_vendor_groups_id","join"=>"gacha_vendor_group_statuses,status_description","join_id"=>"id"];
 			$this->col[] = ['label'=>'Age Grade','name'=>'age_grade'];
 			$this->col[] = ['label'=>'Battery','name'=>'battery'];
-			$this->col[] = ['label'=>'Created Date','name'=>'created_at'];
-			$this->col[] = ['label'=>'Updated Date','name'=>'updated_at'];
+			$this->col[] = ["label"=>"Created By","name"=>"created_by","join"=>"cms_users,name"];
+			$this->col[] = ["label"=>"Created Date","name"=>"created_at"];
+			$this->col[] = ["label"=>"Approved By","name"=>"created_by","join"=>"cms_users,name"];
+			$this->col[] = ["label"=>"Approved Date","name"=>"created_at"];
+			$this->col[] = ["label"=>"Updated By","name"=>"updated_by","join"=>"cms_users,name"];
+			$this->col[] = ["label"=>"Updated Date","name"=>"updated_at"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'JAN Number','name'=>'jan_no','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Digits Code','name'=>'digits_code','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'JAN Number','name'=>'jan_no','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Item Number','name'=>'item_no','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'SAP Number','name'=>'sap_no','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Initial WRR Date','name'=>'initial_wrr_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
