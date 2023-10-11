@@ -617,7 +617,7 @@
 				->max('digits_code');
 
 			if (!$current_max_digits_code) {
-				return 600000000;
+				return 60000000;
 			}
 			
 			return $current_max_digits_code + 1;
