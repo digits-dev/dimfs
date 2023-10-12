@@ -15,8 +15,8 @@
         public function __construct()
         {
             DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
-			$this->editor_details = [];
-			$this->editor_accounting = [];
+			$this->editor_details = ['MCB TM'];
+			$this->editor_accounting = ['COST ACCTG', 'ACCTG HEAD'];
         }
 
 	    public function cbInit() {
@@ -42,50 +42,50 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Digits Code","name"=>"digits_code"];
-			$this->col[] = ["label"=>"JAN Number","name"=>"jan_no"];
-			$this->col[] = ["label"=>"Item Number","name"=>"item_no"];
-			$this->col[] = ["label"=>"SAP Number","name"=>"sap_no"];
-			$this->col[] = ["label"=>"Initial WRR Date (YYYY-MM-DD)","name"=>"initial_wrr_date"];
-			$this->col[] = ["label"=>"Latest WRR Date (YYYY-MM-DD)","name"=>"latest_wrr_date"];
-			$this->col[] = ["label"=>"Brand Description","name"=>"gacha_brands_id","join"=>"gacha_brands,brand_description"];
-			$this->col[] = ["label"=>"Brand Status","name"=>"gacha_brands_id","join"=>"gacha_brand_statuses,status_description","join_id"=>"id"];
-			$this->col[] = ["label"=>"SKU Status","name"=>"gacha_sku_statuses_id","join"=>"gacha_sku_statuses,status_description"];
-			$this->col[] = ["label"=>"Item Description","name"=>"item_description"];
-			$this->col[] = ['label'=>'Model','name'=>'gacha_models'];
-			$this->col[] = ['label'=>'WH Category Description','name'=>'gacha_wh_categories_id','join'=>'gacha_wh_categories,category_description'];
+			$this->col[] = ["label"=>"DIGITS CODE","name"=>"digits_code"];
+			$this->col[] = ["label"=>"JAN NUMBER","name"=>"jan_no"];
+			$this->col[] = ["label"=>"ITEM NUMBER","name"=>"item_no"];
+			$this->col[] = ["label"=>"SAP NUMBER","name"=>"sap_no"];
+			$this->col[] = ["label"=>"INITIAL WRR DATE (YYYY-MM-DD)","name"=>"initial_wrr_date"];
+			$this->col[] = ["label"=>"LATEST WRR DATE (YYYY-MM-DD)","name"=>"latest_wrr_date"];
+			$this->col[] = ["label"=>"BRAND DESCRIPTION","name"=>"gacha_brands_id","join"=>"gacha_brands,brand_description"];
+			$this->col[] = ["label"=>"BRAND STATUS","name"=>"gacha_brands_id","join"=>"gacha_brand_statuses,status_description","join_id"=>"id"];
+			$this->col[] = ["label"=>"SKU STATUS","name"=>"gacha_sku_statuses_id","join"=>"gacha_sku_statuses,status_description"];
+			$this->col[] = ["label"=>"ITEM DESCRIPTION","name"=>"item_description"];
+			$this->col[] = ['label'=>'MODEL','name'=>'gacha_models'];
+			$this->col[] = ['label'=>'WH CATEGORY DESCRIPTION','name'=>'gacha_wh_categories_id','join'=>'gacha_wh_categories,category_description'];
 			$this->col[] = ['label'=>'MSRP JPY','name'=>'msrp'];
-			$this->col[] = ['label'=>'Current SRP','name'=>'current_srp'];
-			$this->col[] = ['label'=>'Number of Tokens','name'=>'no_of_tokens'];
-			$this->col[] = ['label'=>'LC Per Carton','name'=>'lc_per_carton'];
-			$this->col[] = ['label'=>'LC Margin Per Carton (%)','name'=>'lc_margin_per_carton'];
-			$this->col[] = ['label'=>'LC Per PC','name'=>'lc_per_pc'];
-			$this->col[] = ['label'=>'LC Margin Per PC (%)','name'=>'lc_margin_per_pc'];
-			$this->col[] = ['label'=>'SC Per PC','name'=>'store_cost'];
-			$this->col[] = ['label'=>'SC Margin Per PC (%)','name'=>'sc_margin'];
-			$this->col[] = ['label'=>'PCS Per CTN','name'=>'pcs_ctn'];
-			$this->col[] = ['label'=>'DP Per CTN','name'=>'dp_ctn'];
-			$this->col[] = ['label'=>'PCS Per DP','name'=>'pcs_dp'];
+			$this->col[] = ['label'=>'CURRENT SRP','name'=>'current_srp'];
+			$this->col[] = ['label'=>'NUMBER OF TOKENS','name'=>'no_of_tokens'];
+			$this->col[] = ['label'=>'LC PER CARTON','name'=>'lc_per_carton'];
+			$this->col[] = ['label'=>'LC MARGIN PER CARTON (%)','name'=>'lc_margin_per_carton'];
+			$this->col[] = ['label'=>'LC PER PC','name'=>'lc_per_pc'];
+			$this->col[] = ['label'=>'LC MARGIN PER PC (%)','name'=>'lc_margin_per_pc'];
+			$this->col[] = ['label'=>'SC PER PC','name'=>'store_cost'];
+			$this->col[] = ['label'=>'SC MARGIN PER PC (%)','name'=>'sc_margin'];
+			$this->col[] = ['label'=>'PCS PER CTN','name'=>'pcs_ctn'];
+			$this->col[] = ['label'=>'DP PER CTN','name'=>'dp_ctn'];
+			$this->col[] = ['label'=>'PCS PER DP','name'=>'pcs_dp'];
 			$this->col[] = ['label'=>'MOQ','name'=>'moq'];
-			$this->col[] = ['label'=>'Order CTN','name'=>'no_of_ctn'];
-			$this->col[] = ['label'=>'Number of Assort','name'=>'no_of_assort'];
-			$this->col[] = ['label'=>'Country of Origin','name'=>'gacha_countries_id','join'=>'gacha_countries,country_code'];
-			$this->col[] = ['label'=>'Incoterms','name'=>'gacha_incoterms_id','join'=>'gacha_incoterms,incoterm_description'];
-			$this->col[] = ['label'=>'Currency','name'=>'currencies_id','join'=>'currencies,currency_code'];
-			$this->col[] = ['label'=>'Supplier Cost','name'=>'supplier_cost'];
-			$this->col[] = ['label'=>'UOM Code','name'=>'gacha_uoms_id','join'=>'gacha_uoms,uom_code'];
-			$this->col[] = ['label'=>'Inventory Type','name'=>'gacha_inventory_types_id','join'=>'gacha_inventory_types,inventory_type_description'];
-			$this->col[] = ['label'=>'Vendor Type','name'=>'gacha_vendor_types_id','join'=>'gacha_vendor_types,vendor_type_description'];
-			$this->col[] = ["label"=>"Vendor Group Name","name"=>"gacha_vendor_groups_id","join"=>"gacha_vendor_groups,vendor_group_description"];
-			$this->col[] = ["label"=>"Vendor Group Status","name"=>"gacha_vendor_groups_id","join"=>"gacha_vendor_group_statuses,status_description","join_id"=>"id"];
-			$this->col[] = ['label'=>'Age Grade','name'=>'age_grade'];
-			$this->col[] = ['label'=>'Battery','name'=>'battery'];
-			$this->col[] = ["label"=>"Created By","name"=>"created_by","join"=>"cms_users,name"];
-			$this->col[] = ["label"=>"Created Date","name"=>"created_at"];
-			$this->col[] = ["label"=>"Approved By","name"=>"created_by","join"=>"cms_users,name"];
-			$this->col[] = ["label"=>"Approved Date","name"=>"created_at"];
-			$this->col[] = ["label"=>"Updated By","name"=>"updated_by","join"=>"cms_users,name"];
-			$this->col[] = ["label"=>"Updated Date","name"=>"updated_at"];
+			$this->col[] = ['label'=>'ORDER CTN','name'=>'no_of_ctn'];
+			$this->col[] = ['label'=>'NUMBER OF ASSORT','name'=>'no_of_assort'];
+			$this->col[] = ['label'=>'COUNTRY OF ORIGIN','name'=>'gacha_countries_id','join'=>'gacha_countries,country_code'];
+			$this->col[] = ['label'=>'INCOTERMS','name'=>'gacha_incoterms_id','join'=>'gacha_incoterms,incoterm_description'];
+			$this->col[] = ['label'=>'CURRENCY','name'=>'currencies_id','join'=>'currencies,currency_code'];
+			$this->col[] = ['label'=>'SUPPLIER COST','name'=>'supplier_cost'];
+			$this->col[] = ['label'=>'UOM CODE','name'=>'gacha_uoms_id','join'=>'gacha_uoms,uom_code'];
+			$this->col[] = ['label'=>'INVENTORY TYPE','name'=>'gacha_inventory_types_id','join'=>'gacha_inventory_types,inventory_type_description'];
+			$this->col[] = ['label'=>'VENDOR TYPE','name'=>'gacha_vendor_types_id','join'=>'gacha_vendor_types,vendor_type_description'];
+			$this->col[] = ["label"=>"VENDOR GROUP NAME","name"=>"gacha_vendor_groups_id","join"=>"gacha_vendor_groups,vendor_group_description"];
+			$this->col[] = ["label"=>"VENDOR GROUP STATUS","name"=>"gacha_vendor_groups_id","join"=>"gacha_vendor_group_statuses,status_description","join_id"=>"id"];
+			$this->col[] = ['label'=>'AGE GRADE','name'=>'age_grade'];
+			$this->col[] = ['label'=>'BATTERY','name'=>'battery'];
+			$this->col[] = ["label"=>"CREATED BY","name"=>"created_by","join"=>"cms_users,name"];
+			$this->col[] = ["label"=>"CREATED DATE","name"=>"created_at"];
+			$this->col[] = ["label"=>"APPROVED BY","name"=>"created_by","join"=>"cms_users,name"];
+			$this->col[] = ["label"=>"APPROVED DATE","name"=>"created_at"];
+			$this->col[] = ["label"=>"UPDATED BY","name"=>"updated_by","join"=>"cms_users,name"];
+			$this->col[] = ["label"=>"UPDATED DATE","name"=>"updated_at"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -170,7 +170,7 @@
 					];
 				}
 
-				if (in_array(CRUDBooster::myPrivilegeName(), $this->editor_details) || CRUDBooster::isSuperAdmin()) {
+				if (in_array(CRUDBooster::myPrivilegeName(), $this->editor_accounting) || CRUDBooster::isSuperAdmin()) {
 					$this->addaction[] = [
 						'title'=>'Edit Accounting Details',
 						'url'=>CRUDBooster::mainpath('edit-item-accounting-detail/[id]'),
