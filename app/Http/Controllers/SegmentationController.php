@@ -3,83 +3,118 @@
 namespace App\Http\Controllers;
 
 use App\Segmentation;
+use App\ItemMaster;
+use App\SkuLegend;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Excel;
 
 class SegmentationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function importTemplate(){
+		$segmentations = Segmentation::where('status','ACTIVE')->orderBy('segmentation_description','ASC')->get();
+		Excel::create('skulegend-segmentation-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) use ($segmentations) {
+			$excel->sheet('skulegend', function ($sheet) use ($segmentations) {
+			    $headers = array('DIGITS CODE', 'SKU LEGEND');
+			    $lines = array('80000001', 'CORE');
+			    foreach($segmentations as $segmentation){
+			        array_push($headers, $segmentation->segmentation_description);
+			        array_push($lines, 'CORE');
+			    }
+				$sheet->row(1, $headers);
+				$sheet->row(2, $lines);
+			});
+		})->download('csv');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function importSKULegendSegmentation(Request $request)
+	{
+	    ini_set('memory_limit', '-1');
+		$errors = array();
+		$cnt_success = 0;
+		$cnt_fail = 0;
+		$file = $request->file('import_file');
+		$segmentations = Segmentation::where('status','ACTIVE')->orderBy('segmentation_description','ASC')->get();
+		$skulegends = SkuLegend::where('status','ACTIVE')->orderBy('sku_legend_description','ASC')->get();
+			
+		$validator = \Validator::make(
+			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
+			['file' => 'required', 'extension' => 'required|in:csv',]
+		);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+		if ($validator->fails()) {
+			return back()->with('error_import', 'Failed ! Please check required file extension.');
+		}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Segmentation  $segmentation
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Segmentation $segmentation)
-    {
-        //
-    }
+		if (Input::hasFile('import_file')) {
+			$path = Input::file('import_file')->getRealPath();
+			
+			$csv = array_map('str_getcsv', file($path));
+			$dataExcel = Excel::load($path, function($reader) {})->get();
+			
+			$unMatch = [];
+			$header = array('DIGITS CODE', 'SKU LEGEND');
+            foreach($segmentations as $segmentation){
+		        array_push($header, $segmentation->segmentation_description);
+		    }
+			for ($i=0; $i < sizeof($csv[0]); $i++) {
+				if (! in_array($csv[0][$i], $header)) {
+					$unMatch[] = $csv[0][$i];
+				}
+			}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Segmentation  $segmentation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Segmentation $segmentation)
-    {
-        //
-    }
+			if(!empty($unMatch)) {
+				return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
+			}
+			
+			if(!empty($dataExcel) && $dataExcel->count()) {
+				
+				foreach ($dataExcel as $key => $value) {
+					$data = array();
+					$line_item = 0;	
+					$line_item = $key+1;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Segmentation  $segmentation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Segmentation $segmentation)
-    {
-        //
-    }
+					$skulegend = $skulegends->where('sku_legend_description',$value->sku_legend)->first();
+					
+					foreach($segmentations as $segmentation){
+        		        $segment = strtolower(str_replace(" ","_",$segmentation->segmentation_description));
+        		        $sku_segment = $skulegends->where('sku_legend_description', $value->$segment)->first();
+        		        
+        		        if(empty($sku_segment)){
+                            $segmentColumn = $segmentation->segmentation_description;
+                            $segmentValue = $value->$segment;
+    						array_push($errors, "Line $line_item : with segmentation $segmentValue at column $segmentColumn not found in submaster.");
+    					}
+    					else{
+							$data[$segmentation->segmentation_column] = $value->$segment;
+						}
+    				    
+        		    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Segmentation  $segmentation
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Segmentation $segmentation)
-    {
-        //
-    }
+					if(empty($skulegend)){
+                        $skuLegendValue = $value->sku_legend;
+						array_push($errors, "Line $line_item : with sku legend $skuLegendValue not found in submaster.");
+					}
+					else{
+						$data['sku_legends_id'] = $skulegend->id;
+					}
+					try {
+                        $cnt_success++;
+                        ItemMaster::where('digits_code', intval($value->digits_code))->update($data);
+					} catch (\Exception $e) {
+						$cnt_fail++;
+						array_push($errors, "Line $line_item : with error ".json_encode($e));
+					}
+				}
+			}
+		}
+
+		if(empty($errors)){
+			return back()->with('success_import', "Success ! $cnt_success item(s) were updated successfully.");
+		}
+		else{
+			return back()->with('error_import', "$cnt_success item(s) were updated successfully but with errors at : <br>". implode("<br>", $errors));
+		}
+		
+	}
 }

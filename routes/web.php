@@ -48,12 +48,12 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
     
     Route::get('/item_masters/import-wrr-template', 'AdminItemMastersController@importWRRTemplate')->name('upload.wrr-template');
     Route::get('/item_masters/import-item-template', 'McbUploadController@importItemTemplate')->name('upload.item-template');
-    Route::get('/item_masters/import-skulegend-template', 'AdminItemMastersController@importSKULegendTemplate')->name('upload.skulegend-template');
+    Route::get('/item_masters/import-skulegend-template', 'SegmentationController@importTemplate')->name('upload.skulegend-template');
     Route::get('/item_masters/import-ecom-template', 'AdminItemMastersController@importECOMTemplate')->name('upload.ecom-template');
     
     Route::post('/item_masters/import-wrr', 'AdminItemMastersController@importWRR')->name('upload.wrr');
     Route::post('/item_masters/import-item', 'McbUploadController@importItem')->name('upload.item');
-    Route::post('/item_masters/import-skulegend', 'AdminItemMastersController@importSKULegend')->name('upload.skulegend');
+    Route::post('/item_masters/import-skulegend', 'SegmentationController@importSKULegendSegmentation')->name('upload.skulegend');
     Route::post('/item_masters/import-ecom', 'AdminItemMastersController@importECOM')->name('upload.ecom');
     
     //imports - ecom price change
