@@ -45,6 +45,7 @@
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
 			$this->col[] = ["label"=>"APPROVAL STATUS","name"=>"approval_status","join"=>"gacha_approval_statuses,status_description","join_id"=>"approval_status_id"];
+			$this->col[] = ["label"=>"APPROVAL STATUS ACCT","name"=>"approval_status_acct","join"=>"gacha_approval_statuses,status_description","join_id"=>"approval_status_id"];
 			$this->col[] = ["label"=>"DIGITS CODE","name"=>"digits_code"];
 			$this->col[] = ["label"=>"JAN NUMBER","name"=>"jan_no"];
 			$this->col[] = ["label"=>"ITEM NUMBER","name"=>"item_no"];
@@ -354,6 +355,9 @@
 			];
 
 	    	if ($column_index == 2) {
+				$column_value = $approval_status_badges[$column_value];
+			}
+	    	if ($column_index == 3) {
 				$column_value = $approval_status_badges[$column_value];
 			}
 	    }
