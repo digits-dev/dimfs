@@ -11,12 +11,14 @@
 	class AdminGachaItemMasterApprovalsController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 		private $approver;
+		private $approver_accounting;
 		private $main_controller;
 
         public function __construct()
         {
             DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 			$this->approver = ['MCB TL'];
+			$this->approver_accounting = [];
 			$this->main_controller = new AdminGachaItemMastersController;
 
         }
@@ -45,7 +47,7 @@
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
 			$this->col[] = ["label"=>"APPROVAL STATUS","name"=>"approval_status","join"=>"gacha_approval_statuses,status_description","join_id"=>"approval_status_id"];
-			$this->col[] = ["label"=>"APPROVAL STATUS ACCT","name"=>"approval_status_acct","join"=>"gacha_approval_statuses,status_description","join_id"=>"approval_status_id"];
+			$this->col[] = ["label"=>"APPROVAL STATUS ACCTNG","name"=>"approval_status_acct","join"=>"gacha_approval_statuses,status_description","join_id"=>"approval_status_id"];
 			$this->col[] = ["label"=>"DIGITS CODE","name"=>"digits_code"];
 			$this->col[] = ["label"=>"JAN NUMBER","name"=>"jan_no"];
 			$this->col[] = ["label"=>"ITEM NUMBER","name"=>"item_no"];
@@ -193,6 +195,11 @@
 	        	$this->button_selected[] = ['label'=>'APPROVE','icon'=>'fa fa-check','name'=>'approve'];
 				$this->button_selected[] = ['label'=>'REJECT','icon'=>'fa fa-times','name'=>'reject'];
 			}
+
+			if (in_array(CRUDBooster::myPrivilegeName(), $this->approver_accounting) || CRUDBooster::isSuperadmin()) {
+	        	$this->button_selected[] = ['label'=>'APPROVE ACCTNG','icon'=>'fa fa-check','name'=>'approve_accounting'];
+				$this->button_selected[] = ['label'=>'REJECT ACCTNG','icon'=>'fa fa-times','name'=>'reject_accounting'];
+			}
 	                
 	        /* 
 	        | ---------------------------------------------------------------------- 
@@ -323,7 +330,11 @@
 	    |
 	    */
 	    public function actionButtonSelected($id_selected,$button_name) {
-	        return self::approveOrReject($id_selected, $button_name);     
+			if (in_array($button_name, ['approve', 'reject'])) {
+				return self::approveOrReject($id_selected, $button_name);     
+			} else if (in_array($button_name, ['approve_accounting', 'reject_accounting'])) {
+				return self::approveOrRejectAcct($id_selected, $button_name);
+			}
 	    }
 
 
@@ -335,10 +346,12 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	        //Your code here
-	        if(!CRUDBooster::isSuperAdmin()){
-				$query->where('approval_status','!=',200);
-			}    
+	        if (in_array(CRUDBooster::myPrivilegeName(), $this->approver)){
+				$query->where('approval_status', '!=', 200);
+			}
+			if (in_array(CRUDBooster::myPrivilegeName(), $this->approver_accounting)) {
+				$query->where('approval_status_acct', '!=', 200);
+			} 
 	    }
 
 	    /*
@@ -622,6 +635,52 @@
 			]);
 		}
 
+		public function approveOrRejectAcct($ids, $action) {
+			if (!is_array($ids)) $ids = [$ids];
+
+			foreach($ids as $id) {
+				$item = DB::table('gacha_item_master_approvals')
+					->where('id', $id)
+					->first();
+
+				if ($item->approval_status_acct == 200) return;
+
+				if ($action == 'approve_accounting') {
+					$digits_code = $item->digits_code;
+					if (!$digits_code) {
+						$digits_code = self::createDigitsCode();
+					}
+					$differences = self::getDifferences($id);
+					if ($differences) self::createHistory($differences, $digits_code);
+					$item = DB::table('gacha_item_master_approvals')
+						->where('id', $id);
+					$update = $item->update([
+						'approval_status_acct' => 200,
+						'approved_at_acct' => date('Y-m-d H:i:s'),
+						'approved_by_acct' => CRUDBooster::myId(),
+					]);
+					$item = $item->first();
+					unset($item->id);
+
+					DB::table('gacha_item_masters')->updateOrInsert(['digits_code' => $digits_code], (array) $item);
+					$message = "✔️ Successfully approved Item: $digits_code";
+					$message_type = "success";
+					
+				} else if ($action == 'reject_accounting') {
+					DB::table('gacha_item_master_approvals')
+						->where('id', $id)
+						->update(['approval_status_acct' => 400]);
+
+					$message = "👎🏽 Successfully rejected Item.";
+					$message_type = "info";
+				}
+			}
+			return redirect(CRUDBooster::mainPath())->with([
+				'message_type' => $message_type,
+				'message' => $message,
+			]);
+		}
+
 		public function createDigitsCode() {
 			$current_max_digits_code = DB::table('gacha_item_masters')
 				->max('digits_code');
@@ -720,6 +779,7 @@
 			$request = $request->all();
 			$digits_code = $request['digits_code'];
 			$data = [
+				'approval_status_acct' => 202,
 				'msrp' => $request['msrp'],
 				'current_srp' => $request['current_srp'],
 				'lc_per_carton' => $request['lc_per_carton'],
@@ -736,13 +796,10 @@
 
 			$approval_item = GachaItemApproval::where('digits_code', $digits_code);
 			$approval_item->update($data);
-			$differences = self::getDifferences($approval_item->first()->id);
-			if ($differences) self::createHistory($differences, $digits_code);
-			GachaItemMaster::where('digits_code', $digits_code)->update($data);
 
 			return redirect(CRUDBooster::adminPath('gasha_item_masters'))->with([
 				'message_type' => 'success',
-				'message' => '✔️ Item details updated successfully.',
+				'message' => "✔️ Item with Digits Code: $digits_code added to pending items for accounting approval.",
 			]);
 			
 		}
