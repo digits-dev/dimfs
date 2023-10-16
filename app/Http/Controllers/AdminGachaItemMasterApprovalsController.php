@@ -598,7 +598,7 @@
 					->where('id', $id)
 					->first();
 				
-				if ($item->approval_status == 200) return;
+				if ($item->approval_status == 200) continue;
 
 				if ($action == 'approve') {
 					$digits_code = $item->digits_code;
@@ -645,7 +645,7 @@
 					->where('id', $id)
 					->first();
 
-				if ($item->approval_status_acct == 200) return;
+				if ($item->approval_status_acct == 200) continue;
 
 				if ($action == 'approve_accounting') {
 					$digits_code = $item->digits_code;
