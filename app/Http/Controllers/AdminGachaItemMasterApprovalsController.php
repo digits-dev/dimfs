@@ -88,8 +88,10 @@
 			$this->col[] = ['label'=>'BATTERY','name'=>'battery'];
 			$this->col[] = ["label"=>"CREATED BY","name"=>"created_by","join"=>"cms_users,name"];
 			$this->col[] = ["label"=>"CREATED DATE","name"=>"created_at"];
-			$this->col[] = ["label"=>"APPROVED BY","name"=>"created_by","join"=>"cms_users,name"];
-			$this->col[] = ["label"=>"APPROVED DATE","name"=>"created_at"];
+			$this->col[] = ["label"=>"APPROVED BY","name"=>"approved_by","join"=>"cms_users,name"];
+			$this->col[] = ["label"=>"APPROVED DATE","name"=>"approved_at"];
+			$this->col[] = ["label"=>"APPROVED BY ACCTNG","name"=>"approved_by_acct","join"=>"cms_users,name"];
+			$this->col[] = ["label"=>"APPROVED DATE ACCTNG","name"=>"approved_at_acct"];
 			$this->col[] = ["label"=>"UPDATED BY","name"=>"updated_by","join"=>"cms_users,name"];
 			$this->col[] = ["label"=>"UPDATED DATE","name"=>"updated_at"];
 			
