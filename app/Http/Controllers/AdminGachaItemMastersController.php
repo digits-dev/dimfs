@@ -15,7 +15,7 @@
         public function __construct()
         {
             DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
-			$this->editor_details = ['MCB TM'];
+			$this->editor_details = ['MCB TM','MCB TL'];
 			$this->editor_accounting = ['COST ACCTG', 'ACCTG HEAD'];
         }
 
