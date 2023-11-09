@@ -269,6 +269,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
                     $skulegend_franchise = SkuLegend::where('sku_legend_description', $value->franchise)->first();
                     $skulegend_newstore = SkuLegend::where('sku_legend_description', $value->new_store)->first();
                     $skulegend_mi = SkuLegend::where('sku_legend_description', $value->mi)->first();
+                    $skulegend_opensource = SkuLegend::where('sku_legend_description', $value->opensource)->first();
 					//---------------------------
 					if(!empty($existingUPC)){
 						array_push($errors, 'Line '.$line_item.': existing upc code "'.$value->upc_code.'" has been detected.');
@@ -384,6 +385,9 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					if(empty($skulegend_mi)){
 						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->mi.'" at column MI not found in submaster.');
 					}
+					if(empty($skulegend_opensource)){
+						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->opensource.'" at column OPENSOURCE not found in submaster.');
+					}
 
 					$data = [
 						'upc_code' => $value->upc_code,
@@ -445,6 +449,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'dwmachine_segmentation' => $value->dw_machine,
 						'franchise_segmentation' => $value->franchise,
 						'newstore_segmentation' => $value->new_store,
+						'opensource_segmentation' => $value->opensource,
 						'mi_segmentation' => $value->mi,
 						'has_serial' => $value->serial_code,
 						'imei_code1' => '0',
