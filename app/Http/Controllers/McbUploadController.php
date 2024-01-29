@@ -409,6 +409,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'newstore_segmentation' => $value->new_store,
 						'opensource_segmentation' => $value->opensource,
 						'mi_segmentation' => $value->mi,
+						'af_segmentation' => $value->acefast,
 						'has_serial' => $value->serial_code,
 						'imei_code1' => '0',
 						'imei_code2' => '0',
@@ -459,6 +460,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 		$cnt_success = 0;
 		$cnt_fail = 0;
 		$file = $request->file('import_file');
+		$segments = Segmentation::where('status','ACTIVE')->get();
 			
 		$validator = \Validator::make(
 			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
@@ -554,20 +556,6 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 							->where('status','ACTIVE')->first();
 					}
 
-					$skulegend_btb = SkuLegend::where('sku_legend_description', $value->btb)->first();
-					// $skulegend_baseus = SkuLegend::where('sku_legend_description', $value->baseus)->first();
-					$skulegend_dw = SkuLegend::where('sku_legend_description', $value->dw)->first();
-					// $skulegend_omg = SkuLegend::where('sku_legend_description', $value->omg)->first();
-					$skulegend_online = SkuLegend::where('sku_legend_description', $value->online)->first();
-					$skulegend_guam = SkuLegend::where('sku_legend_description', $value->guam)->first();
-					$skulegend_distri_con = SkuLegend::where('sku_legend_description', $value->distri_con)->first();
-					$skulegend_distri_out = SkuLegend::where('sku_legend_description', $value->distri_out)->first();
-					$skulegend_dw_machine = SkuLegend::where('sku_legend_description', $value->dw_machine)->first();
-					$skulegend_franchise = SkuLegend::where('sku_legend_description', $value->franchise)->first();
-					$skulegend_newstore = SkuLegend::where('sku_legend_description', $value->new_store)->first();
-					$skulegend_mi = SkuLegend::where('sku_legend_description', $value->mi)->first();
-
-					//---------------------------
 					if(empty($existingDigitsCode)){
 						array_push($errors, 'Line '.$line_item.': item code "'.$value->digits_code.'" not found.');
 					}
@@ -625,42 +613,17 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					if(empty($sku_class_id) && !is_null($value->sku_class)){
 						array_push($errors, 'Line '.$line_item.': with sku class "'.$value->sku_class.'" is not found in submaster.');
 					}
-					if(empty($skulegend_btb) && !empty($value->btb)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->btb.'" at column BTB not found in submaster.');
+
+					foreach ($segments as $key_segment => $value_segment) {
+						$seg = $value_segment->import_header_name;
+						$seg_description = $value_segment->segmentation_description;
+						$seg_value = $value_segment->$seg;
+						$legendExists = SkuLegend::where('sku_legend_description', $seg_value)->first();
+						if(empty($legendExists) && !empty($seg_value)){
+							array_push($errors, "Line $line_item : with segmentation $seg_value at column $seg_description not found in submaster.");
+						}
 					}
-					// if(empty($skulegend_baseus) && !empty($value->baseus)){
-					// 	array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->baseus.'" at column BASEUS not found in submaster.');
-					// }
-					if(empty($skulegend_dw) && !empty($value->dw)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->dw.'" at column DW not found in submaster.');
-					}
-					// if(empty($skulegend_omg) && !empty($value->omg)){
-					// 	array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->omg.'" at column OMG not found in submaster.');
-					// }
-					if(empty($skulegend_online) && !empty($value->online)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->online.'" at column ONLINE not found in submaster.');
-					}
-					if(empty($skulegend_guam) && !empty($value->guam)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->guam.'" at column GUAM not found in submaster.');
-					}
-					if(empty($skulegend_distri_con) && !empty($value->distri_con)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->distri_con.'" at column DISTRI CON not found in submaster.');
-					}
-					if(empty($skulegend_distri_out) && !empty($value->distri_out)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->distri_out.'" at column DISTRI OUT not found in submaster.');
-					}
-					if(empty($skulegend_dw_machine) && !empty($value->dw_machine)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->dw_machine.'" at column DW MACHINE not found in submaster.');
-					}
-					if(empty($skulegend_franchise) && !empty($value->franchise)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->franchise.'" at column FRANCHISE not found in submaster.');
-					}
-					if(empty($skulegend_newstore) && !empty($value->new_store)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->new_store.'" at column NEW STORE not found in submaster.');
-					}
-					if(empty($skulegend_mi) && !empty($value->mi)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->mi.'" at column MI not found in submaster.');
-					}
+					
 
 					$data = [
 						'upc_code' => $value->upc_code_1,
@@ -714,6 +677,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'franchise_segmentation' => $value->franchise,
 						'newstore_segmentation' => $value->new_store,
 						'mi_segmentation' => $value->mi,
+						'af_segmentation' => $value->acefast,
 						'has_serial' => $value->serial_code,
 						'updated_by' => CRUDBooster::myId(),
 						'updated_at' => date('Y-m-d H:i:s')

@@ -43,6 +43,7 @@ return [
         'NEW STORE',
         'ONLINE',
         'OPENSOURCE',
+        'ACEFAST',
         'ORIGINAL SRP',
         'CURRENT SRP',
         'DG SRP',
@@ -120,6 +121,7 @@ return [
         'NEW STORE',
         'ONLINE',
         'OPENSOURCE',
+        'ACEFAST',
         'SERIAL CODE'
     ],
     'gashapon-item-master' => [
