@@ -75,7 +75,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <i class="fa fa-pencil"></i><strong> Add {{CRUDBooster::getCurrentModule()->name}}</strong>
+        <i class="fa fa-pencil"></i><strong> Detail {{CRUDBooster::getCurrentModule()->name}}</strong>
     </div>
     <div class="panel-body">
             <h3 class="text-center text-bold">ITEM DETAILS</h3>

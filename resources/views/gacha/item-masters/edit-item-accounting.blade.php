@@ -82,7 +82,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <i class="fa fa-pencil"></i><strong> Add {{CRUDBooster::getCurrentModule()->name}}</strong>
+        <i class="fa fa-pencil"></i><strong> Edit {{CRUDBooster::getCurrentModule()->name}}</strong>
     </div>
     <div class="panel-body">
         <form action="{{ route('submit_edit_accounting') }} " method="POST" autocomplete="off">
