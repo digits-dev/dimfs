@@ -64,9 +64,10 @@ class GachaponItemMasterImportController extends Controller
 						$nullColumns = strtoupper(str_replace('_',' ',array_keys($nullItems)[0]));
 						array_push($this->errors, "Line $line_item : $nullColumns is blank!");
 					}
-					
+					$productType = self::filterValues($submasters,'product_types',$value,'product_type','product_type_description',$line_item,'Product Type');
 					$brand = self::filterValues($submasters,'brands',$value,'brand_description','brand_description',$line_item,'Brand');
 					$skuStatus = self::filterValues($submasters,'sku_statuses',$value,'sku_status','status_description',$line_item,'SKU Status');
+					$category = self::filterValues($submasters,'categories',$value,'category','category_description',$line_item,'Category');
 					$whCategory = self::filterValues($submasters,'warehouse_categories',$value,'wh_category_description','category_description',$line_item,'WH Category');
 					$country = self::filterValues($submasters,'countries',$value,'country_of_origin','country_code',$line_item,'Country');
 					$incoterm = self::filterValues($submasters,'incoterms',$value,'incoterms','incoterm_description',$line_item,'Incoterm');
@@ -96,10 +97,12 @@ class GachaponItemMasterImportController extends Controller
 						'jan_no' => $jan_number,
 						'item_no' => $value['item_number'],
 						'sap_no' => $value['sap_number'],
+						'gacha_product_types_id' => $productType[array_keys($productType)[0]]->id,
 						'gacha_brands_id' => $brand[array_keys($brand)[0]]->id,
 						'gacha_sku_statuses_id' => $skuStatus[array_keys($skuStatus)[0]]->id,
 						'item_description' => $item_description,
 						'gacha_models' => trim(strtoupper($value['model'])),
+						'gacha_categories_id' => $category[array_keys($category)[0]]->id,
 						'gacha_wh_categories_id' => $whCategory[array_keys($whCategory)[0]]->id,
 						'msrp' => $value['msrp_jpy'],
 						'current_srp' => $value['current_srp'],
