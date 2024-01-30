@@ -112,6 +112,19 @@
                                 <td><input value="{{ $item->sap_no }}" type="text" name="sap_no" id="sap_no" class="form-control" readonly></td>
                             </tr>
                             <tr>
+                                <th> Product Type</th>
+                                <td>
+                                    <select disabled style="width: 100%" name="gacha_product_types_id" id="gacha_product_types_id" class="form-control" readonly>
+                                        <option value="" disabled selected>None selected...</option>
+                                        @if ($product_types)
+                                        @foreach ($product_types as $product_type)
+                                        <option value="{{ $product_type->id }}" {{ $product_type->id == $item->gacha_product_types_id ? 'selected' : '' }}>{{ $product_type->product_type_description }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th> Brand Description</th>
                                 <td>
                                     <select disabled style="width: 100%" name="gacha_brands_id" id="gacha_brands_id" class="form-control" readonly>
@@ -143,6 +156,19 @@
                             <tr>
                                 <th>Model</th>
                                 <td><input value="{{ $item->gacha_models ?: '' }}" type="text" name="gacha_models" id="item_description" class="form-control" readonly oninput="this.value = this.value.toUpperCase()"></td>
+                            </tr>
+                            <tr>
+                                <th> Category</th>
+                                <td>
+                                    <select disabled style="width: 100%" name="gacha_categories_id" id="gacha_categories_id" class="form-control" readonly>
+                                        <option value="" disabled selected>None selected...</option>
+                                        @if ($categories)
+                                        @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" {{ $category->id == $item->gacha_categories_id ? 'selected' : '' }}>{{ $category->category_description }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Warehouse Category Description</th>

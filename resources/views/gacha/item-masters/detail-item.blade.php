@@ -116,6 +116,10 @@
                                 <td>{{ $item->sap_no }}</td>
                             </tr>
                             <tr>
+                                <th>Product Type</th>
+                                <td>{{ $item->product_type_description }}</td>
+                            </tr>
+                            <tr>
                                 <th> Brand Description</th>
                                 <td>{{ $item->brand_description }}</td>
                             </tr>
@@ -138,8 +142,12 @@
                                 <td>{{ $item->gacha_models }}</td>
                             </tr>
                             <tr>
-                                <th>Warehouse Category</th>
+                                <th>Category</th>
                                 <td>{{ $item->category_description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Warehouse Category</th>
+                                <td>{{ $item->wh_category_description }}</td>
                             </tr>
                             <tr>
                                 <th>MSRP JPY</th>

@@ -11,12 +11,14 @@ select
     gacha_item_master_approvals.sap_no,
     gacha_item_master_approvals.initial_wrr_date,
     gacha_item_master_approvals.latest_wrr_date,
+    gacha_product_types.product_type_description,
     gacha_brands.brand_description,
     gacha_brand_statuses.status_description as brand_status,
     gacha_sku_statuses.status_description,
     gacha_item_master_approvals.item_description,
     gacha_item_master_approvals.gacha_models,
-    gacha_wh_categories.category_description,
+    gacha_categories.category_description,
+    gacha_wh_categories.category_description as wh_category_description,
     gacha_item_master_approvals.msrp,
     gacha_item_master_approvals.current_srp,
     gacha_item_master_approvals.no_of_tokens,
@@ -51,9 +53,11 @@ select
     updated_by.name as updated_name
 from
     gacha_item_master_approvals
+    left join gacha_product_types on gacha_product_types.id = gacha_item_master_approvals.gacha_product_types_id
     left join gacha_brands on gacha_brands.id = gacha_item_master_approvals.gacha_brands_id
     left join gacha_brand_statuses on gacha_brands.gacha_brand_statuses_id = gacha_brand_statuses.id
     left join gacha_sku_statuses on gacha_sku_statuses.id = gacha_item_master_approvals.gacha_sku_statuses_id
+    left join gacha_categories on gacha_categories.id = gacha_item_master_approvals.gacha_categories_id
     left join gacha_wh_categories on gacha_wh_categories.id = gacha_item_master_approvals.gacha_wh_categories_id
     left join gacha_countries on gacha_countries.id = gacha_item_master_approvals.gacha_countries_id
     left join gacha_incoterms on gacha_incoterms.id = gacha_item_master_approvals.gacha_incoterms_id

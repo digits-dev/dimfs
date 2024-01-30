@@ -82,7 +82,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <i class="fa fa-pencil"></i><strong> Add {{CRUDBooster::getCurrentModule()->name}}</strong>
+        <i class="fa fa-pencil"></i><strong> Add/Edit {{CRUDBooster::getCurrentModule()->name}}</strong>
     </div>
     <div class="panel-body">
         <form action="{{ $action == 'add' ? route('submit_new_gacha_item') : route('submit_edit_gacha_item') }} " method="POST" autocomplete="off">
@@ -111,6 +111,19 @@
                             <tr>
                                 <th><span class="required-star">*</span> SAP Number</th>
                                 <td><input value="{{ $item->sap_no }}" type="text" name="sap_no" id="sap_no" class="form-control" required></td>
+                            </tr>
+                            <tr>
+                                <th><span class="required-star">*</span>  Product Type</th>
+                                <td>
+                                    <select style="width: 100%" name="gacha_product_types_id" id="gacha_product_types_id" class="form-control" required>
+                                        <option value="" disabled selected>None selected...</option>
+                                        @if ($product_types)
+                                        @foreach ($product_types as $product_type)
+                                        <option value="{{ $product_type->id }}" {{ $product_type->id == $item->gacha_product_types_id ? 'selected' : '' }}>{{ $product_type->product_type_description }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span>  Brand Description</th>
@@ -144,6 +157,19 @@
                             <tr>
                                 <th><span class="required-star">*</span> Model</th>
                                 <td><input value="{{ $item->gacha_models ?: '' }}" type="text" name="gacha_models" id="item_description" class="form-control" required oninput="this.value = this.value.toUpperCase()"></td>
+                            </tr>
+                            <tr>
+                                <th><span class="required-star">*</span> Category</th>
+                                <td>
+                                    <select style="width: 100%" name="gacha_categories_id" id="gacha_categories_id" class="form-control" required>
+                                        <option value="" disabled selected>None selected...</option>
+                                        @if ($categories)
+                                        @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" {{ $category->id == $item->gacha_categories_id ? 'selected' : '' }}>{{ $category->category_description }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Warehouse Category Description</th>
