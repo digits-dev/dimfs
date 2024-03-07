@@ -4,19 +4,13 @@
 	use Request;
 	use DB;
 	use CRUDBooster;
-	use App\GachaItemApproval;
-	use App\GachaItemMaster;
+	use App\GachaItemEditHistory;
 
-	class AdminGachaItemMastersController extends \crocodicstudio\crudbooster\controllers\CBController {
-
-		private $editor_details;
-		private $editor_accounting;
+	class AdminGachaItemEditHistoriesController extends \crocodicstudio\crudbooster\controllers\CBController {
 
         public function __construct()
         {
             DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
-			$this->editor_details = ['MCB TM','MCB TL'];
-			$this->editor_accounting = ['COST ACCTG', 'ACCTG HEAD'];
         }
 
 	    public function cbInit() {
@@ -27,83 +21,76 @@
 			$this->orderby = "id,desc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
-			$this->button_bulk_action = true;
+			$this->button_bulk_action = false;
 			$this->button_action_style = "button_icon";
-			$this->button_add = true;
+			$this->button_add = false;
 			$this->button_edit = false;
 			$this->button_delete = false;
 			$this->button_detail = true;
 			$this->button_show = true;
 			$this->button_filter = true;
 			$this->button_import = false;
-			$this->button_export = true;
-			$this->table = "gacha_item_masters";
+			$this->button_export = false;
+			$this->table = "gacha_item_edit_histories";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"DIGITS CODE","name"=>"digits_code"];
-			$this->col[] = ["label"=>"JAN NUMBER","name"=>"jan_no"];
-			$this->col[] = ["label"=>"ITEM NUMBER","name"=>"item_no"];
-			$this->col[] = ["label"=>"SAP NUMBER","name"=>"sap_no"];
-			$this->col[] = ["label"=>"INITIAL WRR DATE (YYYY-MM-DD)","name"=>"initial_wrr_date"];
-			$this->col[] = ["label"=>"LATEST WRR DATE (YYYY-MM-DD)","name"=>"latest_wrr_date"];
-			$this->col[] = ["label"=>"PRODUCT TYPE","name"=>"gacha_product_types_id","join"=>"gacha_product_types,product_type_description"];
-			$this->col[] = ["label"=>"BRAND DESCRIPTION","name"=>"gacha_brands_id","join"=>"gacha_brands,brand_description"];
-			$this->col[] = ["label"=>"BRAND STATUS","name"=>"gacha_brands_id","join"=>"gacha_brand_statuses,status_description","join_id"=>"id"];
-			$this->col[] = ["label"=>"SKU STATUS","name"=>"gacha_sku_statuses_id","join"=>"gacha_sku_statuses,status_description"];
-			$this->col[] = ["label"=>"ITEM DESCRIPTION","name"=>"item_description"];
-			$this->col[] = ['label'=>'MODEL','name'=>'gacha_models'];
-			$this->col[] = ['label'=>'CATEGORY','name'=>'gacha_categories_id','join'=>'gacha_categories,category_description'];
-			$this->col[] = ['label'=>'WH CATEGORY DESCRIPTION','name'=>'gacha_wh_categories_id','join'=>'gacha_wh_categories,category_description'];
-			$this->col[] = ['label'=>'MSRP JPY','name'=>'msrp'];
-			$this->col[] = ['label'=>'CURRENT SRP','name'=>'current_srp'];
-			$this->col[] = ['label'=>'NUMBER OF TOKENS','name'=>'no_of_tokens'];
-			if(!in_array(CRUDBooster::myPrivilegeName(),['IC TM','REPORTS'])){
-			$this->col[] = ['label'=>'LC PER CARTON','name'=>'lc_per_carton'];
-			$this->col[] = ['label'=>'LC MARGIN PER CARTON (%)','name'=>'lc_margin_per_carton'];
-			$this->col[] = ['label'=>'LC PER PC','name'=>'lc_per_pc'];
-			$this->col[] = ['label'=>'LC MARGIN PER PC (%)','name'=>'lc_margin_per_pc'];
-			$this->col[] = ['label'=>'SC PER PC','name'=>'store_cost'];
-			$this->col[] = ['label'=>'SC MARGIN PER PC (%)','name'=>'sc_margin'];
-			$this->col[] = ['label'=>'PCS PER CTN','name'=>'pcs_ctn'];
-			$this->col[] = ['label'=>'DP PER CTN','name'=>'dp_ctn'];
-			$this->col[] = ['label'=>'PCS PER DP','name'=>'pcs_dp'];
-			$this->col[] = ['label'=>'MOQ','name'=>'moq'];
-			$this->col[] = ['label'=>'ORDER CTN','name'=>'no_of_ctn'];
-			$this->col[] = ['label'=>'NUMBER OF ASSORT','name'=>'no_of_assort'];
-			$this->col[] = ['label'=>'COUNTRY OF ORIGIN','name'=>'gacha_countries_id','join'=>'gacha_countries,country_code'];
-			$this->col[] = ['label'=>'INCOTERMS','name'=>'gacha_incoterms_id','join'=>'gacha_incoterms,incoterm_description'];
-			}
-			$this->col[] = ['label'=>'CURRENCY','name'=>'currencies_id','join'=>'currencies,currency_code'];
-			if(!in_array(CRUDBooster::myPrivilegeName(),['REPORTS'])){
-			$this->col[] = ['label'=>'SUPPLIER COST','name'=>'supplier_cost'];
-			}
-			$this->col[] = ['label'=>'UOM CODE','name'=>'gacha_uoms_id','join'=>'gacha_uoms,uom_code'];
-			$this->col[] = ['label'=>'INVENTORY TYPE','name'=>'gacha_inventory_types_id','join'=>'gacha_inventory_types,inventory_type_description'];
-			$this->col[] = ['label'=>'VENDOR TYPE','name'=>'gacha_vendor_types_id','join'=>'gacha_vendor_types,vendor_type_description'];
-			$this->col[] = ["label"=>"VENDOR GROUP NAME","name"=>"gacha_vendor_groups_id","join"=>"gacha_vendor_groups,vendor_group_description"];
-			$this->col[] = ["label"=>"VENDOR GROUP STATUS","name"=>"gacha_vendor_groups_id","join"=>"gacha_vendor_group_statuses,status_description","join_id"=>"id"];
-			$this->col[] = ['label'=>'AGE GRADE','name'=>'age_grade'];
-			$this->col[] = ['label'=>'BATTERY','name'=>'battery'];
-			$this->col[] = ["label"=>"CREATED BY","name"=>"created_by","join"=>"cms_users,name"];
-			$this->col[] = ["label"=>"CREATED DATE","name"=>"created_at"];
-			if(!in_array(CRUDBooster::myPrivilegeName(),['IC TM','REPORTS'])){
-			$this->col[] = ["label"=>"APPROVED BY","name"=>"approved_by","join"=>"cms_users,name"];
-			$this->col[] = ["label"=>"APPROVED DATE","name"=>"approved_at"];
-			$this->col[] = ["label"=>"APPROVED BY ACCTNG","name"=>"approved_by_acct","join"=>"cms_users,name"];
-			$this->col[] = ["label"=>"APPROVED DATE ACCTNG","name"=>"approved_at_acct"];
-			$this->col[] = ["label"=>"UPDATED BY","name"=>"updated_by","join"=>"cms_users,name"];
-			$this->col[] = ["label"=>"UPDATED DATE","name"=>"updated_at"];
-			$this->col[] = ["label"=>"status","name"=>"approval_status_acct" ,'callback'=>function($row){
-				return $row->status;
-			}, "visible"=> false];
-			}
+			$this->col[] = ["label"=>"Jan Number","name"=>"jan_number"];
+			$this->col[] = ["label"=>"Old LC Per Carton","name"=>"old_lc_per_carton"];
+			$this->col[] = ["label"=>"New LC Per Carton","name"=>"new_lc_per_carton"];
+			$this->col[] = ["label"=>"Old LC Per PC","name"=>"old_lc_per_pc"];
+			$this->col[] = ["label"=>"New LC Per PC","name"=>"new_lc_per_pc"];
+			$this->col[] = ["label"=>"Old Supplier Cost","name"=>"old_supplier_cost"];
+			$this->col[] = ["label"=>"New Supplier Cost","name"=>"new_supplier_cost"];
+			$this->col[] = ["label"=>"Approved At Acct","name"=>"approved_at_acct"];
+			$this->col[] = ["label"=>"Approved By Acct","name"=>"approved_by_acct","join"=>"cms_users,name"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
+			$this->form[] = ['label'=>'Created By','name'=>'created_by','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Jan Number','name'=>'jan_number','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Old Lc Per Carton','name'=>'old_lc_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'New Lc Per Carton','name'=>'new_lc_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Old Lc Margin Per Carton','name'=>'old_lc_margin_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'New Lc Margin Per Carton','name'=>'new_lc_margin_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Old Lc Per Pc','name'=>'old_lc_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'New Lc Per Pc','name'=>'new_lc_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Old Lc Margin Per Pc','name'=>'old_lc_margin_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'New Lc Margin Per Pc','name'=>'new_lc_margin_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Old Sc Per Pc','name'=>'old_sc_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'New Sc Per Pc','name'=>'new_sc_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Old Sc Margin Per Pc','name'=>'old_sc_margin_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'New Sc Margin Per Pc','name'=>'new_sc_margin_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Old Supplier Cost','name'=>'old_supplier_cost','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'New Supplier Cost','name'=>'new_supplier_cost','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Approved At Acct','name'=>'approved_at_acct','type'=>'datetime','validation'=>'required|date_format:Y-m-d H:i:s','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Approved By Acct','name'=>'approved_by_acct','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
+
+			# OLD START FORM
+			//$this->form = [];
+			//$this->form[] = ["label"=>"Approval Status Acct","name"=>"approval_status_acct","type"=>"number","required"=>TRUE,"validation"=>"required|integer|min:0"];
+			//$this->form[] = ["label"=>"Approved At Acct","name"=>"approved_at_acct","type"=>"datetime","required"=>TRUE,"validation"=>"required|date_format:Y-m-d H:i:s"];
+			//$this->form[] = ["label"=>"Approved By Acct","name"=>"approved_by_acct","type"=>"number","required"=>TRUE,"validation"=>"required|integer|min:0"];
+			//$this->form[] = ["label"=>"Created By","name"=>"created_by","type"=>"number","required"=>TRUE,"validation"=>"required|integer|min:0"];
+			//$this->form[] = ["label"=>"Jan Number","name"=>"jan_number","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"New Lc Margin Per Carton","name"=>"new_lc_margin_per_carton","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"New Lc Margin Per Pc","name"=>"new_lc_margin_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"New Lc Per Carton","name"=>"new_lc_per_carton","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"New Lc Per Pc","name"=>"new_lc_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"New Sc Margin Per Pc","name"=>"new_sc_margin_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"New Sc Per Pc","name"=>"new_sc_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"New Supplier Cost","name"=>"new_supplier_cost","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"Old Lc Margin Per Carton","name"=>"old_lc_margin_per_carton","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"Old Lc Margin Per Pc","name"=>"old_lc_margin_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"Old Lc Per Carton","name"=>"old_lc_per_carton","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"Old Lc Per Pc","name"=>"old_lc_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"Old Sc Margin Per Pc","name"=>"old_sc_margin_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"Old Sc Per Pc","name"=>"old_sc_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"Old Supplier Cost","name"=>"old_supplier_cost","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			# OLD END FORM
 
 			/* 
 	        | ---------------------------------------------------------------------- 
@@ -132,27 +119,6 @@
 	        | 
 	        */
 	        $this->addaction = array();
-			if (CRUDBooster::isUpdate()) {
-				if (in_array(CRUDBooster::myPrivilegeName(), $this->editor_details) || CRUDBooster::isSuperAdmin()) {
-					$this->addaction[] = [
-						'title'=>'Edit',
-						'url'=>CRUDBooster::mainpath('edit/[id]'),
-						'icon'=>'fa fa-pencil',
-						'color' => ' ',
-					];
-				}
-				if (in_array(CRUDBooster::myPrivilegeName(), $this->editor_accounting) || CRUDBooster::isSuperAdmin()) {
-					$this->addaction[] = [
-						'title'=>'Edit Accounting Details',
-						'url'=>CRUDBooster::mainpath('edit-item-accounting-detail/[id]'),
-						'icon'=>'fa fa-pencil',
-						'color' => ' ',
-						'showIf' => "[status] != 202",
-					];
-				}
-
-
-			}
 
 
 	        /* 
@@ -193,12 +159,8 @@
 	        | 
 	        */
 	        $this->index_button = array();
-			if(CRUDBooster::getCurrentMethod() == 'getIndex') {
-				if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['MCB TM','MCB TL'])){
-					$this->index_button[] = ["title"=>"Import Items","label"=>"Import Items",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-view')];
-					$this->index_button[] = ["title"=>"Import Items","label"=>"Import Updates",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-edit-view')];
-				}
-			}
+
+
 
 	        /* 
 	        | ---------------------------------------------------------------------- 
@@ -318,7 +280,7 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	        $query->addSelect('gacha_item_master_approvals.approval_status_acct as status')->leftJoin('gacha_item_master_approvals', 'gacha_item_masters.digits_code', 'gacha_item_master_approvals.digits_code' );    
+	            
 	    }
 
 	    /*
@@ -328,7 +290,7 @@
 	    |
 	    */    
 	    public function hook_row_index($column_index,&$column_value) {	        
-	    	//Your code here
+	    
 	    }
 
 	    /*
@@ -341,8 +303,6 @@
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
             $postdata["created_by"]=CRUDBooster::myId();
-			
-			
 	    }
 
 	    /* 
@@ -354,6 +314,7 @@
 	    */
 	    public function hook_after_add($id) {        
 	        //Your code here
+
 	    }
 
 	    /* 
@@ -405,148 +366,11 @@
 
         }
 
-		public function getAdd() {
-			if (!CRUDBooster::isCreate()) CRUDBooster::redirect(
-				CRUDBooster::adminPath(),
-				trans('crudbooster.denied_access')
-			);
-
-			$data = [];
-			$data['page_title'] = 'Add Item';
-			$data['action'] = 'add';
-
-			$data = array_merge($data, self::getSubmaster());
-
-			return view('gacha/item-masters/add-item', $data);
-		}
-
-		public function getEdit($id) {
-			if (!CRUDBooster::isUpdate()) CRUDBooster::redirect(
-				CRUDBooster::adminPath(),
-				trans('crudbooster.denied_access')
-			);
-
-			$digits_code = DB::table('gacha_item_masters')->where('id', $id)->pluck('digits_code')->first();
-
-			$data = [];
-			$data['item'] = (object) GachaItemApproval::where('digits_code', $digits_code)->first()->toArray();
-			$data['gacha_item_master_approvals_id'] = $data['item']->id;
-			$data['page_title'] = 'Edit Item';
-			$data['action'] = 'edit';
-			$data['path'] = 'gasha_item_masters';
-			$data = array_merge($data, self::getSubmaster());
-
-			return view('gacha/item-masters/add-item',$data);
-		}
-
 		public function getDetail($id) {
-			$data = [];
-			$data['item'] = self::getItemDetails($id, 'gacha_item_masters_export');
-			return view('gacha/item-masters/detail-item', $data);
+			$data['title'] = 'Details';
+			$data['item'] = GachaItemEditHistory::details($id);
+
+			return view('gacha/item-masters/history-detail-item',$data);
+
 		}
-
-		public function importItemView() {
-			if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE || $this->button_add==FALSE) {    
-				CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
-			}
-			$data['page_title'] = 'Import New Item';
-			return view('gacha/item-masters/new-item-upload',$data);
-		}
-
-		public function importItemEditView() {
-			if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE || $this->button_add==FALSE) {    
-				CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
-			}
-			$data['page_title'] = 'Import Updates';
-			return view('gacha/item-masters/upload-edit-item-acct',$data);
-		}
-		
-		public function getSubmaster() {
-			$data = [];
-
-			$data['product_types'] = DB::table('gacha_product_types')
-				->where('status', 'ACTIVE')
-				->orderBy('product_type_description')
-				->get()
-				->toArray();
-
-			$data['brands'] = DB::table('gacha_brands')
-				->where('status', 'ACTIVE')
-				->orderBy('brand_description')
-				->get()
-				->toArray();
-
-			$data['sku_statuses'] = DB::table('gacha_sku_statuses')
-				->where('status', 'ACTIVE')
-				->orderBy('status_description')
-				->get()
-				->toArray();
-			
-			$data['categories'] = DB::table('gacha_categories')
-				->where('status', 'ACTIVE')
-				->orderBy('category_description')
-				->get()
-				->toArray();
-
-			$data['warehouse_categories'] = DB::table('gacha_wh_categories')
-				->where('status', 'ACTIVE')
-				->orderBy('category_description')
-				->get()
-				->toArray();
-
-			$data['countries'] = DB::table('gacha_countries')
-				->where('status', 'ACTIVE')
-				->orderBy('country_name')
-				->get()
-				->toArray();
-
-			$data['incoterms'] = DB::table('gacha_incoterms')
-				->where('status', 'ACTIVE')
-				->orderBy('incoterm_description')
-				->get()
-				->toArray();
-
-			$data['currencies'] = DB::table('currencies')
-				->where('status', 'ACTIVE')
-				->orderBy('currency_description')
-				->get()
-				->toArray();
-
-			$data['uoms'] = DB::table('gacha_uoms')
-				->where('status', 'ACTIVE')
-				->orderBy('uom_code')
-				->get()
-				->toArray();
-
-			$data['inventory_types'] = DB::table('gacha_inventory_types')
-				->where('status', 'ACTIVE')
-				->orderBy('inventory_type_description')
-				->get()
-				->toArray();
-
-			$data['vendor_types'] = DB::table('gacha_vendor_types')
-				->where('status', 'ACTIVE')
-				->orderBy('vendor_type_description')
-				->get()
-				->toArray();
-
-			$data['vendor_groups'] = DB::table('gacha_vendor_groups')
-				->where('status', 'ACTIVE')
-				->orderBy('vendor_group_description')
-				->get()
-				->toArray();
-
-			return $data;
-		}
-
-		public function getItemDetails($id, $view_name) {
-			if ($view_name == 'gacha_item_masters_export') {
-				$primary_key = 'gacha_item_masters_id';
-			} else if ($view_name == 'gacha_item_master_approvals_export') {
-				$primary_key = 'gacha_item_master_approvals_id';
-			}
-			$item = DB::table($view_name)->where($primary_key, $id)->get()->first();
-			return $item;
-		}
-
 	}

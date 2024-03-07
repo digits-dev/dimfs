@@ -8,6 +8,7 @@ use Excel;
 use CRUDBooster;
 use Illuminate\Support\Facades\Input;
 use App\GachaItemApproval;
+use App\GachaItemEditHistory;
 class GachaponItemMasterImportController extends Controller
 {
 	private $errors;
@@ -19,7 +20,7 @@ class GachaponItemMasterImportController extends Controller
     public function importItems(Request $request){
       $cnt_success = 0;
       $file = $request->file('import_file');
-			
+	
 		$validator = \Validator::make(
 			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
 			['file' => 'required', 'extension' => 'required|in:csv',]
@@ -31,9 +32,9 @@ class GachaponItemMasterImportController extends Controller
 
 		if (Input::hasFile('import_file')) {
 			$path = Input::file('import_file')->getRealPath();
-			
 			$csv = array_map('str_getcsv', file($path));
 			$dataExcel = Excel::load($path, function($reader) {})->get()->toArray();
+			
 			$unMatch = [];
 			$header = config('excel-template.gashapon-item-master');
 
@@ -163,10 +164,126 @@ class GachaponItemMasterImportController extends Controller
 		return $itemExists;
 	}
 
+	public function editItems(Request $request){
+
+		$cnt_success = 0;
+		$file = $request->file('import_file');
+	
+		$validator = \Validator::make(
+			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
+			['file' => 'required', 'extension' => 'required|in:csv',]
+		);
+
+		if ($validator->fails()) {
+			return back()->with('error_import', 'Failed ! Please check required file extension.');
+		}
+
+		if (Input::hasFile('import_file')) {
+			$path = Input::file('import_file')->getRealPath();
+			
+			$csv = array_map('str_getcsv', file($path));
+			$dataExcel = Excel::load($path, function($reader) {})->get()->toArray();
+	
+			$unMatch = [];
+			$header = config('excel-template.gashapon-item-master-edit');
+
+			for ($i=0; $i < sizeof($csv[0]); $i++) {
+				if (! in_array($csv[0][$i], $header)) {
+					$unMatch[] = $csv[0][$i];
+				}
+			}
+			if(!empty($unMatch)) {
+				return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
+			}
+			
+			if ($dataExcel == null) {
+				return back()->with('error_import', 'Failed ! Empty Excel');
+			}
+
+			if(!empty($dataExcel)) {
+				
+				foreach ($dataExcel as $key => $value) {
+					$data = array();
+					$line_item = 0;	
+					$line_item = $key+1;
+					
+					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
+
+					$nullItems = array_filter($value, function ($obj) {
+						return $obj == null;
+					});
+
+					if(!empty($nullItems)){
+						$nullColumns = strtoupper(str_replace('_',' ',array_keys($nullItems)[0]));
+						array_push($this->errors, "Line $line_item : $nullColumns is blank!");
+					}
+					
+					$item = GachaItemApproval::where('jan_no', $jan_number)->first();
+
+					if ($item->approval_status_acct == 202) {
+						array_push($this->errors, "Jan number $jan_number on line $line_item has a pending status.");
+					}
+		
+					$moq = $item->moq;
+				
+					$new_lc_per_carton = $value['lc_per_carton'];
+					$new_lc_per_pc = $value['lc_per_pc'];
+
+					$new_lc_margin_per_carton = ($new_lc_per_carton  / $moq  * 100 );
+					
+					$new_lc_margin_per_pc = ($new_lc_per_pc / $moq  * 100 );
+					$new_sc_per_pc = ($new_lc_per_pc / 100 * 30) + $new_lc_per_pc;
+					$new_sc_margin_per_pc = ($new_sc_per_pc / $moq * 100);
+					
+					$data = [
+						'approval_status_acct' => 202,
+						'lc_per_carton' => $value['lc_per_carton'],
+						'lc_margin_per_carton' => $new_lc_margin_per_carton,
+						'lc_per_pc' => $value['lc_per_pc'],
+						'lc_margin_per_pc' => $new_lc_margin_per_pc,
+						'store_cost' => $new_sc_per_pc,
+						'sc_margin' => $new_sc_margin_per_pc,
+						'supplier_cost' => $value['supplier_cost'],
+						'updated_by' => CRUDBooster::myId(),
+						'updated_at' => date('Y-m-d H:i:s'),
+					];
+
+				
+					try {
+						if(empty($this->errors)){
+							$cnt_success++;
+							$approval_item = GachaItemApproval::where('jan_no', $jan_number);
+							$approval_item->update($data);
+						}
+
+					} catch (\Exception $e) {
+						array_push($this->errors, "Line $line_item : with error ".json_encode($e));
+					}
+				}
+			}
+		}
+
+		if(empty($this->errors)){
+			return back()->with('success_import', "Success ! $cnt_success item(s) added to pending items for accounting approval.");
+		}
+		else{
+			return back()->with('error_import', implode("<br>", $this->errors));
+		}
+    }
+
+
     public function importItemTemplate(){
 		Excel::create('gashapon-item-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) {
 			$excel->sheet('item', function ($sheet) {
 			$sheet->row(1, config('excel-template.gashapon-item-master'));
+			});
+		})->download('csv');
+    }
+
+    public function importItemEditTemplate(){
+		Excel::create('gashapon-item-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) {
+			$excel->sheet('item', function ($sheet) {
+			$sheet->row(1, config('excel-template.gashapon-item-master-edit'));
 			});
 		})->download('csv');
     }
