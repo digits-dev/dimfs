@@ -152,7 +152,7 @@
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Item Description</th>
-                                <td><input value="{{ $item->item_description ?: '' }}" type="text" name="item_description" id="item_description" class="form-control" required oninput="this.value = this.value.toUpperCase()" {{ $item->digits_code ? 'readonly' : '' }}></td>
+                                <td><input value="{{ $item->item_description ?: '' }}" type="text" name="item_description" id="item_description" class="form-control" required oninput="this.value = this.value.toUpperCase()" {{ $item->digits_code && !in_array(CRUDBooster::myEmail(), config('privileges._edit_gacha_item_desc')) ? 'readonly' : '' }}></td>
                             </tr>
                             <tr>
                                 <th><span class="required-star">*</span> Model</th>
