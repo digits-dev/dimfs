@@ -196,6 +196,9 @@
 			if(CRUDBooster::getCurrentMethod() == 'getIndex') {
 				if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['MCB TM','MCB TL'])){
 					$this->index_button[] = ["title"=>"Import Items","label"=>"Import Items",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-view')];
+					
+				}
+				if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['COST ACCTG'])) {
 					$this->index_button[] = ["title"=>"Import Items","label"=>"Import Updates",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-edit-view')];
 				}
 			}
