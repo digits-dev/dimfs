@@ -196,6 +196,9 @@
 			if(CRUDBooster::getCurrentMethod() == 'getIndex') {
 				if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['MCB TM','MCB TL'])){
 					$this->index_button[] = ["title"=>"Import Items","label"=>"Import Items",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-view')];
+					
+				}
+				if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['COST ACCTG'])) {
 					$this->index_button[] = ["title"=>"Import Items","label"=>"Import Updates",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-edit-view')];
 				}
 			}
@@ -454,7 +457,7 @@
 		}
 
 		public function importItemEditView() {
-			if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE || $this->button_add==FALSE) {    
+			if(!CRUDBooster::isUpdate() && $this->global_privilege==FALSE || $this->button_edit==FALSE) {    
 				CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
 			}
 			$data['page_title'] = 'Import Updates';

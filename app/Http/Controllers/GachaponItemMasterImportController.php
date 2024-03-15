@@ -201,29 +201,35 @@ class GachaponItemMasterImportController extends Controller
 			}
 
 			if(!empty($dataExcel)) {
-				
+
 				foreach ($dataExcel as $key => $value) {
 					$data = array();
 					$line_item = 0;	
 					$line_item = $key+1;
 					
-					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
-
 					$nullItems = array_filter($value, function ($obj) {
 						return $obj == null;
 					});
-
+					
 					if(!empty($nullItems)){
 						$nullColumns = strtoupper(str_replace('_',' ',array_keys($nullItems)[0]));
 						array_push($this->errors, "Line $line_item : $nullColumns is blank!");
 					}
 					
+					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
 					$item = GachaItemApproval::where('jan_no', $jan_number)->first();
-
+					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
+					
 					if ($item->approval_status_acct == 202) {
 						array_push($this->errors, "Jan number $jan_number on line $line_item has a pending status.");
 					}
-		
+				}
+				if(empty($this->errors)){
+				foreach ($dataExcel as $key => $value) { 
+
+					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
+					$item = GachaItemApproval::where('jan_no', $jan_number)->first();
+
 					$moq = $item->moq;
 				
 					$new_lc_per_carton = $value['lc_per_carton'];
@@ -247,19 +253,12 @@ class GachaponItemMasterImportController extends Controller
 						'updated_by' => CRUDBooster::myId(),
 						'updated_at' => date('Y-m-d H:i:s'),
 					];
-
-				
-					try {
-						if(empty($this->errors)){
 							$cnt_success++;
 							$approval_item = GachaItemApproval::where('jan_no', $jan_number);
 							$approval_item->update($data);
-						}
-
-					} catch (\Exception $e) {
-						array_push($this->errors, "Line $line_item : with error ".json_encode($e));
-					}
 				}
+			}
+
 			}
 		}
 
