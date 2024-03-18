@@ -165,7 +165,7 @@
                                 <th>LC Per Carton</th>
                                 <td>{{ $item->lc_per_carton }}</td>
                             </tr>
-                            <tr>
+                            <tr class="hide">
                                 <th>LC Margin Per Carton (%)</th>
                                 <td>{{ $item->lc_margin_per_carton }}</td>
                             </tr>

@@ -61,7 +61,7 @@
 			$this->col[] = ['label'=>'NUMBER OF TOKENS','name'=>'no_of_tokens'];
 			if(!in_array(CRUDBooster::myPrivilegeName(),['IC TM','REPORTS'])){
 			$this->col[] = ['label'=>'LC PER CARTON','name'=>'lc_per_carton'];
-			$this->col[] = ['label'=>'LC MARGIN PER CARTON (%)','name'=>'lc_margin_per_carton'];
+			// $this->col[] = ['label'=>'LC MARGIN PER CARTON (%)','name'=>'lc_margin_per_carton'];
 			$this->col[] = ['label'=>'LC PER PC','name'=>'lc_per_pc'];
 			$this->col[] = ['label'=>'LC MARGIN PER PC (%)','name'=>'lc_margin_per_pc'];
 			$this->col[] = ['label'=>'SC PER PC','name'=>'store_cost'];
