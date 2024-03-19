@@ -32,8 +32,8 @@
                     <table class="table-responsive table">
                         <tbody>
                             <tr>
-                                <th colspan="2">JAN Number</th>
-                                <td colspan="2">{{ $item->jan_number }}</td>
+                                <th colspan="2">Digits Code</th>
+                                <td colspan="2">{{ $item->digits_code }}</td>
                             </tr>
                            <tr>
                                 <th>Old LC per Carton</th>
@@ -41,12 +41,6 @@
                                 <th>New LC per Carton</th>
                                 <td>{{ $item->new_lc_per_carton }}</td>
                            </tr>
-                           <tr>
-                                <th>Old LC Margin per Carton</th>
-                                <td>{{ $item->old_lc_margin_per_carton }}</td>
-                                <th>New LC Margin per Carton</th>
-                                <td>{{ $item->new_lc_margin_per_carton }}</td>
-                            </tr>
                            <tr>
                                 <th>Old LC per PC</th>
                                 <td>{{ $item->old_lc_per_pc }}</td>

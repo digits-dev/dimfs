@@ -199,7 +199,6 @@ class GachaponItemMasterImportController extends Controller
 			if ($dataExcel == null) {
 				return back()->with('error_import', 'Failed ! Empty Excel');
 			}
-
 			if(!empty($dataExcel)) {
 
 				foreach ($dataExcel as $key => $value) {
@@ -216,45 +215,39 @@ class GachaponItemMasterImportController extends Controller
 						array_push($this->errors, "Line $line_item : $nullColumns is blank!");
 					}
 					
-					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
-					$item = GachaItemApproval::where('jan_no', $jan_number)->first();
-					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
+					$digits_code = preg_replace("/[^A-Za-z0-9 ]/", '', $value['digits_code']);
+					$item = GachaItemApproval::where('digits_code', $digits_code)->first();
 					
 					if ($item->approval_status_acct == 202) {
-						array_push($this->errors, "Jan number $jan_number on line $line_item has a pending status.");
+						array_push($this->errors, "Digits Code $digits_code on line $line_item has a pending status.");
 					}
 				}
 				if(empty($this->errors)){
 				foreach ($dataExcel as $key => $value) { 
-
-					$jan_number = preg_replace("/[^A-Za-z0-9 ]/", '', $value['jan_number']);
-					$item = GachaItemApproval::where('jan_no', $jan_number)->first();
-
-					$moq = $item->moq;
 				
-					$new_lc_per_carton = $value['lc_per_carton'];
-					$new_lc_per_pc = $value['lc_per_pc'];
 
-					$new_lc_margin_per_carton = ($new_lc_per_carton  / $moq  * 100 );
+					$digits_code = preg_replace("/[^A-Za-z0-9 ]/", '', $value['digits_code']);
+					$item = GachaItemApproval::where('digits_code', $digits_code)->first();
 					
-					$new_lc_margin_per_pc = ($new_lc_per_pc / $moq  * 100 );
-					$new_sc_per_pc = ($new_lc_per_pc / 100 * 30) + $new_lc_per_pc;
-					$new_sc_margin_per_pc = ($new_sc_per_pc / $moq * 100);
+					$current_srp = $item->current_srp;
+				
+					$new_lc_margin_per_pc = (($current_srp - $value['lc_per_pc']) / $current_srp  * 100);
+					$new_sc_margin_per_pc = (($current_srp - $value['sc_per_pc']) / $current_srp  * 100);
+
 					
 					$data = [
 						'approval_status_acct' => 202,
 						'lc_per_carton' => $value['lc_per_carton'],
-						'lc_margin_per_carton' => $new_lc_margin_per_carton,
 						'lc_per_pc' => $value['lc_per_pc'],
 						'lc_margin_per_pc' => $new_lc_margin_per_pc,
-						'store_cost' => $new_sc_per_pc,
+						'store_cost' => $value['sc_per_pc'],
 						'sc_margin' => $new_sc_margin_per_pc,
 						'supplier_cost' => $value['supplier_cost'],
 						'updated_by' => CRUDBooster::myId(),
 						'updated_at' => date('Y-m-d H:i:s'),
 					];
 							$cnt_success++;
-							$approval_item = GachaItemApproval::where('jan_no', $jan_number);
+							$approval_item = GachaItemApproval::where('digits_code', $digits_code);
 							$approval_item->update($data);
 				}
 			}

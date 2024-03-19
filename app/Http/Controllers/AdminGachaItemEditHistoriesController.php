@@ -36,11 +36,13 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Jan Number","name"=>"jan_number"];
+			$this->col[] = ["label"=>"Digits Code","name"=>"digits_code"];
 			$this->col[] = ["label"=>"Old LC Per Carton","name"=>"old_lc_per_carton"];
 			$this->col[] = ["label"=>"New LC Per Carton","name"=>"new_lc_per_carton"];
 			$this->col[] = ["label"=>"Old LC Per PC","name"=>"old_lc_per_pc"];
 			$this->col[] = ["label"=>"New LC Per PC","name"=>"new_lc_per_pc"];
+			$this->col[] = ["label"=>"Old SC Per PC","name"=>"old_sc_per_pc"];
+			$this->col[] = ["label"=>"New SCPer PC","name"=>"new_sc_per_pc"];
 			$this->col[] = ["label"=>"Old Supplier Cost","name"=>"old_supplier_cost"];
 			$this->col[] = ["label"=>"New Supplier Cost","name"=>"new_supplier_cost"];
 			$this->col[] = ["label"=>"Approved At Acct","name"=>"approved_at_acct"];
@@ -50,7 +52,7 @@
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'Created By','name'=>'created_by','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Jan Number','name'=>'jan_number','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Digits Code','name'=>'digits_code','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Old Lc Per Carton','name'=>'old_lc_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'New Lc Per Carton','name'=>'new_lc_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Old Lc Margin Per Carton','name'=>'old_lc_margin_per_carton','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
@@ -75,7 +77,7 @@
 			//$this->form[] = ["label"=>"Approved At Acct","name"=>"approved_at_acct","type"=>"datetime","required"=>TRUE,"validation"=>"required|date_format:Y-m-d H:i:s"];
 			//$this->form[] = ["label"=>"Approved By Acct","name"=>"approved_by_acct","type"=>"number","required"=>TRUE,"validation"=>"required|integer|min:0"];
 			//$this->form[] = ["label"=>"Created By","name"=>"created_by","type"=>"number","required"=>TRUE,"validation"=>"required|integer|min:0"];
-			//$this->form[] = ["label"=>"Jan Number","name"=>"jan_number","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"Digits Code","name"=>"digits_code","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"New Lc Margin Per Carton","name"=>"new_lc_margin_per_carton","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"New Lc Margin Per Pc","name"=>"new_lc_margin_per_pc","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"New Lc Per Carton","name"=>"new_lc_per_carton","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];

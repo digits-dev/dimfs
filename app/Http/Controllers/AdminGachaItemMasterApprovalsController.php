@@ -672,11 +672,9 @@
 					unset($item->id);
 
 					$history = [
-						'jan_number' => $old_item->jan_no,
+						'digits_code' => $old_item->digits_code,
 						'old_lc_per_carton' => $old_item->lc_per_carton ?? 0,
 						'new_lc_per_carton' => $item->lc_per_carton,
-						'old_lc_margin_per_carton' => $old_item->lc_margin_per_carton ?? 0,
-						'new_lc_margin_per_carton' => $item->lc_margin_per_carton,
 						'old_lc_per_pc' => $old_item->lc_per_pc ?? 0,
 						'new_lc_per_pc' => $item->lc_per_pc,
 						'old_lc_margin_per_pc' => $old_item->lc_margin_per_pc ?? 0,
@@ -693,7 +691,7 @@
 		
 
 					DB::table('gacha_item_masters')->updateOrInsert(['digits_code' => $digits_code], (array) $item);
-					DB::table('gacha_item_edit_histories')->updateOrInsert(['jan_number' => $item->jan_no], $history);
+					DB::table('gacha_item_edit_histories')->updateOrInsert(['digits_code' => $item->digits_code], $history);
 					
 					$message = "✔️ Successfully approved Item: $digits_code";
 					$message_type = "success";

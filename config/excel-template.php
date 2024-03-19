@@ -156,9 +156,10 @@ return [
         'BATTERY'
     ],
     'gashapon-item-master-edit' => [
-        'JAN NUMBER',
+        'DIGITS CODE',
         'LC PER CARTON',
         'LC PER PC',
+        'SC PER PC',
         'SUPPLIER COST'
     ],
 ];
