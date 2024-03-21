@@ -20,6 +20,8 @@
         <li>
             {!! Session::get('error_import') !!}
         </li>
+        <br>
+        Please re-upload your file without the errors found.
     </div>
     @endif
 
