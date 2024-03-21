@@ -217,8 +217,10 @@ class GachaponItemMasterImportController extends Controller
 					
 					$digits_code = preg_replace("/[^A-Za-z0-9 ]/", '', $value['digits_code']);
 					$item = GachaItemApproval::where('digits_code', $digits_code)->first();
-					
-					if ($item->approval_status_acct == 202) {
+
+				    if (!$item) {
+						array_push($this->errors, "Digits Code $digits_code on line $line_item does not exist.");
+					} elseif ($item->approval_status_acct == 202) {
 						array_push($this->errors, "Digits Code $digits_code on line $line_item has a pending status.");
 					}
 				}
