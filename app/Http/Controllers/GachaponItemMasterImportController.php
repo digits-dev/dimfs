@@ -244,7 +244,6 @@ class GachaponItemMasterImportController extends Controller
 						'lc_margin_per_pc' => $new_lc_margin_per_pc,
 						'store_cost' => $value['sc_per_pc'],
 						'sc_margin' => $new_sc_margin_per_pc,
-						'supplier_cost' => $value['supplier_cost'],
 						'updated_by' => CRUDBooster::myId(),
 						'updated_at' => date('Y-m-d H:i:s'),
 					];

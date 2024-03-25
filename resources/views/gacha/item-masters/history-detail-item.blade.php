@@ -66,12 +66,6 @@
                                 <td>{{ $item->new_sc_margin_per_pc }}</td>
                             </tr>
                             <tr>
-                                <th>Old Supplier Cost</th>
-                                <td>{{ $item->old_supplier_cost }}</td>
-                                <th>New Supplier Cost</th>
-                                <td>{{ $item->new_supplier_cost}}</td>
-                            </tr>
-                            <tr>
                                 <th>Approved By</th>
                                 <td>{{ $item->name }}</td>
                                 <th>Approved Date</th>

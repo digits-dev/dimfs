@@ -160,6 +160,5 @@ return [
         'LC PER CARTON',
         'LC PER PC',
         'SC PER PC',
-        'SUPPLIER COST'
     ],
 ];

@@ -42,9 +42,7 @@
 			$this->col[] = ["label"=>"Old LC Per PC","name"=>"old_lc_per_pc"];
 			$this->col[] = ["label"=>"New LC Per PC","name"=>"new_lc_per_pc"];
 			$this->col[] = ["label"=>"Old SC Per PC","name"=>"old_sc_per_pc"];
-			$this->col[] = ["label"=>"New SCPer PC","name"=>"new_sc_per_pc"];
-			$this->col[] = ["label"=>"Old Supplier Cost","name"=>"old_supplier_cost"];
-			$this->col[] = ["label"=>"New Supplier Cost","name"=>"new_supplier_cost"];
+			$this->col[] = ["label"=>"New SC Per PC","name"=>"new_sc_per_pc"];
 			$this->col[] = ["label"=>"Approved At Acct","name"=>"approved_at_acct"];
 			$this->col[] = ["label"=>"Approved By Acct","name"=>"approved_by_acct","join"=>"cms_users,name"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
@@ -65,8 +63,6 @@
 			$this->form[] = ['label'=>'New Sc Per Pc','name'=>'new_sc_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Old Sc Margin Per Pc','name'=>'old_sc_margin_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'New Sc Margin Per Pc','name'=>'new_sc_margin_per_pc','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Old Supplier Cost','name'=>'old_supplier_cost','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'New Supplier Cost','name'=>'new_supplier_cost','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Approved At Acct','name'=>'approved_at_acct','type'=>'datetime','validation'=>'required|date_format:Y-m-d H:i:s','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Approved By Acct','name'=>'approved_by_acct','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE

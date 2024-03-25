@@ -683,8 +683,6 @@
 						'new_sc_per_pc' => $item->store_cost,
 						'old_sc_margin_per_pc' => $old_item->sc_margin ?? 0,
 						'new_sc_margin_per_pc' => $item->sc_margin,
-						'old_supplier_cost' => $old_item->supplier_cost ?? 0,
-						'new_supplier_cost' => $item->supplier_cost,
 						'approved_by_acct' => CRUDBooster::myId(),
 						'approved_at_acct' => date('Y-m-d H:i:s'),
 					];
