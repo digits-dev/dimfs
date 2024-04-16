@@ -26,6 +26,7 @@ use App\SkuStatus;
 use App\SkuClass;
 use App\SkuLegend;
 use App\ActionType;
+use App\Segmentation;
 use App\StatusState;
 use App\Vendor;
 use App\WorkflowSetting;
@@ -138,72 +139,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 	{
 		Excel::create('new-item-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) {
 			$excel->sheet('dimfs', function ($sheet) {
-				$sheet->row(1, 
-					array(
-					    'SKU STATUS',
-						'SKU LEGEND',
-						'UPC CODE',
-						'SUPPLIER ITEM CODE',
-						'MODEL NUMBER',
-						'ITEM DESCRIPTION',
-						'APPLE LOB',
-    					'APPLE REPORT INCLUSION',
-						'BRAND DESCRIPTION',
-						'MARGIN CATEGORY',
-						'CATEGORY DESCRIPTION',
-						'CLASS DESCRIPTION',
-						'SUBCLASS',
-						'WAREHOUSE CATEGORY',
-						'MODEL',
-						'YEAR LAUNCH',
-						'MODEL SPECIFIC DESCRIPTION',
-						'COMPATIBILITY',
-						'SIZE',
-						'SIZE CODE',
-						'LENGTH',
-                        'WIDTH',
-                        'HEIGHT',
-                        'WEIGHT',
-						'ACTUAL COLOR',
-						'MAIN COLOR DESCRIPTION',
-						'UOM CODE',
-						'VENDOR TYPE CODE',
-						'INVENTORY TYPE',
-						'SKU CLASS',
-						'BASEUS',
-						'BTB',
-						'DISTRI CON',
-						'DISTRI OUT',
-						'DW',
-						'DW MACHINE',
-						'GUAM',
-						'OMG',
-						'ONLINE',
-						'FRANCHISE',
-						'NEW STORE',
-						'MI',
-						'ORIGINAL SRP',
-						'CURRENT SRP',
-						'DG SRP',
-						'PRICE CHANGE',
-						'PRICE CHANGE DATE',
-						'STORE COST',
-						'STORE MARGIN PERCENTAGE',
-						'WORKING STORE COST',
-						'WORKING STORE MARGIN PERCENTAGE',
-						'MAX CONSIGNMENT RATE PERCENTAGE',
-						'MOQ',
-						'INCOTERMS',
-						'CURRENCY',
-						'SUPPLIER COST',
-						'LANDED COST',
-						'WORKING LANDED COST',
-						'VENDOR NAME',
-						'SERIAL CODE',
-						'IMEI CODE 1',
-						'IMEI CODE 2'
-						)
-					);
+				$sheet->row(1, config('excel-template.item-master'));
 			});
 
 			})->download('csv');
@@ -215,6 +151,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 		$cnt_success = 0;
 		$cnt_fail = 0;
 		$file = $request->file('import_file');
+		$segments = Segmentation::where('status','ACTIVE')->get();
 			
 		$validator = \Validator::make(
 			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
@@ -232,69 +169,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$dataExcel = Excel::load($path, function($reader) {})->get();
 			
 			$unMatch = [];
-			$header = array(
-				'SKU STATUS',
-				'SKU LEGEND',
-				'UPC CODE',
-				'SUPPLIER ITEM CODE',
-				'MODEL NUMBER',
-				'ITEM DESCRIPTION',
-				'APPLE LOB',
-				'APPLE REPORT INCLUSION',
-				'BRAND DESCRIPTION',
-				'MARGIN CATEGORY',
-				'CATEGORY DESCRIPTION',
-				'CLASS DESCRIPTION',
-				'SUBCLASS',
-				'WAREHOUSE CATEGORY',
-				'MODEL',
-				'YEAR LAUNCH',
-				'MODEL SPECIFIC DESCRIPTION',
-				'COMPATIBILITY',
-				'SIZE',
-				'SIZE CODE',
-				'LENGTH',
-                'WIDTH',
-                'HEIGHT',
-                'WEIGHT',
-				'ACTUAL COLOR',
-				'MAIN COLOR DESCRIPTION',
-				'UOM CODE',
-				'VENDOR TYPE CODE',
-				'INVENTORY TYPE',
-				'SKU CLASS',
-				'BASEUS',
-				'BTB',
-				'DISTRI CON',
-				'DISTRI OUT',
-				'DW',
-				'DW MACHINE',
-				'GUAM',
-				'OMG',
-				'ONLINE',
-				'FRANCHISE',
-				'NEW STORE',
-				'MI',
-				'ORIGINAL SRP',
-				'CURRENT SRP',
-				'DG SRP',
-				'PRICE CHANGE',
-				'PRICE CHANGE DATE',
-				'STORE COST',
-				'STORE MARGIN PERCENTAGE',
-				'WORKING STORE COST',
-				'WORKING STORE MARGIN PERCENTAGE',
-				'MAX CONSIGNMENT RATE PERCENTAGE',
-				'MOQ',
-				'INCOTERMS',
-				'CURRENCY',
-				'SUPPLIER COST',
-				'LANDED COST',
-				'WORKING LANDED COST',
-				'VENDOR NAME',
-				'SERIAL CODE',
-				'IMEI CODE 1',
-				'IMEI CODE 2');
+			$header = config('excel-template.item-master');
 
 			for ($i=0; $i < sizeof($csv[0]); $i++) {
 				if (! in_array($csv[0][$i], $header)) {
@@ -383,19 +258,6 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'vendor_name' => $value->vendor_name,
 						'status' => 'ACTIVE',
 						'brands_id' => $brand_id->id])->first();
-
-					$skulegend_btb = SkuLegend::where('sku_legend_description', $value->btb)->first();
-					$skulegend_baseus = SkuLegend::where('sku_legend_description', $value->baseus)->first();
-					$skulegend_dw = SkuLegend::where('sku_legend_description', $value->dw)->first();
-					$skulegend_omg = SkuLegend::where('sku_legend_description', $value->omg)->first();
-					$skulegend_online = SkuLegend::where('sku_legend_description', $value->online)->first();
-					$skulegend_guam = SkuLegend::where('sku_legend_description', $value->guam)->first();
-					$skulegend_distri_con = SkuLegend::where('sku_legend_description', $value->distri_con)->first();
-					$skulegend_distri_out = SkuLegend::where('sku_legend_description', $value->distri_out)->first();
-					$skulegend_dw_machine = SkuLegend::where('sku_legend_description', $value->dw_machine)->first();
-                    $skulegend_franchise = SkuLegend::where('sku_legend_description', $value->franchise)->first();
-                    $skulegend_newstore = SkuLegend::where('sku_legend_description', $value->new_store)->first();
-                    $skulegend_mi = SkuLegend::where('sku_legend_description', $value->mi)->first();
 					//---------------------------
 					if(!empty($existingUPC)){
 						array_push($errors, 'Line '.$line_item.': existing upc code "'.$value->upc_code.'" has been detected.');
@@ -475,42 +337,17 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					if(empty($vendor_id)){
 						array_push($errors, 'Line '.$line_item.': with vendor "'.$value->vendor_name.'" is not found in submaster.');
 					}
-					if(empty($skulegend_btb)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->btb.'" at column BTB not found in submaster.');
+
+					foreach ($segments as $key_segment => $value_segment) {
+						$seg = $value_segment->import_header_name;
+						$seg_description = $value_segment->segmentation_description;
+						$seg_value = $value_segment->$seg;
+						$legendExists = SkuLegend::where('sku_legend_description', $seg_value)->first();
+						if(empty($legendExists) && !empty($seg_value)){
+							array_push($errors, "Line $line_item : with segmentation $seg_value at column $seg_description not found in submaster.");
+						}
 					}
-					if(empty($skulegend_baseus)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->baseus.'" at column BASEUS not found in submaster.');
-					}
-					if(empty($skulegend_dw)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->dw.'" at column DW not found in submaster.');
-					}
-					if(empty($skulegend_omg)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->omg.'" at column OMG not found in submaster.');
-					}
-					if(empty($skulegend_online)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->online.'" at column ONLINE not found in submaster.');
-					}
-					if(empty($skulegend_guam)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->guam.'" at column GUAM not found in submaster.');
-					}
-					if(empty($skulegend_distri_con)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->distri_con.'" at column DISTRI CON not found in submaster.');
-					}
-					if(empty($skulegend_distri_out)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->distri_out.'" at column DISTRI OUT not found in submaster.');
-					}
-					if(empty($skulegend_dw_machine)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->dw_machine.'" at column DW MACHINE not found in submaster.');
-					}
-					if(empty($skulegend_franchise)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->franchise.'" at column FRANCHISE not found in submaster.');
-					}
-					if(empty($skulegend_newstore)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->new_store.'" at column NEW STORE not found in submaster.');
-					}
-					if(empty($skulegend_mi)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->mi.'" at column MI not found in submaster.');
-					}
+					
 
 					$data = [
 						'upc_code' => $value->upc_code,
@@ -562,9 +399,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'warranties_id' => 1, //year
 						'warranty_duration' => 1,
 						'btb_segmentation' => $value->btb,
-						'baseus_segmentation' => $value->baseus,
 						'dw_segmentation' => $value->dw,
-						'omg_segmentation' => $value->omg,
 						'online_segmentation' => $value->online,
 						'guam_segmentation' => $value->guam,
 						'dcon_segmentation' => $value->distri_con,
@@ -572,7 +407,9 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'dwmachine_segmentation' => $value->dw_machine,
 						'franchise_segmentation' => $value->franchise,
 						'newstore_segmentation' => $value->new_store,
+						'opensource_segmentation' => $value->opensource,
 						'mi_segmentation' => $value->mi,
+						'af_segmentation' => $value->acefast,
 						'has_serial' => $value->serial_code,
 						'imei_code1' => '0',
 						'imei_code2' => '0',
@@ -611,67 +448,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 	{
 		Excel::create('mcb-update-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) {
 			$excel->sheet('dimfs', function ($sheet) {
-				$sheet->row(1, 
-					array(
-						'DIGITS CODE',
-					    'UPC CODE 1',
-						'UPC CODE 2',
-						'UPC CODE 3',
-						'UPC CODE 4',
-						'UPC CODE 5',
-						'SUPPLIER ITEM CODE',
-						'MODEL NUMBER',
-						'BRAND DESCRIPTION',
-						'SKU STATUS',
-						'SKU LEGEND',
-						'ITEM DESCRIPTION',
-						'MODEL',
-						'YEAR LAUNCH',
-						'MODEL SPECIFIC DESCRIPTION',
-						'COMPATIBILITY',
-						'MARGIN CATEGORY DESCRIPTION',
-						'CATEGORY DESCRIPTION',
-						'CLASS DESCRIPTION',
-						'SUBCLASS DESCRIPTION',
-						'WH CATEGORY DESCRIPTION',
-						'ORIGINAL SRP',
-						'CURRENT SRP',
-						'DG SRP',
-						'PRICE CHANGE',
-						'PRICE CHANGE DATE',
-						'DURATION FROM',
-						'DURATION TO',
-						'SUPPORT TYPE',
-						'VENDOR TYPE CODE',
-						'MOQ',
-						'CURRENCY',
-						'SUPPLIER COST',
-						'SIZE',
-						'SIZE CODE',
-						'LENGTH',
-                        'WIDTH',
-                        'HEIGHT',
-                        'WEIGHT',
-						'ACTUAL COLOR',
-						'MAIN COLOR DESCRIPTION',
-						'UOM CODE',
-						'INVENTORY TYPE',
-						'SKU CLASS',
-						'BASEUS',
-						'BTB',
-						'DISTRI CON',
-						'DISTRI OUT',
-						'DW',
-						'DW MACHINE',
-						'GUAM',
-						'OMG',
-						'ONLINE',
-						'FRANCHISE',
-						'NEW STORE',
-						'MI',
-						'SERIAL CODE'
-						)
-					);
+				$sheet->row(1, config('excel-template.item-master-edit'));
 			});
 
 			})->download('csv');
@@ -683,6 +460,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 		$cnt_success = 0;
 		$cnt_fail = 0;
 		$file = $request->file('import_file');
+		$segments = Segmentation::where('status','ACTIVE')->get();
 			
 		$validator = \Validator::make(
 			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
@@ -700,64 +478,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$dataExcel = Excel::load($path, function($reader) {})->get();
 			
 			$unMatch = [];
-			$header = array(
-				'DIGITS CODE',
-				'UPC CODE 1',
-				'UPC CODE 2',
-				'UPC CODE 3',
-				'UPC CODE 4',
-				'UPC CODE 5',
-				'SUPPLIER ITEM CODE',
-				'MODEL NUMBER',
-				'BRAND DESCRIPTION',
-				'SKU STATUS',
-				'SKU LEGEND',
-				'ITEM DESCRIPTION',
-				'MODEL',
-				'YEAR LAUNCH',
-				'MODEL SPECIFIC DESCRIPTION',
-				'COMPATIBILITY',
-				'MARGIN CATEGORY DESCRIPTION',
-				'CATEGORY DESCRIPTION',
-				'CLASS DESCRIPTION',
-				'SUBCLASS DESCRIPTION',
-				'WH CATEGORY DESCRIPTION',
-				'ORIGINAL SRP',
-				'CURRENT SRP',
-				'DG SRP',
-				'PRICE CHANGE',
-				'PRICE CHANGE DATE',
-				'DURATION FROM',
-				'DURATION TO',
-				'SUPPORT TYPE',
-				'VENDOR TYPE CODE',
-				'MOQ',
-				'CURRENCY',
-				'SUPPLIER COST',
-				'SIZE',
-				'SIZE CODE',
-				'LENGTH',
-                'WIDTH',
-                'HEIGHT',
-                'WEIGHT',
-				'ACTUAL COLOR',
-				'MAIN COLOR DESCRIPTION',
-				'UOM CODE',
-				'INVENTORY TYPE',
-				'SKU CLASS',
-				'BASEUS',
-				'BTB',
-				'DISTRI CON',
-				'DISTRI OUT',
-				'DW',
-				'DW MACHINE',
-				'GUAM',
-				'OMG',
-				'ONLINE',
-				'FRANCHISE',
-				'NEW STORE',
-				'MI',
-				'SERIAL CODE');
+			$header = config('excel-template.item-master-edit');
 
 			for ($i=0; $i < sizeof($csv[0]); $i++) {
 				if (! in_array($csv[0][$i], $header)) {
@@ -835,20 +556,6 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 							->where('status','ACTIVE')->first();
 					}
 
-					$skulegend_btb = SkuLegend::where('sku_legend_description', $value->btb)->first();
-					$skulegend_baseus = SkuLegend::where('sku_legend_description', $value->baseus)->first();
-					$skulegend_dw = SkuLegend::where('sku_legend_description', $value->dw)->first();
-					$skulegend_omg = SkuLegend::where('sku_legend_description', $value->omg)->first();
-					$skulegend_online = SkuLegend::where('sku_legend_description', $value->online)->first();
-					$skulegend_guam = SkuLegend::where('sku_legend_description', $value->guam)->first();
-					$skulegend_distri_con = SkuLegend::where('sku_legend_description', $value->distri_con)->first();
-					$skulegend_distri_out = SkuLegend::where('sku_legend_description', $value->distri_out)->first();
-					$skulegend_dw_machine = SkuLegend::where('sku_legend_description', $value->dw_machine)->first();
-					$skulegend_franchise = SkuLegend::where('sku_legend_description', $value->franchise)->first();
-					$skulegend_newstore = SkuLegend::where('sku_legend_description', $value->new_store)->first();
-					$skulegend_mi = SkuLegend::where('sku_legend_description', $value->mi)->first();
-
-					//---------------------------
 					if(empty($existingDigitsCode)){
 						array_push($errors, 'Line '.$line_item.': item code "'.$value->digits_code.'" not found.');
 					}
@@ -906,42 +613,17 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					if(empty($sku_class_id) && !is_null($value->sku_class)){
 						array_push($errors, 'Line '.$line_item.': with sku class "'.$value->sku_class.'" is not found in submaster.');
 					}
-					if(empty($skulegend_btb) && !empty($value->btb)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->btb.'" at column BTB not found in submaster.');
+
+					foreach ($segments as $key_segment => $value_segment) {
+						$seg = $value_segment->import_header_name;
+						$seg_description = $value_segment->segmentation_description;
+						$seg_value = $value_segment->$seg;
+						$legendExists = SkuLegend::where('sku_legend_description', $seg_value)->first();
+						if(empty($legendExists) && !empty($seg_value)){
+							array_push($errors, "Line $line_item : with segmentation $seg_value at column $seg_description not found in submaster.");
+						}
 					}
-					if(empty($skulegend_baseus) && !empty($value->baseus)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->baseus.'" at column BASEUS not found in submaster.');
-					}
-					if(empty($skulegend_dw) && !empty($value->dw)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->dw.'" at column DW not found in submaster.');
-					}
-					if(empty($skulegend_omg) && !empty($value->omg)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->omg.'" at column OMG not found in submaster.');
-					}
-					if(empty($skulegend_online) && !empty($value->online)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->online.'" at column ONLINE not found in submaster.');
-					}
-					if(empty($skulegend_guam) && !empty($value->guam)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->guam.'" at column GUAM not found in submaster.');
-					}
-					if(empty($skulegend_distri_con) && !empty($value->distri_con)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->distri_con.'" at column DISTRI CON not found in submaster.');
-					}
-					if(empty($skulegend_distri_out) && !empty($value->distri_out)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->distri_out.'" at column DISTRI OUT not found in submaster.');
-					}
-					if(empty($skulegend_dw_machine) && !empty($value->dw_machine)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->dw_machine.'" at column DW MACHINE not found in submaster.');
-					}
-					if(empty($skulegend_franchise) && !empty($value->franchise)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->franchise.'" at column FRANCHISE not found in submaster.');
-					}
-					if(empty($skulegend_newstore) && !empty($value->new_store)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->new_store.'" at column NEW STORE not found in submaster.');
-					}
-					if(empty($skulegend_mi) && !empty($value->mi)){
-						array_push($errors, 'Line '.$line_item.': with segmentation "'.$value->mi.'" at column MI not found in submaster.');
-					}
+					
 
 					$data = [
 						'upc_code' => $value->upc_code_1,
@@ -995,6 +677,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'franchise_segmentation' => $value->franchise,
 						'newstore_segmentation' => $value->new_store,
 						'mi_segmentation' => $value->mi,
+						'af_segmentation' => $value->acefast,
 						'has_serial' => $value->serial_code,
 						'updated_by' => CRUDBooster::myId(),
 						'updated_at' => date('Y-m-d H:i:s')
