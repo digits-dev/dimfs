@@ -105,5 +105,7 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
     Route::get('gasha_item_masters/import-view', 'AdminGachaItemMastersController@importItemView')->name('importGachaItemView');
     Route::get('gasha_item_masters/import-gacha-template', 'GachaponItemMasterImportController@importItemTemplate')->name('upload.gacha-template');
     Route::post('gasha_item_masters/import-gacha-items', 'GachaponItemMasterImportController@importItems')->name('upload.gachaItems');
+
+    Route::get('item_models/get-item-models', 'AdminItemModelsController@getItemModels')->name('get-item-models');
     
 });
