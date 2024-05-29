@@ -186,13 +186,13 @@
                             <tr>
                                 <th><span class="required-star">*</span> MSRP JPY</th>
                                 <td>
-                                    <input type="number" value="{{ $item->msrp }}" class="form-control" name="msrp" id="msrp" step="0.01" required>
+                                    <input type="number" value="{{ $item->msrp }}" class="form-control" name="msrp" id="msrp" step="0.01" readonly>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Current SRP</th>
                                 <td>
-                                    <input type="number" value="{{ $item->current_srp }}" class="form-control" name="current_srp" id="current_srp" step="0.01">
+                                    <input type="number" value="{{ $item->current_srp }}" class="form-control" name="current_srp" id="current_srp" step="0.01" readonly>
                                 </td>
                             </tr>
                             <tr>
@@ -207,7 +207,7 @@
                                     <input margin-input-id="lc_margin_per_carton" type="number" value="{{ $item->lc_per_carton }}" class="form-control with-margin" name="lc_per_carton" id="lc_per_carton" required>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="hide">
                                 <th>LC Margin Per Carton (%)</th>
                                 <td>
                                     <input type="number" value="{{ $item->lc_margin_per_carton }}" class="form-control" name="lc_margin_per_carton" id="lc_margin_per_carton" readonly>
@@ -228,7 +228,7 @@
                             <tr>
                                 <th>SC Per PC</th>
                                 <td>
-                                    <input margin-input-id="sc_margin" type="number" value="{{ $item->store_cost }}" class="form-control" name="store_cost" id="store_cost" required readonly>
+                                    <input margin-input-id="sc_margin" type="number" value="{{ $item->store_cost }}" class="form-control with-margin" name="store_cost" id="store_cost" required step="0.01">
                                 </td>
                             </tr>
                             <tr>
@@ -420,20 +420,11 @@
     });
 
     $(document).on('input', '.with-margin', function() {
-        const value = Number($(this).val());
-        const moq = Number($('#moq').val());
+        const srp = Number($('#current_srp').val() || 0);
+        const cost = Number($(this).val());
+        const margin = ((srp - cost) / srp * 100).toFixed(2);
         const marginInputId = $(this).attr('margin-input-id');
-        
-        const marginValue = (value / moq * 100).toFixed(2);
-        $(`#${marginInputId}`).val(Number(marginValue));
-
-        if ($(this).attr('id') == 'lc_per_pc') {
-            const storeCost = $('#store_cost');
-            const storeCostValue = ($(this).val() / 100 * 30) + Number($(this).val());
-            storeCost.val(storeCostValue);
-            const scMargin = (storeCostValue / moq * 100).toFixed(2);
-            $('#sc_margin').val(Number(scMargin));
-        }
+        $(`#${marginInputId}`).val(Number(margin));
     });
 </script>
 @endsection

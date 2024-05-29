@@ -6,6 +6,7 @@
 	use CRUDBooster;
 	use App\GachaItemApproval;
 	use App\GachaItemMaster;
+	use App\GachaItemEditHistory;
 	use Schema;
 
 	class AdminGachaItemMasterApprovalsController extends \crocodicstudio\crudbooster\controllers\CBController {
@@ -18,7 +19,7 @@
         {
             DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 			$this->approver = ['MCB TL'];
-			$this->approver_accounting = [];
+			$this->approver_accounting = ['ACCTG HEAD'];
 			$this->main_controller = new AdminGachaItemMastersController;
 
         }
@@ -64,7 +65,7 @@
 			$this->col[] = ['label'=>'CURRENT SRP','name'=>'current_srp'];
 			$this->col[] = ['label'=>'NUMBER OF TOKENS','name'=>'no_of_tokens'];
 			$this->col[] = ['label'=>'LC PER CARTON','name'=>'lc_per_carton'];
-			$this->col[] = ['label'=>'LC MARGIN PER CARTON (%)','name'=>'lc_margin_per_carton'];
+			// $this->col[] = ['label'=>'LC MARGIN PER CARTON (%)','name'=>'lc_margin_per_carton'];
 			$this->col[] = ['label'=>'LC PER PC','name'=>'lc_per_pc'];
 			$this->col[] = ['label'=>'LC MARGIN PER PC (%)','name'=>'lc_margin_per_pc'];
 			$this->col[] = ['label'=>'SC PER PC','name'=>'store_cost'];
@@ -516,10 +517,12 @@
 				'digits_code' => $request['digits_code'],
 				'item_no' => $request['item_no'],
 				'sap_no' => $request['sap_no'],
+				'gacha_product_types_id' => $request['gacha_product_types_id'],
 				'gacha_brands_id' => $request['gacha_brands_id'],
 				'gacha_sku_statuses_id' => $request['gacha_sku_statuses_id'],
 				'item_description' => $item_description,
 				'gacha_models' => $request['gacha_models'],
+				'gacha_categories_id' => $request['gacha_categories_id'],
 				'gacha_wh_categories_id' => $request['gacha_wh_categories_id'],
 				'msrp' => $request['msrp'],
 				'current_srp' => $request['current_srp'],
@@ -644,7 +647,11 @@
 				$item = DB::table('gacha_item_master_approvals')
 					->where('id', $id)
 					->first();
+				$old_item = DB::table('gacha_item_masters')
+					->where('jan_no', $item->jan_no)
+					->first();
 
+				
 				if ($item->approval_status_acct == 200) continue;
 
 				if ($action == 'approve_accounting') {
@@ -664,7 +671,26 @@
 					$item = $item->first();
 					unset($item->id);
 
+					$history = [
+						'digits_code' => $old_item->digits_code,
+						'old_lc_per_carton' => $old_item->lc_per_carton ?? 0,
+						'new_lc_per_carton' => $item->lc_per_carton,
+						'old_lc_per_pc' => $old_item->lc_per_pc ?? 0,
+						'new_lc_per_pc' => $item->lc_per_pc,
+						'old_lc_margin_per_pc' => $old_item->lc_margin_per_pc ?? 0,
+						'new_lc_margin_per_pc' => $item->lc_margin_per_pc,
+						'old_sc_per_pc' => $old_item->store_cost ?? 0,
+						'new_sc_per_pc' => $item->store_cost,
+						'old_sc_margin_per_pc' => $old_item->sc_margin ?? 0,
+						'new_sc_margin_per_pc' => $item->sc_margin,
+						'approved_by_acct' => CRUDBooster::myId(),
+						'approved_at_acct' => date('Y-m-d H:i:s'),
+					];
+		
+
 					DB::table('gacha_item_masters')->updateOrInsert(['digits_code' => $digits_code], (array) $item);
+					DB::table('gacha_item_edit_histories')->updateOrInsert(['digits_code' => $item->digits_code], $history);
+					
 					$message = "✔️ Successfully approved Item: $digits_code";
 					$message_type = "success";
 					
@@ -780,6 +806,7 @@
 		public function submitEditAccounting(Request $request) {
 			$request = $request->all();
 			$digits_code = $request['digits_code'];
+
 			$data = [
 				'approval_status_acct' => 202,
 				'msrp' => $request['msrp'],

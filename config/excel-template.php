@@ -155,4 +155,10 @@ return [
         'AGE GRADE',
         'BATTERY'
     ],
+    'gashapon-item-master-edit' => [
+        'DIGITS CODE',
+        'LC PER CARTON',
+        'LC PER PC',
+        'SC PER PC',
+    ],
 ];

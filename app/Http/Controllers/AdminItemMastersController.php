@@ -98,7 +98,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		
 		# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col[] = ["label"=>"DIGITS CODE","name"=>"digits_code"];
-		$this->col[] = ["label"=>"UPC CODE-1","name"=>"upc_code","visible"=>CRUDBooster::myColumnView()->upc_code ? true:false];
+		$this->col[] = ["label"=>"UPC CODE-1","name"=>"upc_code","visible"=>CRUDBooster::myColumnView()->upc_code_1 ? true:false];
 		$this->col[] = ["label"=>"UPC CODE-2","name"=>"upc_code2","visible"=>false];
 		$this->col[] = ["label"=>"UPC CODE-3","name"=>"upc_code3","visible"=>false];
 		$this->col[] = ["label"=>"UPC CODE-4","name"=>"upc_code4","visible"=>false];
