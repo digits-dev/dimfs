@@ -35,6 +35,7 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
+			$this->col[] = ["label"=>"Subclass Code","name"=>"id"];
 			$this->col[] = ["label"=>"Class","name"=>"classes_id","join"=>"classes,class_description"];
 			$this->col[] = ["label"=>"Subclass Description","name"=>"subclass_description"];
 			$this->col[] = ["label"=>"Status","name"=>"status"];

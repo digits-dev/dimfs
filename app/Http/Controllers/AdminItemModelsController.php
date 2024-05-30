@@ -358,7 +358,7 @@ use Session;
 			
 			foreach(array_flatten($models) as $value){
 				$itemModel = new ItemModel([
-					'model_description' => $value,
+					'model_description' => trim($value),
 					'created_by' => CRUDBooster::myId(),
 					'created_at' => date('Y-m-d H:i:s')
 				]);
