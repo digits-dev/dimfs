@@ -93,11 +93,12 @@
 
 	        $this->button_selected = array();
 			if(CRUDBooster::isUpdate()) {
+				$this->button_selected[] = ['label'=>'---Status---','icon'=>'','name'=>'status'];
 	        	$this->button_selected[] = ["label"=>"Set Brand Status ACTIVE ","icon"=>"fa fa-check-circle","name"=>"set_brand_status_ACTIVE"];
 				$this->button_selected[] = ["label"=>"Set Brand Status INACTIVE","icon"=>"fa fa-times-circle","name"=>"set_brand_status_INACTIVE"];
 				$this->button_selected[] = ['label'=>'Set Brand Status STATUS QUO','icon'=>'fa fa-times-circle','name'=>'set_brand_status_STATUS_QUO'];
-				$this->button_selected[] = ['label'=>'Set Brand Status CORE','icon'=>'fa fa-play-times','name'=>'set_brand_status_CORE'];
-
+				$this->button_selected[] = ['label'=>'Set Brand Status CORE','icon'=>'fa fa-times-circle','name'=>'set_brand_status_CORE'];
+				$this->button_selected[] = ['label'=>'---Group---','icon'=>'','name'=>'group'];
 				$this->button_selected[] = ["label"=>"Set Brand Group APPLE","icon"=>"fa fa-times-circle","name"=>"set_brand_group_APPLE"];
 				$this->button_selected[] = ['label'=>'Set Brand Group NON APPLE','icon'=>'fa fa-times-circle','name'=>'set_brand_group_NONAPPLE'];
 				$this->button_selected[] = ['label'=>'Set Brand Group INVALID','icon'=>'fa fa-times-circle','name'=>'set_brand_group_INVALID'];
