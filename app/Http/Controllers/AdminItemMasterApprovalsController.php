@@ -1,44 +1,22 @@
 <?php namespace App\Http\Controllers;
 
 	use Session;
-	use Request;
 	use DB;
 	use CRUDBooster;
 	use Excel;
-	use App\ActionType;
-	use App\Segmentation;
-	use App\VendorType;
-	use App\Category;
-	use App\Counter;
-	use App\InventoryType;
+	use App\Http\Traits\ItemTraits;
 	use App\ItemIdentifier;
 	use App\ItemMaster;
 	use App\ItemMasterApproval;
 	use App\Size;
-	use App\SkuStatus;
-	use App\StatusState;
-	use App\SupportType;
 	use App\WorkflowSetting;
-	use App\Platform;
-	use App\PromoType;
 
 	class AdminItemMasterApprovalsController extends \crocodicstudio\crudbooster\controllers\CBController {
 
-		private $approved;
-		private $rejected;
-		private $pending;
-		private $module_id;
-		private $create;
-		private $update;
+		use ItemTraits;
 
         public function __construct() {
 			DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
-			$this->approved = StatusState::where('status_state','APPROVED')->value('id');
-			$this->rejected = StatusState::where('status_state','REJECTED')->value('id');
-			$this->pending = StatusState::where('status_state','PENDING')->value('id');
-			$this->create = ActionType::where('action_type',"CREATE")->value('id');
-			$this->update = ActionType::where('action_type',"UPDATE")->value('id');
-			$this->module_id = DB::table('cms_moduls')->where('table_name','item_masters')->value('id');
         }
 
 	    public function cbInit() {
@@ -60,10 +38,6 @@
 			$this->button_export = true;
 			$this->table = "item_master_approvals";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
-
-			$segmentations = Segmentation::where('status','ACTIVE')->orderBy('segmentation_description','ASC')->get();
-    		$platforms = Platform::where('status','ACTIVE')->orderBy('platform_description','ASC')->get();
-    		$promo_types = PromoType::where('status','ACTIVE')->orderBy('promo_type_description','ASC')->get();
     		
     		# START COLUMNS DO NOT REMOVE THIS LINE
     		$this->col = [];
@@ -126,13 +100,10 @@
     		$this->col[] = ["label"=>"INVENTORY TYPE","name"=>"inventory_types_id","join"=>"inventory_types,inventory_type_description","visible"=>CRUDBooster::myColumnView()->inventory_type ? true:false];
     		$this->col[] = ["label"=>"SKU CLASS","name"=>"sku_classes_id","join"=>"sku_classes,sku_class_description","visible"=>CRUDBooster::myColumnView()->sku_class ? true:false];
     		
-    		foreach ($segmentations as $segmentation) {
+    		foreach ($this->getSegmentations() as $segmentation) {
     			$this->col[] = ["label"=>$segmentation->segmentation_description,"name"=>$segmentation->segmentation_column, "visible"=>true];
     		}
-    		
-    // 		$this->col[] = ["label"=>"MAX CONSIGNMENT RATE (%)","name"=>"dtp_dcon_percentage","visible"=>CRUDBooster::myColumnView()->store_cost_pdcon ? true:false];
-    // 		$this->col[] = ["label"=>"LIGHTROOM COST","name"=>"lightroom_cost","visible"=>CRUDBooster::myColumnView()->lightroom_cost ? true:false];
-    		
+			
     		$this->col[] = ["label"=>"VENDOR NAME","name"=>"vendors_id","join"=>"vendors,vendor_name","visible"=>CRUDBooster::myColumnView()->vendor_name ? true:false];
     		$this->col[] = ["label"=>"VENDOR STATUS","name"=>"vendors_id","join"=>"vendors,status","visible"=>CRUDBooster::myColumnView()->vendor_status ? true:false];
     		$this->col[] = ["label"=>"VENDOR GROUP","name"=>"vendor_groups_id","join"=>"vendor_groups,vendor_group_name","visible"=>CRUDBooster::myColumnView()->vendor_group_name ? true:false];
@@ -342,7 +313,7 @@
     			'visible'=>self::getEditAccessOnly('price_effective_date')
     		];
     		
-    		foreach ($promo_types as $promo_type) {
+    		foreach ($this->getPromoTypes() as $promo_type) {
         		$this->form[] = ['label'=>$promo_type->promo_type_description,'name'=>$promo_type->promo_type_column,'type'=>'number','step'=>'.01','width'=>'col-sm-6',
         			
         			'visible'=>self::getEditAccessOnly($promo_type->promo_type_column)
@@ -436,7 +407,7 @@
     			'visible'=>self::getAllAccess('serialized')
     		];
     		
-    		foreach ($segmentations as $segmentation) {
+    		foreach ($this->getSegmentations() as $segmentation) {
     			$this->form[] = ['label'=>$segmentation->segmentation_description,'name'=>$segmentation->segmentation_column,'type'=>'select-custom','validation'=>'required','width'=>'col-sm-6',
     				'datatable'=>'sku_legends,sku_legend_description',
     				'datatable_where'=>"status='ACTIVE'",
@@ -495,182 +466,26 @@
     			'visible'=>self::getDetailAccessOnly('approved_date')
     		];
 			# END FORM DO NOT REMOVE THIS LINE
-
-			/* 
-	        | ---------------------------------------------------------------------- 
-	        | Sub Module
-	        | ----------------------------------------------------------------------     
-			| @label          = Label of action 
-			| @path           = Path of sub module
-			| @foreign_key 	  = foreign key of sub table/module
-			| @button_color   = Bootstrap Class (primary,success,warning,danger)
-			| @button_icon    = Font Awesome Class  
-			| @parent_columns = Separate with comma, e.g : name,created_at
-	        | 
-	        */
-	        $this->sub_module = array();
-
-
-	        /* 
-	        | ---------------------------------------------------------------------- 
-	        | Add More Action Button / Menu
-	        | ----------------------------------------------------------------------     
-	        | @label       = Label of action 
-	        | @url         = Target URL, you can use field alias. e.g : [id], [name], [title], etc
-	        | @icon        = Font awesome class icon. e.g : fa fa-bars
-	        | @color 	   = Default is primary. (primary, warning, succecss, info)     
-	        | @showIf 	   = If condition when action show. Use field alias. e.g : [id] == 1
-	        | 
-	        */
-	        $this->addaction = array();
-
-	        /* 
-	        | ---------------------------------------------------------------------- 
-	        | Add More Button Selected
-	        | ----------------------------------------------------------------------     
-	        | @label       = Label of action 
-	        | @icon 	   = Icon from fontawesome
-	        | @name 	   = Name of button 
-	        | Then about the action, you should code at actionButtonSelected method 
-	        | 
-	        */
+			
 	        $this->button_selected = array();
             if(CRUDBooster::isSuperadmin() || CRUDBooster::myPrivilegeName() == "MCB TL") { //if approver
 	        	$this->button_selected[] = ["label"=>"APPROVE","icon"=>"fa fa-check-circle","name"=>"approve"];
 				$this->button_selected[] = ["label"=>"REJECT","icon"=>"fa fa-times-circle","name"=>"reject"];
 	        }
 	                
-	        /* 
-	        | ---------------------------------------------------------------------- 
-	        | Add alert message to this module at overheader
-	        | ----------------------------------------------------------------------     
-	        | @message = Text of message 
-	        | @type    = warning,success,danger,info        
-	        | 
-	        */
-	        $this->alert = array();
-	                
-
-	        
-	        /* 
-	        | ---------------------------------------------------------------------- 
-	        | Add more button to header button 
-	        | ----------------------------------------------------------------------     
-	        | @label = Name of button 
-	        | @url   = URL Target
-	        | @icon  = Icon from Awesome.
-	        | 
-	        */
 			$this->index_button = array();
 			if(CRUDBooster::getCurrentMethod() == 'getIndex'){
 				$this->index_button[] = ['label'=>'Export Pending Items','title'=>'Export Pending Items','color'=>'warning','url'=>CRUDBooster::mainpath('export-pending'),'icon'=>'fa fa-upload'];
 			}
-
-
-
-	        /* 
-	        | ---------------------------------------------------------------------- 
-	        | Customize Table Row Color
-	        | ----------------------------------------------------------------------     
-	        | @condition = If condition. You may use field alias. E.g : [id] == 1
-	        | @color = Default is none. You can use bootstrap success,info,warning,danger,primary.        
-	        | 
-	        */
+			
 	        $this->table_row_color = array();     	          
             $this->table_row_color[] = ["condition"=>"[approval_status] == '3'","color"=>"danger"];//rejected items
 	        
-	        /*
-	        | ---------------------------------------------------------------------- 
-	        | You may use this bellow array to add statistic at dashboard 
-	        | ---------------------------------------------------------------------- 
-	        | @label, @count, @icon, @color 
-	        |
-	        */
-	        $this->index_statistic = array();
-
-
-
-	        /*
-	        | ---------------------------------------------------------------------- 
-	        | Add javascript at body 
-	        | ---------------------------------------------------------------------- 
-	        | javascript code in the variable 
-	        | $this->script_js = "function() { ... }";
-	        |
-	        */
-	        $this->script_js = NULL;
-
-
-            /*
-	        | ---------------------------------------------------------------------- 
-	        | Include HTML Code before index table 
-	        | ---------------------------------------------------------------------- 
-	        | html code to display it before index table
-	        | $this->pre_index_html = "<p>test</p>";
-	        |
-	        */
-	        $this->pre_index_html = null;
-	        
-	        
-	        
-	        /*
-	        | ---------------------------------------------------------------------- 
-	        | Include HTML Code after index table 
-	        | ---------------------------------------------------------------------- 
-	        | html code to display it after index table
-	        | $this->post_index_html = "<p>test</p>";
-	        |
-	        */
-	        $this->post_index_html = null;
-	        
-	        
-	        
-	        /*
-	        | ---------------------------------------------------------------------- 
-	        | Include Javascript File 
-	        | ---------------------------------------------------------------------- 
-	        | URL of your javascript each array 
-	        | $this->load_js[] = asset("myfile.js");
-	        |
-	        */
 	        $this->load_js = array();
-	        $this->load_js[] = asset("js/item_master_approval.js");
-	        
-	        
-	        /*
-	        | ---------------------------------------------------------------------- 
-	        | Add css style at body 
-	        | ---------------------------------------------------------------------- 
-	        | css code in the variable 
-	        | $this->style_css = ".style{....}";
-	        |
-	        */
-	        $this->style_css = NULL;
-	        
-	        
-	        
-	        /*
-	        | ---------------------------------------------------------------------- 
-	        | Include css File 
-	        | ---------------------------------------------------------------------- 
-	        | URL of your css each array 
-	        | $this->load_css[] = asset("myfile.css");
-	        |
-	        */
-	        $this->load_css = array();
-	        
+	        $this->load_js[] = asset("js/item_master_approval.js");        
 	        
 	    }
-
-
-	    /*
-	    | ---------------------------------------------------------------------- 
-	    | Hook for button selected
-	    | ---------------------------------------------------------------------- 
-	    | @id_selected = the id selected
-	    | @button_name = the name of button
-	    |
-	    */
+		
 	    public function actionButtonSelected($id_selected,$button_name) {
 			//Your code here
 			$selected_items = ItemMasterApproval::whereIn('id',$id_selected)->get();
@@ -687,7 +502,7 @@
 								//update digits code
 								ItemMasterApproval::where('id',$item->id)->update([
 									'digits_code'=>$itemCode,
-									'approval_status'=>$this->approved,
+									'approval_status'=>$this->getStatusByDescription('APPROVED'),
 									'approved_by'=>CRUDBooster::myId(),
 									'approved_at'=>date('Y-m-d H:i:s')
 								]);
@@ -697,7 +512,7 @@
 								unset($new_item['id']);
 								ItemMaster::where('id',$item->item_masters_id)->update($new_item);
 
-								$this->updateCodeCounter(substr($itemCode, 0, 1));
+								$this->updateCounter(substr($itemCode, 0, 1));
 								//send notification
 								$this->sendApprovedNotification($itemCode,$item->created_by);
 							}
@@ -711,7 +526,7 @@
 						foreach ($selected_items as $item) {
 							if(is_null($item->digits_code)){
 								ItemMasterApproval::where('id',$item->id)->update([
-									'approval_status'=>$this->rejected
+									'approval_status'=>$this->getStatusByDescription('REJECTED')
 								]);
 
 								$this->sendRejectedNotification($item->upc_code,$item->id,$item->created_by);
@@ -738,60 +553,23 @@
 	    public function hook_query_index(&$query) {
 			//Your code here
 			if(in_array(CRUDBooster::myPrivilegeName(),["ADMIN","MCB TL"]))
-				$query->where('item_master_approvals.approval_status',$this->pending); 
+				$query->where('item_master_approvals.approval_status',$this->getStatusByDescription('PENDING')); 
 			elseif(!CRUDBooster::isSuperadmin()) {
 				$query->where([
 					'item_master_approvals.created_by'=>CRUDBooster::myId(),
-					'item_master_approvals.approval_status'=>$this->rejected
+					'item_master_approvals.approval_status'=>$this->getStatusByDescription('REJECTED')
 				]);
 			}   
 	    }
-
-	    /*
-	    | ---------------------------------------------------------------------- 
-	    | Hook for manipulate row of index table html 
-	    | ---------------------------------------------------------------------- 
-	    |
-	    */    
-	    public function hook_row_index($column_index,&$column_value) {	        
-	    	//Your code here
-	    }
-
-	    /*
-	    | ---------------------------------------------------------------------- 
-	    | Hook for manipulate data input before add data is execute
-	    | ---------------------------------------------------------------------- 
-	    | @arr
-	    |
-	    */
+		
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
             $postdata["created_by"]=CRUDBooster::myId();
 	    }
 
-	    /* 
-	    | ---------------------------------------------------------------------- 
-	    | Hook for execute command after add public static function called 
-	    | ---------------------------------------------------------------------- 
-	    | @id = last insert id
-	    | 
-	    */
-	    public function hook_after_add($id) {        
-	        //Your code here
-
-	    }
-
-	    /* 
-	    | ---------------------------------------------------------------------- 
-	    | Hook for manipulate data input before update data is execute
-	    | ---------------------------------------------------------------------- 
-	    | @postdata = input post data 
-	    | @id       = current id 
-	    | 
-	    */
 	    public function hook_before_edit(&$postdata,$id) {        
 			//Your code here
-			$size = Size::where('id',$postdata["sizes_id"])->value('size_code');
+			$size = Size::getSizeCode($postdata["sizes_id"]);
 			
             if(isset($postdata["warranty_duration"])){
                 if(is_null($postdata["warranty_duration"]) || $postdata["warranty_duration"] == "")
@@ -801,55 +579,19 @@
     	        $postdata['compatibility'] = implode(" / ",$postdata['compatibility']);
     		}
 			$postdata["size"] = ($postdata["size_value"] == 0)? $size : $postdata["size_value"].''.$size;
-			$postdata["approval_status"] = $this->pending;
+			$postdata["approval_status"] = $this->getStatusByDescription("PENDING");
 			$postdata["updated_by"] = CRUDBooster::myId();
 			$this->setSerialFlags($postdata);
 	    }
-
-	    /* 
-	    | ---------------------------------------------------------------------- 
-	    | Hook for execute command after edit public static function called
-	    | ----------------------------------------------------------------------     
-	    | @id       = current id 
-	    | 
-	    */
+		
 	    public function hook_after_edit($id) {
 	        //Your code here 
 			$item = ItemMasterApproval::where('id', $id)->first();
 			$this->sendUpdateNotification($item->upc_code, CRUDBooster::myPrivilegeId());
 	    }
-
-	    /* 
-	    | ---------------------------------------------------------------------- 
-	    | Hook for execute command before delete public static function called
-	    | ----------------------------------------------------------------------     
-	    | @id       = current id 
-	    | 
-	    */
-	    public function hook_before_delete($id) {
-	        //Your code here
-
-	    }
-
-	    /* 
-	    | ---------------------------------------------------------------------- 
-	    | Hook for execute command after delete public static function called
-	    | ----------------------------------------------------------------------     
-	    | @id       = current id 
-	    | 
-	    */
-	    public function hook_after_delete($id) {
-	        //Your code here
-
-		}
 		
 		public function getEdit($id) {
-			$edit_item = ItemMasterApproval::where('item_master_approvals.id',$id)
-				->join('brands','item_master_approvals.brands_id','=','brands.id')
-				->join('categories','item_master_approvals.categories_id','=','categories.id')
-				->join('model_specifics','item_master_approvals.model_specifics_id','=','model_specifics.id')
-				->join('sizes','item_master_approvals.sizes_id','=','sizes.id')
-				->first();
+			$edit_item = ItemMasterApproval::getEditDetails($id)->first();
 
 			Session::put('brand_code'.CRUDBooster::myId(), $edit_item->brand_code);
 			Session::put('category_code'.CRUDBooster::myId(), $edit_item->category_code);
@@ -862,75 +604,16 @@
 			return parent::getEdit($id);
 		}
 
-		public function updateCodeCounter($item_code) {
-
-			switch ($item_code) {
-				case '1':
-					Counter::where('cms_moduls_id',$this->module_id)->increment('code_1');
-					break;
-				case '2':
-					Counter::where('cms_moduls_id',$this->module_id)->increment('code_2');
-					break;
-				case '3':
-					Counter::where('cms_moduls_id',$this->module_id)->increment('code_3');
-					break;
-				case '4':
-					Counter::where('cms_moduls_id',$this->module_id)->increment('code_4');
-					break;
-				case '5':
-					Counter::where('cms_moduls_id',$this->module_id)->increment('code_5');
-					break;
-				case '6':
-					Counter::where('cms_moduls_id',$this->module_id)->increment('code_6');
-					break;
-				case '7':
-					Counter::where('cms_moduls_id',$this->module_id)->increment('code_7');
-					break;
-				case '8':
-					Counter::where('cms_moduls_id',$this->module_id)->increment('code_8');
-					break;
-				case '9':
-					Counter::where('cms_moduls_id',$this->module_id)->increment('code_9');
-					break;
-				
-				default:
-					# code...
-					break;
-			}
-		}
-
 		public function generateItemCode($category_id, $inventory_type_id, $vendor_type_id) {
-			$category_code = Category::where('id',$category_id)->value('category_code');
-			$inventory_type = InventoryType::where('id',$inventory_type_id)->value('inventory_type_code');
-			$vendor_type = VendorType::where('id',$vendor_type_id)->value('vendor_type_code');
 
-			if($category_code == 'SPR') {
-				return Counter::where('cms_moduls_id', $this->module_id)->value('code_2');
-			}
-			elseif(in_array($category_code,['DEM','SAM'])) {
-				return Counter::where('cms_moduls_id', $this->module_id)->value('code_9');
-			}
-			elseif(in_array($category_code,['MKT','PPB','OTH'])) {
-				return Counter::where('cms_moduls_id', $this->module_id)->value('code_3');
-			}
-			else {
-				if($inventory_type == 'N-TRADE') {
-					return Counter::where('cms_moduls_id', $this->module_id)->value('code_3');
-				}
-				else {
-					if(in_array($vendor_type,['IMP-OUT','LR-OUT','LOC-OUT'])) {
-						return Counter::where('cms_moduls_id', $this->module_id)->value('code_8');
-					}
-					elseif(in_array($vendor_type,['IMP-CON','LOC-CON','LR-CON'])){
-						return Counter::where('cms_moduls_id', $this->module_id)->value('code_7');
-					}
-				}
-			}
+			$data=[
+				// 'module_id' => $module_id,
+				'category_id' => $category_id,
+				'inventory_type_id' => $inventory_type_id,
+				'vendor_type_id' => $vendor_type_id
+			];
+			return $this->getDigitsCode($data);
 			
-		}
-
-		public function makeHistoryChanges(&$postdata) {
-			# code...
 		}
 
 		public function sendApprovedNotification($item_code,$encoder_id) {
@@ -954,7 +637,7 @@
 			//get workflow settings
 			$workflow = WorkflowSetting::where([
 				'cms_moduls_id'=>$this->module_id,
-				'action_types_id'=>$this->create,
+				'action_types_id'=>$this->getActionByDescription("CREATE"),
 				'encoder_privileges_id'=>$encoder_id
 			])->first();
 			
@@ -974,7 +657,7 @@
 			$item_identifiers = explode(';',$postdata["serialized"]);
 
 			//get field names with respect to what module name
-			$field_names = ItemIdentifier::where('status','ACTIVE')->orderBy('item_identifier','ASC')->get();
+			$field_names = $this->getItemIdentifier();
 
 			if(!empty($item_identifiers)){
 				//reset field names to 0 flag
@@ -1004,33 +687,22 @@
 
 		public function exportPendingItems(){
 			//export excel all pending items for approval
-			$pendingItems = ItemMasterApproval::join('brands','item_master_approvals.brands_id','=','brands.id')
-				->join('categories','item_master_approvals.categories_id','=','categories.id')
-				->join('cms_users','item_master_approvals.created_by','=','cms_users.id')
-				->select(
-					'upc_code',
-					'supplier_item_code',
-					'item_description',
-					'brands.brand_description',
-					'categories.category_description',
-					'cms_users.name as encoded_by',
-					'item_master_approvals.created_at as creation_date'
-				)->where('approval_status',$this->pending);
+			$pendingItems = ItemMasterApproval::getPendingItems()
+				->where('item_master_approvals.approval_status',$this->getStatusByDescription("PENDING"));
 
 			if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(),["ADMIN","MCB TL"])){
 				$pendingItems->where('item_master_approvals.created_by',CRUDBooster::myId());
 			}
-			$pending_Items = $pendingItems->orderBy('item_master_approvals.created_at','asc')->get();
+			$pending_Items = $pendingItems->get();
+			$headings = array('UPC Code','Supplier Item Code','Item Description','Brand Description','Category Description','Created By','Created Date');
 
-			Excel::create('Pending Items for Approval-'.date("d M Y - h.i.sa"), function($excel) use ($pending_Items) {
-				$excel->sheet('pending-items', function($sheet) use ($pending_Items) {
+			Excel::create('Pending Items for Approval-'.date("d M Y - h.i.sa"), function($excel) use ($pending_Items,$headings) {
+				$excel->sheet('pending-items', function($sheet) use ($pending_Items,$headings) {
 		        	// Set auto size for sheet
 					$sheet->setAutoSIZE(true);
 					$sheet->setColumnFormat(array(
 
 					));
-		        	
-		        	$headings = array('UPC Code','Supplier Item Code','Item Description','Brand Description','Category Description','Created By','Created Date');
 					
 					foreach($pending_Items as $item) {
 
