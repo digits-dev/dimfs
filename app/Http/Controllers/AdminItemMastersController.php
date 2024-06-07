@@ -4,48 +4,29 @@
 	use DB;
 	use CRUDBooster;
 	use Excel;
-	use App\ActionType;
-	use App\Brand;
-	use App\Category;
-	use App\Color;
-	use App\Currency;
-	use App\MarginCategory;
-	use App\ModelSpecific;
 	use App\MarginMatrix;
-	use App\Counter;
 	use App\HistoryLandedCost;
 	use App\HistoryStoreCost;
 	use App\HistorySupplierCost;
 	use App\HistoryUpcCode;
+	use App\Http\Traits\ItemTraits;
 	use App\InventoryType;
-	use App\ItemIdentifier;
 	use App\ItemMaster;
 	use App\ItemMasterApproval;
 	use App\ItemPriceChangeApproval;
 	use App\ItemCurrentPriceChange;
-	use App\Incoterm;
 	use App\Platform;
-	use App\PromoType;
-	use App\Segmentation;
-	use App\SkuLegend;
-	use App\Subclass;
 	use App\Size;
 	use App\SkuStatus;
-	use App\SkuClass;
-	use App\StatusState;
-	use App\SupportType;
-	use App\Uom;
-	use App\Vendor;
-	use App\VendorType;
-	use App\WarehouseCategory;
 	use App\WorkflowSetting;
 	use Carbon\Carbon;
-	// use Illuminate\Support\Facades\Request;
 	use Illuminate\Support\Facades\Input;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Arr;
 
 class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers\CBController {
+
+	use ItemTraits;
 	
 	private $approved;
 	private $rejected;
@@ -59,12 +40,9 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 
 	public function __construct() {
 		DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
-		$this->approved = StatusState::where('status_state','APPROVED')->value('id');
-		$this->rejected = StatusState::where('status_state','REJECTED')->value('id');
-		$this->pending = StatusState::where('status_state','PENDING')->value('id');
-
-		$this->create = ActionType::where('action_type',"CREATE")->value('id');
-		$this->update = ActionType::where('action_type',"UPDATE")->value('id');
+		// $this->approved = StatusState::where('status_state','APPROVED')->value('id');
+		// $this->rejected = StatusState::where('status_state','REJECTED')->value('id');
+		// $this->pending = StatusState::where('status_state','PENDING')->value('id');
 		$this->active = SkuStatus::where('sku_status_description','ACTIVE')->value('id');
 		$this->invalid = SkuStatus::where('sku_status_description','INVALID')->value('id');
 		$this->inactive_inventory = InventoryType::where('inventory_type_description','INACTIVE')->value('id');
@@ -92,10 +70,6 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		$this->table = "item_masters";
 		# END CONFIGURATION DO NOT REMOVE THIS LINE
 
-		$segmentations = Segmentation::where('status','ACTIVE')->orderBy('segmentation_description','ASC')->get();
-		$platforms = Platform::where('status','ACTIVE')->orderBy('platform_description','ASC')->get();
-// 		$promo_types = PromoType::where('status','ACTIVE')->orderBy('promo_type_description','ASC')->get();
-		
 		# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col[] = ["label"=>"DIGITS CODE","name"=>"digits_code"];
 		$this->col[] = ["label"=>"UPC CODE-1","name"=>"upc_code","visible"=>CRUDBooster::myColumnView()->upc_code_1 ? true:false];
@@ -166,11 +140,9 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		$this->col[] = ["label"=>"INVENTORY TYPE","name"=>"inventory_types_id","join"=>"inventory_types,inventory_type_description","visible"=>CRUDBooster::myColumnView()->inventory_type ? true:false];
 		$this->col[] = ["label"=>"SKU CLASS","name"=>"sku_classes_id","join"=>"sku_classes,sku_class_description","visible"=>CRUDBooster::myColumnView()->sku_class ? true:false];
 		
-		foreach ($segmentations as $segmentation) {
+		foreach ($this->getSegmentations() as $segmentation) {
 			$this->col[] = ["label"=>$segmentation->segmentation_description,"name"=>$segmentation->segmentation_column, "visible"=>false];
 		}
-// 		$this->col[] = ["label"=>"MAX CONSIGNMENT RATE (%)","name"=>"dtp_dcon_percentage","visible"=>CRUDBooster::myColumnView()->store_cost_pdcon ? true:false];
-// 		$this->col[] = ["label"=>"LIGHTROOM COST","name"=>"lightroom_cost","visible"=>CRUDBooster::myColumnView()->lightroom_cost ? true:false];
 		
 		$this->col[] = ["label"=>"VENDOR NAME","name"=>"vendors_id","join"=>"vendors,vendor_name","visible"=>CRUDBooster::myColumnView()->vendor_name ? true:false];
 		$this->col[] = ["label"=>"VENDOR STATUS","name"=>"vendors_id","join"=>"vendors,status","visible"=>CRUDBooster::myColumnView()->vendor_status ? true:false];
@@ -543,7 +515,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			'visible'=>self::getAllAccess('serialized')
 		];
 		
-		foreach ($segmentations as $segmentation) {
+		foreach ($this->getSegmentations() as $segmentation) {
 			$this->form[] = ['label'=>$segmentation->segmentation_description,'name'=>$segmentation->segmentation_column,'type'=>'select-custom','validation'=>'required','width'=>'col-sm-6',
 				'datatable'=>'sku_legends,sku_legend_description',
 				'datatable_where'=>"status='ACTIVE'",
@@ -606,75 +578,13 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			'visible'=>self::getDetailAccessOnly('approved_date')
 		];
 		
-		// dd($this->form);
-		# END FORM DO NOT REMOVE THIS LINE
-
-		/* 
-		| ---------------------------------------------------------------------- 
-		| Sub Module
-		| ----------------------------------------------------------------------     
-		| @label          = Label of action 
-		| @path           = Path of sub module
-		| @foreign_key 	  = foreign key of sub table/module
-		| @button_color   = Bootstrap Class (primary,success,warning,danger)
-		| @button_icon    = Font Awesome Class  
-		| @parent_columns = Separate with comma, e.g : name,created_at
-		| 
-		*/
-		$this->sub_module = array();
-
-
-		/* 
-		| ---------------------------------------------------------------------- 
-		| Add More Action Button / Menu
-		| ----------------------------------------------------------------------     
-		| @label       = Label of action 
-		| @url         = Target URL, you can use field alias. e.g : [id], [name], [title], etc
-		| @icon        = Font awesome class icon. e.g : fa fa-bars
-		| @color 	   = Default is primary. (primary, warning, succecss, info)     
-		| @showIf 	   = If condition when action show. Use field alias. e.g : [id] == 1
-		| 
-		*/
-		$this->addaction = array();
-
-
-		/* 
-		| ---------------------------------------------------------------------- 
-		| Add More Button Selected
-		| ----------------------------------------------------------------------     
-		| @label       = Label of action 
-		| @icon 	   = Icon from fontawesome
-		| @name 	   = Name of button 
-		| Then about the action, you should code at actionButtonSelected method 
-		| 
-		*/
+		
 		$this->button_selected = array();
 		if(CRUDBooster::isUpdate() && CRUDBooster::isSuperadmin()) { //
 			$this->button_selected[] = ["label"=>"Set SKU Status ACTIVE","icon"=>"fa fa-check-circle","name"=>"set_sku_status_ACTIVE"];
 			$this->button_selected[] = ["label"=>"Set SKU Status INVALID","icon"=>"fa fa-times-circle","name"=>"set_sku_status_INVALID"];
 		}
-				
-		/* 
-		| ---------------------------------------------------------------------- 
-		| Add alert message to this module at overheader
-		| ----------------------------------------------------------------------     
-		| @message = Text of message 
-		| @type    = warning,success,danger,info        
-		| 
-		*/
-		$this->alert = array();
-				
 
-		
-		/* 
-		| ---------------------------------------------------------------------- 
-		| Add more button to header button 
-		| ----------------------------------------------------------------------     
-		| @label = Name of button 
-		| @url   = URL Target
-		| @icon  = Icon from Awesome.
-		| 
-		*/
 		$this->index_button = array();
 		if(CRUDBooster::getCurrentMethod() == 'getIndex') {
 
@@ -694,37 +604,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		
 			    
 		}
-
-
-		/* 
-		| ---------------------------------------------------------------------- 
-		| Customize Table Row Color
-		| ----------------------------------------------------------------------     
-		| @condition = If condition. You may use field alias. E.g : [id] == 1
-		| @color = Default is none. You can use bootstrap success,info,warning,danger,primary.        
-		| 
-		*/
-		$this->table_row_color = array();
 		
-		/*
-		| ---------------------------------------------------------------------- 
-		| You may use this bellow array to add statistic at dashboard 
-		| ---------------------------------------------------------------------- 
-		| @label, @count, @icon, @color 
-		|
-		*/
-		$this->index_statistic = array();
-
-
-
-		/*
-		| ---------------------------------------------------------------------- 
-		| Add javascript at body 
-		| ---------------------------------------------------------------------- 
-		| javascript code in the variable 
-		| $this->script_js = "function() { ... }";
-		|
-		*/
 		$this->script_js = NULL;
         $this->script_js = "$(function() {
 		    var current_privilege = '".CRUDBooster::myPrivilegeName()."';
@@ -735,63 +615,10 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
                 $('.open-datetimepicker').css('pointer-events','none');
             }
 		});";
-
-		/*
-		| ---------------------------------------------------------------------- 
-		| Include HTML Code before index table 
-		| ---------------------------------------------------------------------- 
-		| html code to display it before index table
-		| $this->pre_index_html = "<p>test</p>";
-		|
-		*/
-		$this->pre_index_html = null;
 		
-		
-		
-		/*
-		| ---------------------------------------------------------------------- 
-		| Include HTML Code after index table 
-		| ---------------------------------------------------------------------- 
-		| html code to display it after index table
-		| $this->post_index_html = "<p>test</p>";
-		|
-		*/
-		$this->post_index_html = null;
-		
-		
-		
-		/*
-		| ---------------------------------------------------------------------- 
-		| Include Javascript File 
-		| ---------------------------------------------------------------------- 
-		| URL of your javascript each array 
-		| $this->load_js[] = asset("myfile.js");
-		|
-		*/
 		$this->load_js = array();
 		$this->load_js[] = asset("js/item_master.js").'?r='.time();
 		
-		
-		/*
-		| ---------------------------------------------------------------------- 
-		| Add css style at body 
-		| ---------------------------------------------------------------------- 
-		| css code in the variable 
-		| $this->style_css = ".style{....}";
-		|
-		*/
-		$this->style_css = NULL;
-		
-		
-		
-		/*
-		| ---------------------------------------------------------------------- 
-		| Include css File 
-		| ---------------------------------------------------------------------- 
-		| URL of your css each array 
-		| $this->load_css[] = asset("myfile.css");
-		|
-		*/
 		$this->load_css = array();
 		$this->load_css[] = asset("css/item_master.css");
 		
@@ -847,10 +674,10 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		//Your code here
 		
 		if(!CRUDBooster::isSuperadmin() && (in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","MCB TM","ACCTG HEAD","ADVANCED","REPORTS","ECOMM STORE MDSG TL"]))){
-        	$query->where('approval_status',$this->approved);
+        	$query->where('approval_status',$this->getStatusByDescription('APPROVED'));
         }
 		else if(!CRUDBooster::isSuperadmin() && (!in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","ACCTG HEAD","ADVANCED","REPORTS","ECOMM STORE MDSG TL"]))){
-		    $query->where('approval_status',$this->approved)
+		    $query->where('approval_status',$this->getStatusByDescription('APPROVED'))
 		        ->where('inventory_types_id','!=',$this->inactive_inventory)
 		        ->where('sku_statuses_id','!=',$this->invalid);
 		}
@@ -883,7 +710,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		$postdata["warranties_id"] = 0;
 		$postdata["warranty_duration"] = 0;
 		$postdata["sku_statuses_id"] = $this->active;
-		$postdata["approval_status"] = $this->pending;
+		$postdata["approval_status"] = $this->getStatusByDescription('PENDING');
 		$postdata["current_srp"] = $postdata["original_srp"];
 		if(isset($postdata["promo_srp"])){
 		    $postdata["bau_price"] = $postdata["promo_srp"];
@@ -896,15 +723,14 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
            $this->setSerialFlags($postdata); 
         }
         else{
-            $field_names = ItemIdentifier::where('status','ACTIVE')->orderBy('item_identifier','ASC')->get();
             $postdata["serialized"]=NULL;
-            foreach ($field_names as $field_name) {
+            foreach ($this->getItemIdentifier() as $field_name) {
                 $postdata[$field_name->column_field_name]=0;
             }
         }
 		if(CRUDBooster::isSuperadmin() || CRUDBooster::myPrivilegeName() == "ADVANCED"){
 			$postdata["digits_code"] = $this->generateItemCode($postdata["categories_id"], $postdata["inventory_types_id"], $postdata["vendor_types_id"]);
-			$postdata["approval_status"] = $this->approved;
+			$postdata["approval_status"] = $this->getStatusByDescription('APPROVED');
 			$postdata["approved_by"] = CRUDBooster::myId();
 			$postdata["approved_at"] = date('Y-m-d H:i:s');
 		}
@@ -915,14 +741,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		unset($postdata["deduct_from_percent_landed_cost"]);
         unset($postdata["ecom_deduct_from_percent_landed_cost"]);
 	}
-
-	/* 
-	| ---------------------------------------------------------------------- 
-	| Hook for execute command after add public static function called 
-	| ---------------------------------------------------------------------- 
-	| @id = last insert id
-	| 
-	*/
+	
 	public function hook_after_add($id) {        
 		//Your code here
 		$item = ItemMaster::where('id', $id)->first();
@@ -938,15 +757,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			$this->sendCreateNotification($item->upc_code, CRUDBooster::myPrivilegeId());
 		}
 	}
-
-	/* 
-	| ---------------------------------------------------------------------- 
-	| Hook for manipulate data input before update data is execute
-	| ---------------------------------------------------------------------- 
-	| @postdata = input post data 
-	| @id       = current id 
-	| 
-	*/
+	
 	public function hook_before_edit(&$postdata,$id) {        
 		//Your code here
 		$existingItem = ItemMaster::where('id', $id)->first();
@@ -961,9 +772,8 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
     			self::setSerialFlags($postdata);
     		}
     		else{
-    		    $field_names = ItemIdentifier::where('status','ACTIVE')->orderBy('item_identifier','ASC')->get();
     		    $postdata["serialized"]=NULL;
-    			foreach ($field_names as $field_name) {
+    			foreach ($this->getItemIdentifier() as $field_name) {
     				$postdata[$field_name->column_field_name]=0;
     			}
     		}
@@ -1051,7 +861,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
                 'duration_from'     => $postdata["duration_from"],
                 'duration_to'       => $postdata["duration_to"],
                 'support_types_id'  => $postdata["support_types_id"],
-                'approval_status'       => $this->pending,
+                'approval_status'       => $this->getStatusByDescription('PENDING'),
                 'encoder_privileges_id' => CRUDBooster::myPrivilegeId(),
                 'updated_by'            => CRUDBooster::myId(),
                 'created_at'            => date('Y-m-d H:i:s')
@@ -1099,50 +909,9 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		
 		$postdata = array_filter($postdata, 'strlen');
 	}
-
-	/* 
-	| ---------------------------------------------------------------------- 
-	| Hook for execute command after edit public static function called
-	| ----------------------------------------------------------------------     
-	| @id       = current id 
-	| 
-	*/
-	public function hook_after_edit($id) {
-		//Your code here 
-
-	}
-
-	/* 
-	| ---------------------------------------------------------------------- 
-	| Hook for execute command before delete public static function called
-	| ----------------------------------------------------------------------     
-	| @id       = current id 
-	| 
-	*/
-	public function hook_before_delete($id) {
-		//Your code here
-
-	}
-
-	/* 
-	| ---------------------------------------------------------------------- 
-	| Hook for execute command after delete public static function called
-	| ----------------------------------------------------------------------     
-	| @id       = current id 
-	| 
-	*/
-	public function hook_after_delete($id) {
-		//Your code here
-
-	}
 	
 	public function getEdit($id) {
-		$edit_item = ItemMaster::where('item_masters.id',$id)
-			->join('brands','item_masters.brands_id','=','brands.id')
-			->join('categories','item_masters.categories_id','=','categories.id')
-			->join('model_specifics','item_masters.model_specifics_id','=','model_specifics.id')
-			->join('sizes','item_masters.sizes_id','=','sizes.id')
-			->first();
+		$edit_item = ItemMaster::getEditDetails($id)->first();
 
 		Session::put('brand_code'.CRUDBooster::myId(), $edit_item->brand_code);
 		Session::put('category_code'.CRUDBooster::myId(), $edit_item->category_code);
@@ -1156,71 +925,18 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 	}
 
 	public function updateCodeCounter($item_code) {
-		$module_id = CRUDBooster::getCurrentModule()->id;
-
-		switch ($item_code) {
-			case '1':
-				Counter::where('cms_moduls_id',$module_id)->increment('code_1');
-				break;
-			case '2':
-				Counter::where('cms_moduls_id',$module_id)->increment('code_2');
-				break;
-			case '3':
-				Counter::where('cms_moduls_id',$module_id)->increment('code_3');
-				break;
-			case '4':
-				Counter::where('cms_moduls_id',$module_id)->increment('code_4');
-				break;
-			case '5':
-				Counter::where('cms_moduls_id',$module_id)->increment('code_5');
-				break;
-			case '6':
-				Counter::where('cms_moduls_id',$module_id)->increment('code_6');
-				break;
-			case '7':
-				Counter::where('cms_moduls_id',$module_id)->increment('code_7');
-				break;
-			case '8':
-				Counter::where('cms_moduls_id',$module_id)->increment('code_8');
-				break;
-			case '9':
-				Counter::where('cms_moduls_id',$module_id)->increment('code_9');
-				break;
-			
-			default:
-				# code...
-				break;
-		}
+		$this->updateCounter($item_code);
 	}
 
 	public function generateItemCode($category_id, $inventory_type_id, $vendor_type_id) {
-		$module_id = CRUDBooster::getCurrentModule()->id;
-		$category_code = Category::where('id',$category_id)->value('category_code');
-		$inventory_type = InventoryType::where('id',$inventory_type_id)->value('inventory_type_code');
-		$vendor_type = VendorType::where('id',$vendor_type_id)->value('vendor_type_code');
-
-		if($category_code == 'SPR') {
-			return Counter::where('cms_moduls_id', $module_id)->value('code_2');
-		}
-		elseif(in_array($category_code,['DEM','SAM'])) {
-			return Counter::where('cms_moduls_id', $module_id)->value('code_9');
-		}
-		elseif(in_array($category_code,['MKT','PPB','OTH'])) {
-			return Counter::where('cms_moduls_id', $module_id)->value('code_3');
-		}
-		else {
-			if($inventory_type == 'N-TRADE') {
-				return Counter::where('cms_moduls_id', $module_id)->value('code_3');
-			}
-			else {
-				if(in_array($vendor_type,['IMP-OUT','LR-OUT','LOC-OUT'])) {
-					return Counter::where('cms_moduls_id', $module_id)->value('code_8');
-				}
-				elseif(in_array($vendor_type,['IMP-CON','LOC-CON','LR-CON'])){
-					return Counter::where('cms_moduls_id', $module_id)->value('code_7');
-				}
-			}
-		}
+		// $module_id = CRUDBooster::getCurrentModule()->id;
+		$data=[
+			// 'module_id' => $module_id,
+			'category_id' => $category_id,
+			'inventory_type_id' => $inventory_type_id,
+			'vendor_type_id' => $vendor_type_id
+		];
+		return $this->getDigitsCode($data);
 		
 	}
 
@@ -1262,7 +978,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		//get workflow settings
 		$workflow = WorkflowSetting::where([
 			'cms_moduls_id'=>CRUDBooster::getCurrentModule()->id,
-			'action_types_id'=>$this->create,
+			'action_types_id'=>$this->getActionByDescription("CREATE"),
 			'encoder_privileges_id'=>$encoder_id
 		])->first();
 		
@@ -1281,7 +997,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		//get workflow settings
 		$workflow = WorkflowSetting::where([
 			'cms_moduls_id'=>CRUDBooster::getCurrentModule()->id,
-			'action_types_id'=>$this->update,
+			'action_types_id'=>$this->getActionByDescription("UPDATE"),
 			'encoder_privileges_id'=>$encoder_id
 		])->first();
 		
@@ -1301,7 +1017,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		$item_identifiers = explode(';',$postdata["serialized"]);
 
 		//get field names with respect to what module name
-		$field_names = ItemIdentifier::where('status','ACTIVE')->orderBy('item_identifier','ASC')->get();
+		$field_names = $this->getItemIdentifier();
 
 		if(!empty($item_identifiers) || !is_null($item_identifiers)){
 			//reset field names to 0 flag
@@ -1363,11 +1079,106 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		}
 	}
 
-	public function exportPOSFormat(Request $request) {
-    ini_set('memory_limit', '-1');
-		Excel::create('Export DIMFSv3.0 POS Items - '.date("Ymd H:i:sa"), function($excel) {
-			$excel->sheet('posformat', function($sheet)
-			{
+	public function exportPOSFormat() {
+
+		$pos_item = ItemMaster::posFormat();
+
+		if(\Request::get('filter_column')) {
+
+			$filter_column = \Request::get('filter_column');
+
+			$pos_item->where(function($w) use ($filter_column,$fc) {
+				foreach($filter_column as $key=>$fc) {
+
+					$value = @$fc['value'];
+					$type  = @$fc['type'];
+
+					if($type == 'empty') {
+						$w->whereNull($key)->orWhere($key,'');
+						continue;
+					}
+
+					if($value=='' || $type=='') continue;
+
+					if($type == 'between') continue;
+
+					switch($type) {
+						default:
+							if($key && $type && $value) $w->where($key,$type,$value);
+						break;
+						case 'like':
+						case 'not like':
+							$value = '%'.$value.'%';
+							if($key && $type && $value) $w->where($key,$type,$value);
+						break;
+						case 'in':
+						case 'not in':
+							if($value) {
+								$value = explode(',',$value);
+								if($key && $value) $w->whereIn($key,$value);
+							}
+						break;
+					}
+				}
+			});
+
+			foreach($filter_column as $key=>$fc) {
+				$value = @$fc['value'];
+				$type  = @$fc['type'];
+				$sorting = @$fc['sorting'];
+
+				if($sorting!='') {
+					if($key) {
+						$pos_item->orderby($key,$sorting);
+						$filter_is_orderby = true;
+					}
+				}
+
+				if ($type=='between') {
+					if($key && $value) $pos_item->whereBetween($key,$value);
+				}
+
+				else {
+					continue;
+				}
+			}
+		}
+
+		$posItems = $pos_item->get();
+		
+		$headings = array('Product ID',
+			'Product Name',
+			'Active Flag',
+			'Memo',
+			'Tax Type',
+			'Sale Flag',
+			'Unit of Measure ID',
+			'Standard Cost',
+			'List Price',
+			'Generic Name',
+			'Barcode 1',
+			'Barcode 2',
+			'Barcode 3',
+			'Alternate Code',
+			'Product Type',
+			'Class ID',
+			'Color Highlight',
+			'Supplier ID',
+			'Reorder Quantity',
+			'Track Expiry',
+			'Track Warranty',
+			'Warranty Duration',
+			'Duration Type',
+			'Category 1',
+			'Category 2',
+			'Category 3',
+			'Category 4',
+			'Category 5',
+			'Category 6');
+
+		Excel::create('Export DIMFSv3.0 POS Items - '.date("Ymd H:i:sa"), function($excel) use ($posItems, $headings) {
+
+			$excel->sheet('posformat', function($sheet) use ($posItems, $headings) {
 				// Set auto size for sheet
 				$sheet->setAutoSIZE(true);
 				$sheet->setColumnFormat(array(
@@ -1375,129 +1186,8 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 					'I' => '0.00',	//for list price
 					'K' => '@',		//for upc code/barcode 1
 				));
-
-				$pos_item = ItemMaster::select(
-					'item_masters.digits_code',
-					'item_masters.item_description',
-					'uoms.uom_code as uom_code',
-					'item_masters.current_srp',
-					'item_masters.upc_code',
-					'item_masters.has_serial',
-					'item_masters.warranty_duration',
-					'warranties.warranty_description',
-					'categories.category_code',
-					'classes.class_code',
-					'subclasses.subclass_code',
-					'brands.brand_code',
-					'item_masters.original_srp',
-					'item_masters.dtp_rf',
-					'item_masters.effective_date')
-				->leftJoin('uoms', 'item_masters.uoms_id', '=', 'uoms.id')
-				->leftJoin('brands', 'item_masters.brands_id', '=', 'brands.id')
-				->leftJoin('categories', 'item_masters.categories_id', '=', 'categories.id')
-				->leftJoin('classes', 'item_masters.classes_id', '=', 'classes.id')
-				->leftJoin('subclasses', 'item_masters.subclasses_id', '=', 'subclasses.id')
-				->leftJoin('warranties', 'item_masters.warranties_id', '=', 'warranties.id');
 				
-				if(\Request::get('filter_column')) {
-
-					$filter_column = \Request::get('filter_column');
-
-					$pos_item->where(function($w) use ($filter_column,$fc) {
-						foreach($filter_column as $key=>$fc) {
-
-							$value = @$fc['value'];
-							$type  = @$fc['type'];
-
-							if($type == 'empty') {
-								$w->whereNull($key)->orWhere($key,'');
-								continue;
-							}
-
-							if($value=='' || $type=='') continue;
-
-							if($type == 'between') continue;
-
-							switch($type) {
-								default:
-									if($key && $type && $value) $w->where($key,$type,$value);
-								break;
-								case 'like':
-								case 'not like':
-									$value = '%'.$value.'%';
-									if($key && $type && $value) $w->where($key,$type,$value);
-								break;
-								case 'in':
-								case 'not in':
-									if($value) {
-										$value = explode(',',$value);
-										if($key && $value) $w->whereIn($key,$value);
-									}
-								break;
-							}
-						}
-					});
-
-					foreach($filter_column as $key=>$fc) {
-						$value = @$fc['value'];
-						$type  = @$fc['type'];
-						$sorting = @$fc['sorting'];
-
-						if($sorting!='') {
-							if($key) {
-								$pos_item->orderby($key,$sorting);
-								$filter_is_orderby = true;
-							}
-						}
-
-						if ($type=='between') {
-							if($key && $value) $pos_item->whereBetween($key,$value);
-						}
-
-						else {
-							continue;
-						}
-					}
-				}
-
-				$pos_item->where('item_masters.approval_status', $this->approved)
-				->where('item_masters.inventory_types_id','!=',$this->inactive_inventory)
-				->where('item_masters.sku_statuses_id','!=',$this->invalid)
-				->whereNull('item_masters.deleted_at')
-				->orderBy('item_masters.digits_code', 'asc');
-				$pos_Items = $pos_item->get();
-				
-				$headings = array('Product ID',
-					'Product Name',
-					'Active Flag',
-					'Memo',
-					'Tax Type',
-					'Sale Flag',
-					'Unit of Measure ID',
-					'Standard Cost',
-					'List Price',
-					'Generic Name',
-					'Barcode 1',
-					'Barcode 2',
-					'Barcode 3',
-					'Alternate Code',
-					'Product Type',
-					'Class ID',
-					'Color Highlight',
-					'Supplier ID',
-					'Reorder Quantity',
-					'Track Expiry',
-					'Track Warranty',
-					'Warranty Duration',
-					'Duration Type',
-					'Category 1',
-					'Category 2',
-					'Category 3',
-					'Category 4',
-					'Category 5',
-					'Category 6');
-				ini_set('memory_limit', '-1');
-				foreach($pos_Items as $item) {
+				foreach($posItems as $item) {
 
 					$items_array[] = array(
 						$item->digits_code,			//product id
@@ -1543,72 +1233,19 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		})->export('xls');
 	}
 
-	public function exportBartenderFormat(Request $request) {
-    /*
-		$db_con = mysqli_connect(
-			env('DB_HOST'), 
-			env('DB_USERNAME'), 
-			env('DB_PASSWORD'), 
-			env('DB_DATABASE'), 
-			env('DB_PORT')
-		);
+	public function exportBartenderFormat() {
 
-		if(!$db_con) {
-			die('Could not connect: ' . mysqli_error($db_con));
-		}
+		$data_items = ItemMaster::bartenderFormat()->get();
+	    $headings = array('DIGITS CODE', 'UPC CODE', 'ITEM DESCRIPTION', 'CURRENT SRP', 'ORIGINAL SRP');
 
-		$filename = "Export DIMFSv3.0 Bartender Items - ".date("Ymd H:i:sa"). ".csv";
-
-		header("Content-Disposition: attachment; filename=\"$filename\"");
-		header("Content-Type: text/csv; charset=UTF-16LE");
-
-		$out = fopen("php://output", 'w');
-		$flag = false;
-
-		$query = "SELECT `digits_code`,`upc_code`,`item_description`,`current_srp`,`price_change` 
-			FROM `item_masters` 
-			WHERE `approval_status`='".$this->approved."' 
-			ORDER BY `digits_code` ASC";
-        ini_set('memory_limit', '-1');
-		$result = mysqli_query($db_con, $query) or die("Database Error:". mysqli_error($db_con));
-		
-		while($row = mysqli_fetch_row($result)) {
-			if(!$flag) {
-				// display field/column names as first row
-				fputcsv($out, array('DIGITS CODE','UPC CODE','ITEM DESCRIPTION','CURRENT SRP','PRICE CHANGE'), ',', '"');
-				$flag = true;
-			}
-			
-			array_walk($row, 
-				function(&$str, $key) {
-					if($str == 't') $str = 'TRUE';
-					if($str == 'f') $str = 'FALSE';
-					if(in_array($key, [0,1])){
-					    $str ="='$str'";
-					}
-					\Log::notice($str);
-					
-					if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
-					if(strstr($str, "'")) $str = str_replace("'", '"', $str);
-					$str = mb_convert_encoding($str, 'UTF-16LE', 'UTF-8');
-				});
-
-			fputcsv($out, array_values($row), ',', '"');
-		}
-
-		fclose($out);
-		exit;
-	*/
-	    ini_set('memory_limit', '-1');
-	    Excel::create('Export DIMFSv3.0 Bartender Items -'.date("d M Y - h.i.sa"), function($excel) {
+	    Excel::create('Export DIMFSv3.0 Bartender Items -'.date("d M Y - h.i.sa"), function($excel) use ($data_items, $headings) {
     		// Set the title
             $excel->setTitle('bartender');
             // Chain the setters
             $excel->setCreator('Digits IMFS')->setCompany('DTC');
             $excel->setDescription('bartender');
 
-			$excel->sheet('bartender', function($sheet)
-	        {
+			$excel->sheet('bartender', function($sheet) use ($data_items, $headings) {
 	        	// Set auto size for sheet
 				$sheet->setAutoSIZE(true);
 				$sheet->setColumnFormat(array(
@@ -1617,11 +1254,6 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 				    'E' => '0.00',	//for original srp
 				));
 
-	        	$data_items = ItemMaster::select('digits_code','upc_code','item_description', 'current_srp','original_srp','price_change','effective_date')
-	        	    ->where('approval_status',2)
-	        	    ->get();
-	        	$headings = array('DIGITS CODE', 'UPC CODE', 'ITEM DESCRIPTION', 'CURRENT SRP', 'ORIGINAL SRP');
-				ini_set('memory_limit', '-1');
 				foreach($data_items as $item) {
                     
 	                $datas[] = array(
@@ -1651,9 +1283,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			
 	}
 
-	public function exportAllItems(Request $request) {
-		$segmentations = Segmentation::where('status','ACTIVE')->orderBy('segmentation_description','ASC')->get();
-		$platforms = Platform::where('status','ACTIVE')->orderBy('platform_description','ASC')->get();
+	public function exportAllItems() {
 		
 		$db_con = mysqli_connect(
 			env('DB_HOST'), 
@@ -1906,7 +1536,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		}
 		
         if(CRUDBooster::myColumnView()->segmentation){
-            foreach ($segmentations as $segmentation) {
+            foreach ($this->getSegmentations() as $segmentation) {
             	array_push($item_header, $segmentation->segmentation_description);
             }
         }
@@ -2182,7 +1812,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		}
 		
         if(CRUDBooster::myColumnView()->segmentation){
-            foreach ($segmentations as $segmentation) {
+            foreach ($this->getSegmentations() as $segmentation) {
             	$sql_query .="`".$segmentation->segmentation_column."`,";
             }
         }
@@ -2273,10 +1903,10 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			LEFT JOIN `cms_users` as user3 ON `item_masters`.approved_by = `user3`.id";
 		
 		if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(), ["ACCTG HEAD","MCB TL","ADVANCED","REPORTS","ECOMM STORE MDSG TL"])){    
-			$sql_query .=" WHERE `item_masters`.approval_status = '".$this->approved."'";
+			$sql_query .=" WHERE `item_masters`.approval_status = '".$this->getStatusByDescription('APPROVED')."'";
 		}
 		else{    
-			$sql_query .=" WHERE `item_masters`.approval_status = '".$this->approved."' 
+			$sql_query .=" WHERE `item_masters`.approval_status = '".$this->getStatusByDescription('APPROVED')."' 
 			    AND `item_masters`.sku_statuses_id != '".$this->invalid."'
 				AND `item_masters`.inventory_types_id != '".$this->inactive_inventory."' ";
 		}
@@ -2804,7 +2434,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			LEFT JOIN `subclasses` ON `item_masters`.subclasses_id = `subclasses`.id
 			LEFT JOIN `currencies` as currencies_1 ON `item_masters`.currencies_id = `currencies_1`.id 
 			LEFT JOIN `support_types` ON `item_masters`.support_types_id = `support_types`.id 
-			WHERE `item_masters`.approval_status = '".$this->approved."' AND 
+			WHERE `item_masters`.approval_status = '".$this->getStatusByDescription('APPROVED')."' AND 
 			`brands`.status = 'ACTIVE'";
 		
 		$sql_query .=" ORDER BY `item_masters`.digits_code ASC";
@@ -3112,16 +2742,16 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 				$MarginCategory = DB::table('ecom_margin_matrices')->where('max','<=', $initial_computation)->orWhere('min','<', $initial_computation)->first();
 			}
 			
-// 			if($initial_computation <= $VendorandBrand->max && $initial_computation >= $VendorandBrand->min) // In Range
-// 			{
-// 				$EcomSCPercentage = number_format($request->landed_cost , 2, '.', '') + (number_format($request->landed_cost , 2, '.', '') * number_format($VendorandBrand->store_margin_percentage , 2, '.', ''));
-// 			}else if($initial_computation < $VendorandBrand->max && $initial_computation < $VendorandBrand->min) // Below minimum
-// 			{
-// 				$EcomSCPercentage = number_format($EcomSCPercentage , 2, '.', '') - number_format($VendorandBrand->store_margin_percentage , 2, '.', '');
-// 			}else if($initial_computation > $VendorandBrand->max && $initial_computation > $VendorandBrand->min) // Above maximum
-// 			{
-// 				$EcomSCPercentage = number_format($request->landed_cost , 2, '.', '') + number_format($VendorandBrand->store_margin_percentage , 2, '.', '');
-// 			}
+		// 			if($initial_computation <= $VendorandBrand->max && $initial_computation >= $VendorandBrand->min) // In Range
+		// 			{
+		// 				$EcomSCPercentage = number_format($request->landed_cost , 2, '.', '') + (number_format($request->landed_cost , 2, '.', '') * number_format($VendorandBrand->store_margin_percentage , 2, '.', ''));
+		// 			}else if($initial_computation < $VendorandBrand->max && $initial_computation < $VendorandBrand->min) // Below minimum
+		// 			{
+		// 				$EcomSCPercentage = number_format($EcomSCPercentage , 2, '.', '') - number_format($VendorandBrand->store_margin_percentage , 2, '.', '');
+		// 			}else if($initial_computation > $VendorandBrand->max && $initial_computation > $VendorandBrand->min) // Above maximum
+		// 			{
+		// 				$EcomSCPercentage = number_format($request->landed_cost , 2, '.', '') + number_format($VendorandBrand->store_margin_percentage , 2, '.', '');
+		// 			}
 				
 			$EcomSCPercentage = number_format($request->landed_cost , 2, '.', '') + number_format($MarginCategory->store_margin_percentage , 2, '.', '');
 			$alldata = $MarginCategory;
