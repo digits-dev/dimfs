@@ -88,12 +88,14 @@
 	    }
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
-            $postdata["created_by"]=CRUDBooster::myId();
+            $postdata["created_by"] = CRUDBooster::myId();
+			$postdata['created_at'] = date('Y-m-d H:i:s');
 	    }
 		
 	    public function hook_before_edit(&$postdata,$id) {        
 	        //Your code here
-            $postdata["updated_by"]=CRUDBooster::myId();
+            $postdata["updated_by"] = CRUDBooster::myId();
+			$postdata['updated_at'] = date('Y-m-d H:i:s');
 	    }
 
 	}
