@@ -5,6 +5,7 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use Request;
+use CRUDBooster;
 
 class CBHook extends Controller {
 
@@ -28,8 +29,8 @@ class CBHook extends Controller {
 
 		$actionTypes = [
 			"addform_views" => "CREATE",
-			"editform_views" => "CREATE READONLY",
-			"add_readonly" => "UPDATE",
+			"add_readonly" => "CREATE READONLY",
+			"editform_views" => "UPDATE",
 			"edit_readonly" => "UPDATE READONLY"
 		];
 
@@ -49,6 +50,7 @@ class CBHook extends Controller {
 
 			Session::put($key, $access);
 		}
+		
 		
 	}
 
