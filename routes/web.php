@@ -111,4 +111,7 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
     Route::get('gasha_item_masters/import-edit-view', 'AdminGachaItemMastersController@importItemEditView')->name('importGachaItemEditView');
     Route::get('gasha_item_masters/import-edit-template', 'GachaponItemMasterImportController@importItemEditTemplate')->name('edit.gacha-template');
     Route::post('gasha_item_masters/edit-gacha-items', 'GachaponItemMasterImportController@editItems')->name('edit.gachaItems');
+
+    Route::post('export_privileges/create/save','AdminExportPrivilegesController@saveExport')->name('export-privileges.save');
+    Route::post('export_privileges/get/table-columns','AdminExportPrivilegesController@getTableColumns')->name('export-privileges.getTableColumns');
 });
