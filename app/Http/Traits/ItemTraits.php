@@ -5,36 +5,47 @@ namespace App\Http\Traits;
 use App\ActionType;
 use App\Category;
 use App\Counter;
+use App\ExportPrivilege;
 use App\InventoryType;
 use App\ItemIdentifier;
 use App\PromoType;
 use App\Segmentation;
+use App\SkuStatus;
 use App\StatusState;
 use App\VendorType;
+use CRUDBooster;
 
 trait ItemTraits {
+
+	public function getSkuStatus($status) {
+		return SkuStatus::status($status);
+	}
+
+	public function getInventoryType($type) {
+		return InventoryType::getType($type);
+	}
 
     public function getSegmentations() {
         return Segmentation::active()->get();
     }
 
-    public function getActionByDescription($action){
+    public function getActionByDescription($action) {
         return ActionType::getType($action);
     }
 
-    public function getStatusByDescription($status){
+    public function getStatusByDescription($status) {
         return StatusState::getState($status);
     }
 
-	public function getItemIdentifier(){
+	public function getItemIdentifier() {
 		return ItemIdentifier::active()->get();
 	}
 
-	public function getPromoTypes(){
+	public function getPromoTypes() {
 		return PromoType::active()->get();
 	}
 
-    public function updateCounter($item_code){
+    public function updateCounter($item_code) {
         $column = '';
         switch ($item_code) {
 			case '1':
@@ -74,7 +85,7 @@ trait ItemTraits {
 
     }
 
-    public function getDigitsCode($params){
+    public function getDigitsCode($params) {
 
         $category_code = Category::getCodeById($params['category_id']);
 		$inventory_type_code = InventoryType::getCodeById('id',$params['inventory_type_id']);
@@ -103,5 +114,91 @@ trait ItemTraits {
 			}
 		}
     }
+
+	public function getItemAccess(){
+		$access =  ExportPrivilege::where('cms_privileges_id',CRUDBooster::myPrivilegeId())
+			->where('table_name','item_masters')
+			->get(['report_header','report_query'])
+			->toArray();
+			// Split the strings into arrays
+			$keys = explode(',', $access[0]['report_header']);
+			$values = explode(',', $access[0]['report_query']);
+
+			// Remove backticks from values
+			$values = array_map(function($value) {
+				return trim($value, '`');
+			}, $values);
+			
+			// Combine the arrays into a key-value array
+			// $array1 = array_combine($keys, $values);
+
+			return $values;
+	}
+
+	public function getItemExport(){
+		$access =  ExportPrivilege::where('cms_privileges_id',CRUDBooster::myPrivilegeId())
+			->where('table_name','item_masters')
+			->where('action_types_id',6) //export
+			->get(['report_header','report_query'])
+			->toArray();
+			// Split the strings into arrays
+			$keys = explode(',', $access[0]['report_header']);
+			$values = explode(',', $access[0]['report_query']);
+
+			// Remove backticks from values
+			$values = array_map(function($value) {
+				return trim($value, '`');
+			}, $values);
+			
+			// Combine the arrays into a key-value array
+			$export = array_combine($keys, $values);
+
+			return $export;
+	}
+
+	public function getItemForms(){
+		$forms =  ExportPrivilege::where('cms_privileges_id',CRUDBooster::myPrivilegeId())
+			->where('table_name','item_masters')
+			->get(['report_header','report_query'])
+			->toArray();
+			// Split the strings into arrays
+			$keys = explode(',', $forms[0]['report_header']);
+			$values = explode(',', $forms[0]['report_query']);
+
+			// Remove backticks from values
+			$values = array_map(function($value) {
+				return trim($value, '`');
+			}, $values);
+			
+			// Combine the arrays into a key-value array
+			// $array1 = array_combine($keys, $values);
+
+			return $values;
+	}
+
+	public function getAllAccess($column_access) {
+		return ((in_array(CRUDBooster::getCurrentMethod(), ['getAdd', 'postAddSave']) && CRUDBooster::myAddForm()->$column_access ? true : false)
+		|| (in_array(CRUDBooster::getCurrentMethod(), ['getEdit', 'postEditSave']) && CRUDBooster::myEditForm()->$column_access ? true : false )
+		|| (CRUDBooster::getCurrentMethod() == "getDetail" && CRUDBooster::myColumnView()->$column_access ? true : false));
+	}
+
+	public function getEditAccessOnly($column_access) {
+		return ((in_array(CRUDBooster::getCurrentMethod(), ['getEdit', 'postEditSave']) && CRUDBooster::myEditForm()->$column_access ? true : false )
+		|| (CRUDBooster::getCurrentMethod() == "getDetail" && CRUDBooster::myColumnView()->$column_access ? true : false));
+	}
+	
+	public function getDetailAccessOnly($column_access) {
+		return (CRUDBooster::getCurrentMethod() == "getDetail" && CRUDBooster::myColumnView()->$column_access ? true : false);
+	}
+
+	public function getAllAccessReadOnly($column_readonly) {
+		return ((in_array(CRUDBooster::getCurrentMethod(), ['getAdd', 'postAddSave']) && CRUDBooster::myAddReadOnly()->$column_readonly ? true : false)
+		|| (in_array(CRUDBooster::getCurrentMethod(), ['getEdit', 'postEditSave']) && CRUDBooster::myEditReadOnly()->$column_readonly ? true : false ));
+	}
+
+	public function getEditAccessReadOnly($column_readonly) {
+		return ((in_array(CRUDBooster::getCurrentMethod(), ['getEdit', 'postEditSave']) && CRUDBooster::myEditReadOnly()->$column_readonly ? true : false )
+		|| (CRUDBooster::getCurrentMethod() == "getDetail" && CRUDBooster::myColumnView()->$column_readonly ? true : false));
+	}
 
 }
