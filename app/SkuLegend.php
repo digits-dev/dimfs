@@ -9,6 +9,7 @@ class SkuLegend extends Model
     protected $table = 'sku_legends';
 
     public function scopeActive($query){
-        return $query->where('status','ACTIVE');
+        return $query->where('status','ACTIVE')
+            ->orderBy('sku_legend_description','ASC');
     }
 }

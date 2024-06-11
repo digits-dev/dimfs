@@ -12,7 +12,7 @@ use Excel;
 class SegmentationController extends Controller
 {
     public function importTemplate(){
-		$segmentations = Segmentation::where('status','ACTIVE')->orderBy('segmentation_description','ASC')->get();
+		$segmentations = Segmentation::active()->get();
 		Excel::create('skulegend-segmentation-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) use ($segmentations) {
 			$excel->sheet('skulegend', function ($sheet) use ($segmentations) {
 			    $headers = array('DIGITS CODE', 'SKU LEGEND');
@@ -34,8 +34,8 @@ class SegmentationController extends Controller
 		$cnt_success = 0;
 		$cnt_fail = 0;
 		$file = $request->file('import_file');
-		$segmentations = Segmentation::where('status','ACTIVE')->orderBy('segmentation_description','ASC')->get();
-		$skulegends = SkuLegend::where('status','ACTIVE')->orderBy('sku_legend_description','ASC')->get();
+		$segmentations = Segmentation::active()->get();
+		$skulegends = SkuLegend::active()->get();
 			
 		$validator = \Validator::make(
 			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
@@ -75,7 +75,6 @@ class SegmentationController extends Controller
 					$line_item = $key+1;
 
 					$skulegend = $skulegends->where('sku_legend_description',$value->sku_legend)->first();
-					
 					foreach($segmentations as $segmentation){
         		        $segment = strtolower(str_replace(" ","_",$segmentation->segmentation_description));
         		        $sku_segment = $skulegends->where('sku_legend_description', $value->$segment)->first();
@@ -98,6 +97,7 @@ class SegmentationController extends Controller
 					else{
 						$data['sku_legends_id'] = $skulegend->id;
 					}
+					
 					try {
                         $cnt_success++;
                         ItemMaster::where('digits_code', intval($value->digits_code))->update($data);

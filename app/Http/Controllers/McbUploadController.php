@@ -23,11 +23,11 @@ use App\ItemMasterApproval;
 use App\Incoterm;
 use App\Currency;
 use App\SkuStatus;
-use App\SkuClass;
 use App\SkuLegend;
 use App\ActionType;
 use App\BrandDirection;
 use App\BrandGroup;
+use App\Http\Traits\UploadTraits;
 use App\Segmentation;
 use App\StatusState;
 use App\Vendor;
@@ -37,17 +37,11 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBController
 {
-    
-    private $pending;
-    private $create;
-    private $update;
+
+	use UploadTraits;
     
     public function __construct() {
 		DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
-		
-		$this->pending = StatusState::where('status_state','PENDING')->value('id');
-		$this->create = ActionType::where('action_type',"CREATE")->value('id');
-		$this->update = ActionType::where('action_type',"UPDATE")->value('id');
 	}
     
     public function importItemTemplate()
@@ -320,7 +314,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'has_serial' => $value->serial_code,
 						'imei_code1' => '0',
 						'imei_code2' => '0',
-						'approval_status' => $this->pending,
+						'approval_status' => $this->getStatusByDescription("PENDING"),
 						'created_by' => CRUDBooster::myId(),
 						'created_at' => date('Y-m-d H:i:s')
 					];
@@ -412,8 +406,8 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$currencies = Currency::active()->get();
 			$skuStatuses = SkuStatus::active()->get();
 			$skuLegends = SkuLegend::active()->get();
-			$incoterms = Incoterm::active()->get();
-			$vendors = Vendor::active()->get();
+			// $incoterms = Incoterm::active()->get();
+			// $vendors = Vendor::active()->get();
 			
 			if(!empty($dataExcel) && $dataExcel->count()) {
 
@@ -509,9 +503,6 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					if(empty($sku_legend_id) && !empty($value->sku_legend)){
 						array_push($errors, 'Line '.$line_item.': with sku legend "'.$value->sku_legend.'" is not found in submaster.');
 					}
-					// if(empty($sku_class_id) && !is_null($value->sku_class)){
-					// 	array_push($errors, 'Line '.$line_item.': with sku class "'.$value->sku_class.'" is not found in submaster.');
-					// }
 
 					foreach ($segments as $key_segment => $value_segment) {
 						$seg = $value_segment->import_header_name;
@@ -523,7 +514,6 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						}
 					}
 					
-
 					$data = [
 						'upc_code' => $value->upc_code_1,
 						'upc_code_2' => $value->upc_code_2,
@@ -545,7 +535,6 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'compatibility' => $value->compatibility,
 						'model_number' => $value->model_number,
 						'model' => $value->model,
-						// 'year_launch' => $value->year_launch,
 						'model_specifics_id' => $model_specific_id->id,
 						'sizes_id' => $size_id->id,
 						'size_value' => $value->size,
@@ -562,7 +551,6 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'currencies_id' => $currency_id->id,
 						'sku_legends_id' => $sku_legend_id->id,
 						'sku_statuses_id' => $sku_status_id->id,
-						// 'sku_classes_id' => $sku_class_id->id,
 						'current_srp' => $value->current_srp,
 						'original_srp' => $value->original_srp,
 						'promo_srp' => $value->dg_srp,
@@ -570,11 +558,9 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'purchase_price' => $value->supplier_cost,
 						'btb_segmentation' => $value->beyond_the_box,
 						'dw_segmentation' => $value->digital_walker,
-						// 'online_segmentation' => $value->online,
 						'guam_segmentation' => $value->guam,
 						'dcon_segmentation' => $value->distribution_consignment,
 						'dout_segmentation' => $value->distribution_outright,
-						// 'dwmachine_segmentation' => $value->dw_machine,
 						'franchise_segmentation' => $value->franchise,
 						'newstore_segmentation' => $value->new_store,
 						'opensource_segmentation' => $value->opensource,
@@ -625,7 +611,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 		//get workflow settings
 		$workflow = WorkflowSetting::where([
 			'cms_moduls_id'=>CRUDBooster::getCurrentModule()->id,
-			'action_types_id'=>$this->create,
+			'action_types_id'=>$this->getActionByDescription("CREATE"),
 			'encoder_privileges_id'=>$encoder_id
 		])->first();
 		
@@ -644,7 +630,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 		//get workflow settings
 		$workflow = WorkflowSetting::where([
 			'cms_moduls_id'=>CRUDBooster::getCurrentModule()->id,
-			'action_types_id'=>$this->update,
+			'action_types_id'=>$this->getActionByDescription("UPDATE"),
 			'encoder_privileges_id'=>$encoder_id
 		])->first();
 		

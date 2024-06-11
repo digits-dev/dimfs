@@ -70,7 +70,6 @@ return [
         "SKU LEGEND" => "",
         "ITEM DESCRIPTION" => "",
         "MODEL" => "",
-        "YEAR LAUNCH" => "",
         "MODEL SPECIFIC DESCRIPTION" => "",
         "COMPATIBILITY" => "",
         "MARGIN CATEGORY DESCRIPTION" => "",
