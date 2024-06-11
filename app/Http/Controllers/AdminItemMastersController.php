@@ -739,7 +739,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		});
 
 		$filename = 'Export DIMFSv3.0 All Items '.date("Ymd-His").'.xlsx';
-		return (new FastExcel($allItems))->download($filename);	
+		return (new FastExcel($exportItems))->download($filename);	
 	}
 
 	public function importView()
