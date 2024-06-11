@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Brand extends Model
 {
     protected $table = 'brands';
+
+    public function scopeActive($query){
+        return $query->where('status','ACTIVE');
+    }
 }

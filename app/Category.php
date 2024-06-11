@@ -12,8 +12,11 @@ class Category extends Model
         return $query->where('id',$id)->value('category_code');
     }
 
-    public function itemMasters()
-    {
+    public function itemMasters() {
         return $this->hasMany(ItemMaster::class, 'categories_id');
+    }
+
+    public function scopeActive($query){
+        return $query->where('status','ACTIVE');
     }
 }

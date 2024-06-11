@@ -26,6 +26,8 @@ use App\SkuStatus;
 use App\SkuClass;
 use App\SkuLegend;
 use App\ActionType;
+use App\BrandDirection;
+use App\BrandGroup;
 use App\Segmentation;
 use App\StatusState;
 use App\Vendor;
@@ -61,7 +63,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 		$cnt_success = 0;
 		$cnt_fail = 0;
 		$file = $request->file('import_file');
-		$segments = Segmentation::where('status','ACTIVE')->get();
+		$segments = Segmentation::active()->get();
 			
 		$validator = \Validator::make(
 			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
@@ -90,7 +92,28 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			if(!empty($unMatch)) {
 				return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
 			}
-			
+
+			$appleLobs = AppleLob::active()->get();
+			$brandGroups = BrandGroup::active()->get();
+			$brandDirections = BrandDirection::active()->get();
+			$brands = Brand::active()->get();
+			$categories = Category::active()->get();
+			$classes = DB::table('classes')->where('status','ACTIVE')->get();
+			$subClasses = Subclass::active()->get();
+			$marginCategories = MarginCategory::active()->get();
+			$warehouseCategories = WarehouseCategory::active()->get();
+			$modelSpecifics = ModelSpecific::active()->get();
+			$sizes = Size::active()->get();
+			$colors = Color::active()->get();
+			$uoms = Uom::active()->get();
+			$vendorTypes = VendorType::active()->get();
+			$inventoryTypes = InventoryType::active()->get();
+			$currencies = Currency::active()->get();
+			$skuStatuses = SkuStatus::active()->get();
+			$skuLegends = SkuLegend::active()->get();
+			$incoterms = Incoterm::active()->get();
+			$vendors = Vendor::active()->get();
+						
 			if(!empty($dataExcel) && $dataExcel->count()) {
 
 				foreach ($dataExcel as $key => $value) {
@@ -100,73 +123,42 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					//checking of all submasters
 					$existingUPC = ItemMaster::where('upc_code', trim($value->upc_code))->first();
 
-					$apple_lobs_id = AppleLob::where('apple_lob_description', $value->apple_lob)
-						->where('status', 'ACTIVE')->first();
-
-					$brand_id = Brand::where('brand_description', $value->brand_description)
-						->where('status','ACTIVE')->first();
-
-					$category_id = Category::where('category_description', $value->category_description)
-						->where('status','ACTIVE')->first();
+					$apple_lobs_id = $appleLobs->where('apple_lob_description', $value->apple_lob)->first();
+					$brand_groups = $brandGroups->where('brand_group_description', $value->brand_group)->first();
+					$brand_directions = $brandDirections->where('brand_direction_description', $value->brand_direction)->first();
+					$brand_id = $brands->where('brand_description', $value->brand_description)->first();
+					$category_id = $categories->where('category_description', $value->category_description)->first();
 					
-					$class_id = DB::table('classes')->where([
+					$class_id = $classes->where([
 						'class_description' => $value->class_description,
-						'status' =>'ACTIVE',
 						'categories_id' => $category_id->id])->first();
 					
-					$subclass_id = Subclass::where([
-						'subclass_description' => $value->subclass,
-						'status' => 'ACTIVE',
+					$subclass_id = $subClasses->where([
+						'subclass_description' => $value->subclass_description,
 						'classes_id' => $class_id->id])->first();
 					
-					$margin_category_id = MarginCategory::where([
+					$margin_category_id = $marginCategories->where([
 						'margin_category_description' => $value->margin_category,
-						'status' => 'ACTIVE',
 						'subclasses_id' => $subclass_id->id])->first();
 					
-					$warehouse_category_id = WarehouseCategory::where('warehouse_category_description', $value->warehouse_category)
-						->where('status','ACTIVE')->first();
+					$warehouse_category_id = $warehouseCategories->where('warehouse_category_description', $value->wh_category_description)->first();
+					$model_specific_id = $modelSpecifics->where('model_specific_description', $value->model_specific_description)->first();
 
-					$model_specific_id = ModelSpecific::where('model_specific_description', $value->model_specific_description)
-						->where('status','ACTIVE')->first();
-
-					$size_id = Size::where('size_code', $value->size_code)
-						->where('status','ACTIVE')->first();
-
-					$color_id = Color::where('color_description', $value->main_color_description)
-						->where('status','ACTIVE')->first();
-					
-					$uom_id = Uom::where('uom_code', $value->uom_code)
-						->where('status','ACTIVE')->first();
-
-					$vendor_type_id = VendorType::where('vendor_type_code', $value->vendor_type_code)
-						->where('status','ACTIVE')->first();
-						
-					$inventory_type_id = InventoryType::where('inventory_type_description', $value->inventory_type)
-						->where('status','ACTIVE')->first();
-
-					$currency_id = Currency::where('currency_code', $value->currency)
-						->where('status','ACTIVE')->first();
-
-					$sku_status_id = SkuStatus::where('sku_status_description', $value->sku_status)
-						->where('status','ACTIVE')->first();
-					
-					$sku_legend_id = SkuLegend::where('sku_legend_description', $value->sku_legend)
-						->where('status','ACTIVE')->first();
-					
-					if(!is_null($value->sku_class)){
-						$sku_class_id = SkuClass::where('sku_class_description', $value->sku_class)
-							->where('status','ACTIVE')->first();
-					}
+					$size_id = $sizes->where('size_code', $value->size_code)->first();
+					$color_id = $colors->where('color_description', $value->main_color_description)->first();
+					$uom_id = $uoms->where('uom_code', $value->uom_code)->first();
+					$vendor_type_id = $vendorTypes->where('vendor_type_code', $value->vendor_type_code)->first();
+					$inventory_type_id = $inventoryTypes->where('inventory_type_description', $value->inventory_type)->first();
+					$currency_id = $currencies->where('currency_code', $value->currency)->first();
+					$sku_status_id = $skuStatuses->where('sku_status_description', $value->sku_status)->first();
+					$sku_legend_id =$skuLegends->where('sku_legend_description', $value->sku_legend)->first();
 
 					if(!is_null($value->incoterms)){
-						$incoterm_id = Incoterm::where('incoterms_description', $value->incoterms)
-							->where('status','ACTIVE')->first();
+						$incoterm_id = $incoterms->where('incoterms_description', $value->incoterms)->first();
 					}
 
-					$vendor_id = Vendor::where([
+					$vendor_id = $vendors->where([
 						'vendor_name' => $value->vendor_name,
-						'status' => 'ACTIVE',
 						'brands_id' => $brand_id->id])->first();
 					//---------------------------
 					if(!empty($existingUPC)){
@@ -252,19 +244,20 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						$seg = $value_segment->import_header_name;
 						$seg_description = $value_segment->segmentation_description;
 						$seg_value = $value_segment->$seg;
-						$legendExists = SkuLegend::where('sku_legend_description', $seg_value)->first();
+						$legendExists = $skuLegends->where('sku_legend_description', $seg_value)->first();
 						if(empty($legendExists) && !empty($seg_value)){
 							array_push($errors, "Line $line_item : with segmentation $seg_value at column $seg_description not found in submaster.");
 						}
 					}
 					
-
 					$data = [
 						'upc_code' => $value->upc_code,
 						'supplier_item_code' => $value->supplier_item_code,
 						'model_number' => $value->model_number,
 						'item_description' => $value->item_description,
 						'apple_lobs_id' => $apple_lobs_id->id,
+						'brand_groups_id' => $brand_groups->id,
+						'brand_directions_id' => $brand_directions->id,
 						'apple_report_inclusion' => $value->apple_report_inclusion,
 						'brands_id' => $brand_id->id,
 						'categories_id' => $category_id->id,
@@ -275,7 +268,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'warehouse_categories_id' => $warehouse_category_id->id,
 						'compatibility' => $value->compatibility,
 						'model' => $value->model,
-						'year_launch' => $value->year_launch,
+						// 'year_launch' => $value->year_launch,
 						'model_specifics_id' => $model_specific_id->id,
 						'sizes_id' => $size_id->id,
 						'size_value' => $value->size,
@@ -293,33 +286,37 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'currencies_id' => $currency_id->id,
 						'sku_legends_id' => $sku_legend_id->id,
 						'sku_statuses_id' => $sku_status_id->id,
-						'sku_classes_id' => (is_null($value->sku_class)) ? null : $sku_class_id->id,
+						// 'sku_classes_id' => (is_null($value->sku_class)) ? null : $sku_class_id->id,
 						'incoterms_id' => (is_null($value->incoterms)) ? null : $incoterm_id->id,
 						'current_srp' => (is_null($value->current_srp)) ? '0.00' : $value->current_srp,
 						'original_srp' => (is_null($value->original_srp)) ? '0.00' : $value->original_srp,
-						'promo_srp' => (is_null($value->dg_srp)) ? null : $value->dg_srp,
+						// 'promo_srp' => (is_null($value->dg_srp)) ? null : $value->dg_srp,
 						'moq' => (is_null($value->moq)) ? null : $value->moq,
 						'purchase_price' => (is_null($value->supplier_cost)) ? null : $value->supplier_cost,
-						'dtp_rf' => (is_null($value->store_cost)) ? null : $value->store_cost,
-						'dtp_rf_percentage' => (is_null($value->store_margin_percentage)) ? null : $value->store_margin_percentage,
-						'working_dtp_rf' => (is_null($value->working_store_cost)) ? null : $value->working_store_cost,
-						'working_dtp_rf_percentage' => (is_null($value->working_store_margin_percentage)) ? null : $value->working_store_margin_percentage,
-						'landed_cost' => (is_null($value->landed_cost)) ? null : $value->landed_cost,
-						'working_landed_cost' => (is_null($value->working_landed_cost)) ? null : $value->working_landed_cost,
-						'warranties_id' => 1, //year
-						'warranty_duration' => 1,
-						'btb_segmentation' => $value->btb,
-						'dw_segmentation' => $value->dw,
-						'online_segmentation' => $value->online,
+						// 'dtp_rf' => (is_null($value->store_cost)) ? null : $value->store_cost,
+						// 'dtp_rf_percentage' => (is_null($value->store_margin_percentage)) ? null : $value->store_margin_percentage,
+						// 'working_dtp_rf' => (is_null($value->working_store_cost)) ? null : $value->working_store_cost,
+						// 'working_dtp_rf_percentage' => (is_null($value->working_store_margin_percentage)) ? null : $value->working_store_margin_percentage,
+						// 'landed_cost' => (is_null($value->landed_cost)) ? null : $value->landed_cost,
+						// 'working_landed_cost' => (is_null($value->working_landed_cost)) ? null : $value->working_landed_cost,
+						// 'warranties_id' => 1, //year
+						// 'warranty_duration' => 1,
+						'btb_segmentation' => $value->beyond_the_box,
+						'dw_segmentation' => $value->digital_walker,
+						// 'online_segmentation' => $value->online,
 						'guam_segmentation' => $value->guam,
-						'dcon_segmentation' => $value->distri_con,
-						'dout_segmentation' => $value->distri_out,
-						'dwmachine_segmentation' => $value->dw_machine,
+						'dcon_segmentation' => $value->distribution_consignment,
+						'dout_segmentation' => $value->distribution_outright,
+						// 'dwmachine_segmentation' => $value->dw_machine,
 						'franchise_segmentation' => $value->franchise,
 						'newstore_segmentation' => $value->new_store,
 						'opensource_segmentation' => $value->opensource,
-						'mi_segmentation' => $value->mi,
+						'web_segmentation' => $value->website,
 						'af_segmentation' => $value->acefast,
+						'svc_segmentation' => $value->service_center,
+						'laz_segmentation' => $value->lazada,
+						'spe_segmentation' => $value->shopee,
+						'tik_segmentation' => $value->tiktok,
 						'has_serial' => $value->serial_code,
 						'imei_code1' => '0',
 						'imei_code2' => '0',
@@ -461,10 +458,10 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$sku_legend_id = SkuLegend::where('sku_legend_description', $value->sku_legend)
 						->where('status','ACTIVE')->first();
 					
-					if(!is_null($value->sku_class)){
-						$sku_class_id = SkuClass::where('sku_class_description', $value->sku_class)
-							->where('status','ACTIVE')->first();
-					}
+					// if(!is_null($value->sku_class)){
+					// 	$sku_class_id = SkuClass::where('sku_class_description', $value->sku_class)
+					// 		->where('status','ACTIVE')->first();
+					// }
 
 					if(empty($existingDigitsCode)){
 						array_push($errors, 'Line '.$line_item.': item code "'.$value->digits_code.'" not found.');
@@ -520,9 +517,9 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					if(empty($sku_legend_id) && !empty($value->sku_legend)){
 						array_push($errors, 'Line '.$line_item.': with sku legend "'.$value->sku_legend.'" is not found in submaster.');
 					}
-					if(empty($sku_class_id) && !is_null($value->sku_class)){
-						array_push($errors, 'Line '.$line_item.': with sku class "'.$value->sku_class.'" is not found in submaster.');
-					}
+					// if(empty($sku_class_id) && !is_null($value->sku_class)){
+					// 	array_push($errors, 'Line '.$line_item.': with sku class "'.$value->sku_class.'" is not found in submaster.');
+					// }
 
 					foreach ($segments as $key_segment => $value_segment) {
 						$seg = $value_segment->import_header_name;
@@ -552,7 +549,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'compatibility' => $value->compatibility,
 						'model_number' => $value->model_number,
 						'model' => $value->model,
-						'year_launch' => $value->year_launch,
+						// 'year_launch' => $value->year_launch,
 						'model_specifics_id' => $model_specific_id->id,
 						'sizes_id' => $size_id->id,
 						'size_value' => $value->size,

@@ -3,7 +3,7 @@
 return [
     "item-master" => [
         "INVENTORY TYPE" => "",
-        "UPC CODE-1" => "",
+        "UPC CODE" => "",
         "SUPPLIER ITEM CODE" => "",
         "BRAND GROUP" => "",
         "BRAND DIRECTION" => "",
