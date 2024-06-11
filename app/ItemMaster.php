@@ -181,7 +181,9 @@ class ItemMaster extends Model
         ->leftJoin('warranties', 'item_masters.warranties_id', '=', 'warranties.id')
         ->leftJoin('cms_users as createdby', 'item_masters.created_by', '=', 'createdby.id')
         ->leftJoin('cms_users as updatedby', 'item_masters.updated_by', '=', 'updatedby.id')
-        ->leftJoin('cms_users as approvedby', 'item_masters.approved_by', '=', 'approvedby.id');
+        ->leftJoin('cms_users as approvedby', 'item_masters.approved_by', '=', 'approvedby.id')
+        ->where('item_masters.approval_status',self::APPROVED)
+        ->orderBy('item_masters.digits_code','ASC');
     }
 
     public function category()
