@@ -28,6 +28,7 @@ use App\ActionType;
 use App\BrandDirection;
 use App\BrandGroup;
 use App\Http\Traits\UploadTraits;
+use App\ItemClass;
 use App\Segmentation;
 use App\StatusState;
 use App\Vendor;
@@ -92,7 +93,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$brandDirections = BrandDirection::active()->get();
 			$brands = Brand::active()->get();
 			$categories = Category::active()->get();
-			$classes = DB::table('classes')->where('status','ACTIVE')->get();
+			$classes = ItemClass::active()->get();
 			$subClasses = Subclass::active()->get();
 			$marginCategories = MarginCategory::active()->get();
 			$warehouseCategories = WarehouseCategory::active()->get();
@@ -390,7 +391,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$brandDirections = BrandDirection::active()->get();
 			$brands = Brand::active()->get();
 			$categories = Category::active()->get();
-			$classes = DB::table('classes')->where('status','ACTIVE')->get();
+			$classes = ItemClass::active()->get();
 			$subClasses = Subclass::active()->get();
 			$marginCategories = MarginCategory::active()->get();
 			$warehouseCategories = WarehouseCategory::active()->get();
