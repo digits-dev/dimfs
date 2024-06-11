@@ -78,7 +78,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$header = config('excel-template.item-master');
 
 			for ($i=0; $i < sizeof($csv[0]); $i++) {
-				if (! in_array($csv[0][$i], $header)) {
+				if (! in_array($csv[0][$i], array_keys($header))) {
 					$unMatch[] = $csv[0][$i];
 				}
 			}
@@ -379,7 +379,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$header = config('excel-template.item-master-edit');
 
 			for ($i=0; $i < sizeof($csv[0]); $i++) {
-				if (! in_array($csv[0][$i], $header)) {
+				if (! in_array($csv[0][$i], array_keys($header))) {
 					$unMatch[] = $csv[0][$i];
 				}
 			}
