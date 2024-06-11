@@ -724,13 +724,13 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 	public function exportAllItems() {
 		$allItems = ItemMaster::generateExport();
 		if(!in_array(CRUDBooster::myPrivilegeName(), ["ACCTG HEAD","MCB TL","ADVANCED","REPORTS","ECOMM STORE MDSG TL"])){
-			$allItems->where('item_masters.sku_statuses_id','!=',$this->getSkuStatus("INVALID"))
+			$exportItems = $allItems->where('item_masters.sku_statuses_id','!=',$this->getSkuStatus("INVALID"))
 				->where('item_masters.inventory_types_id','!=',$this->getInventoryType("INACTIVE"))->get();
 		}
 		else{
-			$allItems->get();
+			$exportItems = $allItems->get();
 		}
-		$allItems->transform(function($items){
+		$exportItems->transform(function($items){
 			$exportItem = [];
 			foreach ($this->getItemExport() as $newKey => $oldKey) {
 				$exportItem[$newKey] = isset($items->$oldKey) ? $items->$oldKey : null;
