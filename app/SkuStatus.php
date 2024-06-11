@@ -11,4 +11,8 @@ class SkuStatus extends Model
     public function scopeStatus($query, $status) {
         return $query->where('sku_status_description', $status)->value('id');
     }
+
+    public function scopeActive($query){
+        return $query->where('status','ACTIVE');
+    }
 }

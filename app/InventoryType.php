@@ -15,4 +15,8 @@ class InventoryType extends Model
     public function scopeGetCodeById($query, $id){
         return $query->where('id',$id)->value('inventory_type_code');
     }
+
+    public function scopeActive($query){
+        return $query->where('status','ACTIVE');
+    }
 }

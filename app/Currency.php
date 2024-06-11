@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Currency extends Model
 {
     protected $table = 'currencies';
+
+    public function scopeActive($query){
+        return $query->where('status','ACTIVE');
+    }
 }

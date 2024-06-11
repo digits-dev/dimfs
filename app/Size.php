@@ -11,4 +11,8 @@ class Size extends Model
     public function scopeGetSizeCode($query, $id) : string {
         return $query->where('id',$id)->value('size_code');
     }
+
+    public function scopeActive($query){
+        return $query->where('status','ACTIVE');
+    }
 }
