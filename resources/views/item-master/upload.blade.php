@@ -67,6 +67,15 @@
                         <a href="{{ route('importItemMcbView') }}" target="_parent"><button class="btn btn-primary" style="width:80%">Update Item Import</button></a>
                     </td>
                 </tr>
+
+                <tr>
+                    <th scope="row">7</th>
+                    <td>SKU Status/Segmentation bulk import</td>
+                    <td>Existing item SKU status/Segmentation bulk update</td>
+                    <td style="text-align: center">
+                        <a href="{{ route('importSKULegendView') }}" target="_parent"><button class="btn btn-primary" style="width:80%">SKU Status/Segmentation Import</button></a>
+                    </td>
+                </tr>
                 
             </tbody>
         </table>

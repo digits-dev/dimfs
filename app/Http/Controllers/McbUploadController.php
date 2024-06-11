@@ -31,6 +31,7 @@ use App\StatusState;
 use App\Vendor;
 use App\WorkflowSetting;
 use Illuminate\Support\Facades\Input;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBController
 {
@@ -38,111 +39,20 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
     private $pending;
     private $create;
     private $update;
-    private $active;
-    private $invalid;
-    private $inactive_inventory;
-    private $trade_inventory;
     
     public function __construct() {
 		DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 		
 		$this->pending = StatusState::where('status_state','PENDING')->value('id');
-
 		$this->create = ActionType::where('action_type',"CREATE")->value('id');
 		$this->update = ActionType::where('action_type',"UPDATE")->value('id');
-		$this->active = SkuStatus::where('sku_status_description','ACTIVE')->value('id');
-		$this->invalid = SkuStatus::where('sku_status_description','INVALID')->value('id');
-		$this->inactive_inventory = InventoryType::where('inventory_type_description','INACTIVE')->value('id');
-		$this->trade_inventory = InventoryType::where('inventory_type_description','TRADE')->value('id');
 	}
-	
-    public function cbInit() {
-        
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
     
     public function importItemTemplate()
 	{
-		Excel::create('new-item-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) {
-			$excel->sheet('dimfs', function ($sheet) {
-				$sheet->row(1, config('excel-template.item-master'));
-			});
-
-			})->download('csv');
+		$template = config('excel-template.item-master');
+		$file_name = 'new-item-'.date("Ymd-His").'.csv';
+		return (new FastExcel([$template]))->download($file_name);
 	}
 	
 	public function importItem(Request $request)
