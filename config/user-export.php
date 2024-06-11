@@ -530,12 +530,12 @@ return [
         "initial_wrr_date" => [ 
             "label"=>"INITIAL WRR DATE (YYYY-MM-DD)",
             "name" =>"initial_wrr_date",
-            'type'=>'date','validation'=>'required|date',
+            'type'=>'date','validation'=>'date',
         ],
         "latest_wrr_date" => [ 
             "label"=>"LATEST WRR DATE (YYYY-MM-DD)",
             "name" =>"latest_wrr_date",
-            'type'=>'date','validation'=>'required|date',
+            'type'=>'date','validation'=>'date',
         ],
         "brand_group_description" => [ 
             "label"=>"BRAND GROUP",
@@ -757,11 +757,12 @@ return [
             "name" =>"moq",
             'type'=>'number','validation'=>'required|min:0'
         ],
-        "incoterms_code" => [ 
-            "label"=>"INCOTERMS",
-            "name" =>"vendors_id",
-            "datatable" =>"vendors,incoterms_id,incoterms,incoterms_code"
-        ],
+        // "incoterms_code" => [ 
+        //     "label"=>"INCOTERMS",
+        //     "name" =>"vendors_id",
+        //     "datatable" =>"vendors,incoterms_id,incoterms,incoterms_code",
+        //     'type'=>'select2',
+        // ],
         "currency_code" => [ 
             "label"=>"CURRENCY",
             "name" =>"currencies_id",
@@ -775,7 +776,7 @@ return [
             'type'=>'number','validation'=>'required|min:0',
             'step'=>'0.01'
         ],
-        "size_description" => [ 
+        "size_value" => [ 
             "label"=>"SIZE",
             "name" =>"size_value",
             'type'=>'number','validation'=>'required|min:0','step'=>'0.01',
@@ -788,7 +789,6 @@ return [
 			'datatable_where'=>"status='ACTIVE'",
             'type'=>'select2','validation'=>'required',
         ],
-        
         "item_length" => [ 
             "label"=>"LENGTH [CM]",
             "name" =>"item_length",
@@ -823,12 +823,14 @@ return [
             "name" =>"colors_id",
             "datatable" =>"colors,color_description",
             'datatable_where'=>"status='ACTIVE'",
-            'type'=>'select2','validation'=>'required|integer|min:0',
+            'type'=>'select2','validation'=>'required|integer|min:0'
         ],
         "uom_code" => [ 
             "label"=>"UOM CODE",
             "name" =>"uoms_id",
-            "datatable" =>"uoms,uom_code"
+            "datatable" =>"uoms,uom_code",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
         ],
         "acefast" => [ 
             "label"=>"ACEFAST",

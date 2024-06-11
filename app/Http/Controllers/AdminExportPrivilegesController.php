@@ -8,6 +8,7 @@
 	use DB;
 	use CRUDBooster;
 	use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 	class AdminExportPrivilegesController extends \crocodicstudio\crudbooster\controllers\CBController {
 		
@@ -36,6 +37,7 @@
 			$this->col = [];
 			$this->col[] = ["label"=>"Privilege","name"=>"cms_privileges_id","join"=>"cms_privileges,name"];
 			$this->col[] = ["label"=>"Module","name"=>"cms_moduls_id","join"=>"cms_moduls,name"];
+			$this->col[] = ["label"=>"Action Type","name"=>"action_types_id","join"=>"action_types,action_type"];
 			$this->col[] = ["label"=>"Table Name","name"=>"table_name"];
 			$this->col[] = ["label"=>"Report Header","name"=>"report_header"];
 			// $this->col[] = ["label"=>"Report Query","name"=>"report_query"];
@@ -45,14 +47,15 @@
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Privileges','name'=>'cms_privileges_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_privileges,name'];
-			$this->form[] = ['label'=>'Modules','name'=>'cms_moduls_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_moduls,name'];
-			$this->form[] = ['label'=>'Table Name','name'=>'table_name','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Report Header','name'=>'report_header','type'=>'textarea','validation'=>'required|string|min:5|max:5000','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Report Query','name'=>'report_query','type'=>'textarea','validation'=>'required|string|min:5|max:5000','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			// $this->form[] = ['label'=>'Created By','name'=>'created_by','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			// $this->form[] = ['label'=>'Updated By','name'=>'updated_by','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Privileges','name'=>'cms_privileges_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6','datatable'=>'cms_privileges,name'];
+			$this->form[] = ['label'=>'Modules','name'=>'cms_moduls_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6','datatable'=>'cms_moduls,name'];
+			$this->form[] = ['label'=>'Action Type','name'=>'action_types_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6','datatable'=>'action_types,action_type'];
+			$this->form[] = ['label'=>'Table Name','name'=>'table_name','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-6'];
+			$this->form[] = ['label'=>'Report Header','name'=>'report_header','type'=>'textarea','validation'=>'required|string|min:5|max:5000','width'=>'col-sm-6'];
+			$this->form[] = ['label'=>'Report Query','name'=>'report_query','type'=>'textarea','validation'=>'required|string|min:5|max:5000','width'=>'col-sm-6'];
+			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-6'];
+			// $this->form[] = ['label'=>'Created By','name'=>'created_by','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-6'];
+			// $this->form[] = ['label'=>'Updated By','name'=>'updated_by','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-6'];
 			// # END FORM DO NOT REMOVE THIS LINE
 
 	        $this->button_selected = array();
@@ -100,7 +103,7 @@
             $data['page_title'] = 'Create User Privilege';
 			$data['actionTypes'] = DB::table('action_types')->orderBy('action_type','asc')->get();
             $data['modules'] = DB::table('cms_moduls')->orderBy('name','asc')->get();
-            $data['privileges'] = CRUDBooster::isSuperAdmin() ? UserPrivilege::all() : UserPrivilege::privileges();
+            $data['privileges'] = CRUDBooster::isSuperAdmin() ? UserPrivilege::all()->sortBy("name") : UserPrivilege::privileges();
 
             return view('export-privilege.create',$data);
         }
@@ -113,7 +116,7 @@
 			$data['row'] = ExportPrivilege::find($id);
 			$data['actionTypes'] = DB::table('action_types')->orderBy('action_type','asc')->get();
             $data['modules'] = DB::table('cms_moduls')->orderBy('name','asc')->get();
-            $data['privileges'] = CRUDBooster::isSuperAdmin() ? UserPrivilege::all() : UserPrivilege::privileges();
+            $data['privileges'] = CRUDBooster::isSuperAdmin() ? UserPrivilege::all()->sortBy("name") : UserPrivilege::privileges();
 
             return view('export-privilege.edit',$data);
 		}
@@ -122,7 +125,30 @@
             return config('user-export.'.$request->tableName);
 		}
 
+		public function getUserTableColumns(Request $request){
+            $data['columns'] = config('user-export.'.$request->tableName);
+			$oldData = ExportPrivilege::where([
+				'cms_privileges_id' => $request->cms_privileges,
+				'action_types_id' => $request->action_types,
+				'table_name' => $request->tableName,
+			])->get(['report_query'])->toArray();
+
+			$data['rows'] = array_map(function($value) {
+				return trim($value, '`');
+			}, explode(',', $oldData[0]['report_query']));
+
+			return $data;
+		}
+
 		public function saveExport(Request $request) {
+
+			// $validated = Validator::make($request->all(), [
+			// 	'modules' => 'required',
+			// 	'cms_privileges' => 'required',
+			// 	'table_columns' => 'required',
+			// 	'action_types' => 'required',
+			// 	'table_name' => 'required'
+			// ]);
 
             // $request->validate([
             //     'modules' => 'required',

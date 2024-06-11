@@ -15,6 +15,6 @@ class UserPrivilege extends Model
 
     public function scopePrivileges($query)
     {
-        return $query->where('is_superadmin',0)->get();
+        return $query->where('is_superadmin',0)->orderBy('name','asc')->get();
     }
 }

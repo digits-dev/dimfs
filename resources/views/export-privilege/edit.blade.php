@@ -80,33 +80,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha512-SFaNb3xC08k/Wf6CRM1J+O/vv4YWyrPBSdy0o+1nqKzf+uLrIBnaeo8aYoAAOd31nMNHwX8zwVwTMbbCJjA8Kg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function() {
+            $("#modules").trigger('change');
 
             $("#modules").change(function () {
                 let selectedTable = $(this).find(':selected').data('table');
                 $('.tableName').val(selectedTable);
                 $.ajax({
-                    url: "{{ route('export-privileges.getTableColumns') }}",
+                    url: "{{ route('export-privileges.getUserTableColumns') }}",
                     method: "POST",
                     data:{
                         _token: $('#token').val(),
-                        tableName: selectedTable
+                        tableName: selectedTable,
+                        cms_privileges: $('#cms_privileges').find(':selected').val(),
+                        action_types: $('#action_types').find(':selected').val()
                     },
                     success : function (data){
-                        console.log(data);
-                        const length = Object.entries(data).length;
-
+                        const length = Object.entries(data.columns).length;
+                        const oldData = data.rows;
+                        
                         $('.left').empty();
                         $('.mid').empty();
                         $('.right').empty();
 
-                        $.each(data, function(i,val) {
+                        $.each(data.columns, function(i,val) {
                             const currentLength = $('.report-headers').get().length;
-
+                            
                             const checkboxElement = $('<input type="checkbox" class="report-headers">').attr({
                                 id: 'checkbox_'+i,
                                 name: 'table_columns['+i+']',
                                 value: val,
-                                checked: true
+                                checked: (oldData.includes(i)) ? true : false
                             });
 
                             const labelElement = $('<label>').attr('for', 'checkbox_' + i).text(val);

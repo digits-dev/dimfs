@@ -183,4 +183,9 @@ class ItemMaster extends Model
         ->leftJoin('cms_users as updatedby', 'item_masters.updated_by', '=', 'updatedby.id')
         ->leftJoin('cms_users as approvedby', 'item_masters.approved_by', '=', 'approvedby.id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categories_id');
+    }
 }

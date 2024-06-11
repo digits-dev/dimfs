@@ -11,4 +11,9 @@ class Category extends Model
     public function scopeGetCodeById($query, $id){
         return $query->where('id',$id)->value('category_code');
     }
+
+    public function itemMasters()
+    {
+        return $this->hasMany(ItemMaster::class, 'categories_id');
+    }
 }

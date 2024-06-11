@@ -118,6 +118,7 @@ trait ItemTraits {
 	public function getItemAccess(){
 		$access =  ExportPrivilege::where('cms_privileges_id',CRUDBooster::myPrivilegeId())
 			->where('table_name','item_masters')
+			->where('action_types_id',5) //view
 			->get(['report_header','report_query'])
 			->toArray();
 			// Split the strings into arrays
@@ -130,7 +131,7 @@ trait ItemTraits {
 			}, $values);
 			
 			// Combine the arrays into a key-value array
-			// $array1 = array_combine($keys, $values);
+			// $access = array_combine($keys, $values);
 
 			return $values;
 	}
@@ -154,6 +155,69 @@ trait ItemTraits {
 			$export = array_combine($keys, $values);
 
 			return $export;
+	}
+
+	public function getItemUpdateReadOnly(){
+		$access =  ExportPrivilege::where('cms_privileges_id',CRUDBooster::myPrivilegeId())
+			->where('table_name','item_masters')
+			->where('action_types_id',4) //update-read-only
+			->get(['report_header','report_query'])
+			->toArray();
+			// Split the strings into arrays
+			$keys = explode(',', $access[0]['report_header']);
+			$values = explode(',', $access[0]['report_query']);
+
+			// Remove backticks from values
+			$values = array_map(function($value) {
+				return trim($value, '`');
+			}, $values);
+			
+			// Combine the arrays into a key-value array
+			// $export = array_combine($keys, $values);
+
+			return $values;
+	}
+
+	public function getItemCreate(){
+		$access =  ExportPrivilege::where('cms_privileges_id',CRUDBooster::myPrivilegeId())
+			->where('table_name','item_masters')
+			->where('action_types_id',1) //create
+			->get(['report_header','report_query'])
+			->toArray();
+			// Split the strings into arrays
+			$keys = explode(',', $access[0]['report_header']);
+			$values = explode(',', $access[0]['report_query']);
+
+			// Remove backticks from values
+			$values = array_map(function($value) {
+				return trim($value, '`');
+			}, $values);
+			
+			// Combine the arrays into a key-value array
+			// $export = array_combine($keys, $values);
+
+			return $values;
+	}
+
+	public function getItemUpdate(){
+		$access =  ExportPrivilege::where('cms_privileges_id',CRUDBooster::myPrivilegeId())
+			->where('table_name','item_masters')
+			->where('action_types_id',2) //update
+			->get(['report_header','report_query'])
+			->toArray();
+			// Split the strings into arrays
+			$keys = explode(',', $access[0]['report_header']);
+			$values = explode(',', $access[0]['report_query']);
+
+			// Remove backticks from values
+			$values = array_map(function($value) {
+				return trim($value, '`');
+			}, $values);
+			
+			// Combine the arrays into a key-value array
+			// $export = array_combine($keys, $values);
+
+			return $values;
 	}
 
 	public function getItemForms(){

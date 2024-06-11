@@ -55,21 +55,49 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
 		foreach (config("user-export.access") as $key => $value) {
-			foreach ($this->getItemAccess() as $keyAccess => $valueAccess) {
-				if($valueAccess == $key){
-					$this->col[] = $value;
-				}
+			if (in_array($key, $this->getItemAccess())) {
+				$this->col[] = $value;
 			}
 		}
 		
 		$this->form = [];
-		foreach (config("user-export.forms") as $key => $value) {
-			foreach ($this->getItemAccess() as $keyAccess => $valueAccess) {
-				if($valueAccess == $key){
+		if(in_array(CRUDBooster::getCurrentMethod(), ['getAdd', 'postAddSave'])){
+			foreach (config("user-export.forms") as $key => $value) {
+				if($key=="size_description"){
+					$value+=[config("user-export.forms.size_value")];
+				}
+				if (in_array($key, $this->getItemCreate())) {
 					$value+=['width'=>'col-sm-6'];
-					// dd($value);
 					$this->form[] = $value;
 				}
+			}
+		}
+		if(in_array(CRUDBooster::getCurrentMethod(), ['getEdit', 'postEditSave'])){
+			foreach (config("user-export.forms") as $key => $value) {
+				
+				if(in_array($key, $this->getItemUpdateReadOnly())){
+					$value+=['readonly'=>true];
+				}
+				if (in_array($key, $this->getItemUpdate())) {
+					if($key=="size_description"){
+						$this->form[]=config("user-export.forms.size_value");
+					}
+					$value+=['width'=>'col-sm-6'];
+					$this->form[] = $value;
+				}
+			}
+		}
+		if(CRUDBooster::getCurrentMethod() == "getDetail"){
+			foreach (config("user-export.forms") as $key => $value) {
+				
+				if (in_array($key, $this->getItemAccess())) {
+					if($key=="size_description"){
+						$this->form[]=config("user-export.forms.size_value");
+					}
+					$value+=['width'=>'col-sm-6'];
+					$this->form[] = $value;
+				}
+				
 			}
 		}
 		
@@ -704,8 +732,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		});
 
 		$filename = 'Export DIMFSv3.0 All Items '.date("Ymd-His").'.xlsx';
-		return (new FastExcel($allItems))->download($filename);
-		
+		return (new FastExcel($allItems))->download($filename);	
 	}
 
 	public function importView()

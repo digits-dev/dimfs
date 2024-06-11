@@ -114,4 +114,6 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
 
     Route::post('export_privileges/create/save','AdminExportPrivilegesController@saveExport')->name('export-privileges.save');
     Route::post('export_privileges/get/table-columns','AdminExportPrivilegesController@getTableColumns')->name('export-privileges.getTableColumns');
+    Route::post('export_privileges/get/user-table-columns','AdminExportPrivilegesController@getUserTableColumns')->name('export-privileges.getUserTableColumns');
+
 });
