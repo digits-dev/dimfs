@@ -82,10 +82,10 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$unMatch[] = $csv[0][$i];
 				}
 			}
-
-			if(!empty($unMatch)) {
-				return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
-			}
+			
+			// if(!empty($unMatch)) {
+			// 	return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
+			// }
 
 			$appleLobs = AppleLob::active()->get();
 			$brandGroups = BrandGroup::active()->get();
@@ -374,19 +374,16 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			
 			$csv = array_map('str_getcsv', file($path));
 			$dataExcel = Excel::load($path, function($reader) {})->get();
-			
 			$unMatch = [];
 			$header = config('excel-template.item-master-edit');
-
 			for ($i=0; $i < sizeof($csv[0]); $i++) {
-				if (! in_array($csv[0][$i], array_keys($header))) {
+				if(!array_key_exists($csv[0][$i], $header)) {
 					$unMatch[] = $csv[0][$i];
 				}
 			}
-
-			if(!empty($unMatch)) {
-				return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
-			}
+			// if(!empty($unMatch)) {
+			// 	return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
+			// }
 
 			$appleLobs = AppleLob::active()->get();
 			$brandGroups = BrandGroup::active()->get();
