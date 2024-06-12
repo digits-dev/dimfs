@@ -422,18 +422,24 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$brand_directions = $brandDirections->where('brand_direction_description', $value->brand_direction)->first();
 					$brand_id = $brands->where('brand_description', $value->brand_description)->first();
 					$category_id = $categories->where('category_description', $value->category_description)->first();
+
+					$class_id = null;
+					if(!is_null($value->class_description))
+					    $class_id = $classes->where('class_description', $value->class_description);
+					if(!is_null($category_id->id))
+					    $class_id->where('categories_id', $category_id->id)->first();
 					
-					$class_id = $classes->where([
-						'class_description' => $value->class_description,
-						'categories_id' => $category_id->id])->first();
+					$subclass_id = null;
+					if(!is_null($value->subclass_description))
+					    $subclass_id = $subClasses->where('subclass_description', $value->subclass_description);
+					if(!is_null($class_id))
+					    $subclass_id->where('classes_id', $class_id->id)->first();
 					
-					$subclass_id = $subClasses->where([
-						'subclass_description' => $value->subclass_description,
-						'classes_id' => $class_id->id])->first();
-					
-					$margin_category_id = $marginCategories->where([
-						'margin_category_description' => $value->margin_category,
-						'subclasses_id' => $subclass_id->id])->first();
+					$margin_category_id = null;
+					if(!is_null($value->margin_category))
+					    $margin_category_id = $marginCategories->where('margin_category_description', $value->margin_category);
+					if(!is_null($subclass_id))
+					    $margin_category_id->where('subclasses_id', $subclass_id->id)->first();
 					
 					$warehouse_category_id = $warehouseCategories->where('warehouse_category_description', $value->wh_category_description)->first();
 					$model_specific_id = $modelSpecifics->where('model_specific_description', $value->model_specific_description)->first();
