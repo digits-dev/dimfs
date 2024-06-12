@@ -723,7 +723,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 
 	public function exportAllItems() {
 		$allItems = ItemMaster::generateExport();
-		if(!CRUDBooster::isSuperadmin() || !in_array(CRUDBooster::myPrivilegeName(), ["ACCTG HEAD","MCB TL","ADVANCED","REPORTS","ECOMM STORE MDSG TL"])){
+		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(), ["ACCTG HEAD","MCB TL","ADVANCED","REPORTS","ECOMM STORE MDSG TL"])){
 			$exportItems = $allItems->where('item_masters.sku_statuses_id','!=',$this->getSkuStatus("INVALID"))
 				->where('item_masters.inventory_types_id','!=',$this->getInventoryType("INACTIVE"))->get();
 		}
