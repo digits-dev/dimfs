@@ -186,6 +186,44 @@ class ItemMaster extends Model
         ->orderBy('item_masters.digits_code','ASC');
     }
 
+    public function scopeMarginMonitoring($query){
+        return $query->select(
+            'item_masters.digits_code',
+		    'item_masters.initial_wrr_date',
+		    'item_masters.latest_wrr_date',
+		    'item_masters.moq',
+		    'currencies.currency_code',
+		    'item_masters.purchase_price',
+		    'item_masters.item_description',
+		    'brands.brand_description',
+		    'margin_categories.margin_category_description',
+		    'categories.category_description',
+		    'subclasses.subclass_description',
+		    'item_masters.current_srp',
+		    'item_masters.promo_srp',
+		    'item_masters.price_change',
+		    'item_masters.effective_date',
+		    'item_masters.dtp_rf',
+		    'item_masters.dtp_rf_percentage',
+		    'item_masters.landed_cost',
+		    'item_masters.working_dtp_rf',
+		    'item_masters.working_dtp_rf_percentage',
+		    'item_masters.working_landed_cost',
+		    'item_masters.duration_from',
+		    'item_masters.duration_to',
+		    'support_types.support_type_description',
+		    'item_masters.landed_cost_sea')
+        ->join('brands','item_masters.brands_id','=','brands.id')
+        ->join('margin_categories','item_masters.margin_categories_id','=','margin_categories.id')
+        ->join('categories','item_masters.categories_id','=','categories.id')
+        ->join('subclasses','item_masters.subclasses_id','=','subclasses.id')
+        ->join('currencies','item_masters.currencies_id','=','currencies.id')
+        ->join('support_types','item_masters.support_types_id','=','support_types.id')
+        ->where('brand.status','ACTIVE')
+        ->where('item_masters.approval_status',self::APPROVED)
+        ->orderBy('item_masters.digits_code','ASC');
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'categories_id');

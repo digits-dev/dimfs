@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return redirect('admin/login');
 });
@@ -46,15 +48,15 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
     Route::get('/item_masters/import-skulegend-view', 'AdminItemMastersController@importSKULegendView')->name('importSKULegendView');
     Route::get('/item_masters/import-ecom-view', 'AdminItemMastersController@importECOMView')->name('importECOMView');
     
-    Route::get('/item_masters/import-wrr-template', 'AdminItemMastersController@importWRRTemplate')->name('upload.wrr-template');
+    Route::get('/item_masters/import-wrr-template', 'WrrController@importWRRTemplate')->name('upload.wrr-template');
     Route::get('/item_masters/import-item-template', 'McbUploadController@importItemTemplate')->name('upload.item-template');
     Route::get('/item_masters/import-skulegend-template', 'SegmentationController@importTemplate')->name('upload.skulegend-template');
-    Route::get('/item_masters/import-ecom-template', 'AdminItemMastersController@importECOMTemplate')->name('upload.ecom-template');
+    Route::get('/item_masters/import-ecom-template', 'EcomController@importECOMTemplate')->name('upload.ecom-template');
     
-    Route::post('/item_masters/import-wrr', 'AdminItemMastersController@importWRR')->name('upload.wrr');
+    Route::post('/item_masters/import-wrr', 'WrrController@importWRR')->name('upload.wrr');
     Route::post('/item_masters/import-item', 'McbUploadController@importItem')->name('upload.item');
     Route::post('/item_masters/import-skulegend', 'SegmentationController@importSKULegendSegmentation')->name('upload.skulegend');
-    Route::post('/item_masters/import-ecom', 'AdminItemMastersController@importECOM')->name('upload.ecom');
+    Route::post('/item_masters/import-ecom', 'EcomController@importECOM')->name('upload.ecom');
     
     //imports - ecom price change
     Route::get('/ecom_price_changes/import-price-view', 'AdminEcomPriceChangesController@importPriceView')->name('importPriceView');
@@ -74,7 +76,7 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
     Route::post('/getAccessoriesMarginPercentage', 'AdminItemMastersController@getAccessoriesMarginPercentage')->name('getAccessoriesMarginPercentage');
     
     // Edited by Lewie 
-    Route::post('/EcomMarginPercentage', 'AdminItemMastersController@EcomMarginPercentage')->name('EcomMarginPercentage');
+    Route::post('/ecomMarginPercentage', 'AdminItemMastersController@ecomMarginPercentage')->name('ecomMarginPercentage');
     
     Route::get('/send-notification', 'AdminItemMastersController@sendApprovedItemEmailNotif')->name('sendApprovedItemEmailNotif');
     
@@ -84,7 +86,7 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
     Route::get('/getRMAClassByCategory/{category_id}','AdminRmaClassesController@getRMAClassByCategory')->name('getRMAClassByCategory');
     Route::get('/getRMASubclassByClass/{class_id}','AdminRmaSubclassesController@getRMASubclassByClass')->name('getRMASubclassByClass');
     
-    Route::get('/getMarginMatrixByMarginCategory/{margin_category}/{brand_id}/{vendor_type_id}','AdminItemMastersController@getMarginMatrixByMarginCategory')->name('getMarginMatrixByMarginCategory');
+    Route::get('/getMarginMatrixByMarginCategory/{margin_category}/{brand_id}/{vendor_type_id}','AccountingUploadController@getMarginMatrixByMarginCategory')->name('getMarginMatrixByMarginCategory');
     Route::get('/getMarginMatrixByOtherMarginCategory/{margin_category}','AdminItemMastersController@getMarginMatrixByOtherMarginCategory')->name('getMarginMatrixByOtherMarginCategory');
     
     Route::get('/item_masters/import-acctg-view', 'AdminItemMastersController@importItemAccountingView')->name('importItemAccountingView');

@@ -6,94 +6,38 @@ use Illuminate\Http\Request;
 use DB;
 use CRUDBooster;
 use Carbon\Carbon;
-use Excel;
 use App\ItemPriceChangeApproval;
 use App\ItemMaster;
 use App\MarginCategory;
 use App\VendorType;
 use App\MarginMatrix;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AccountingUploadController extends \crocodicstudio\crudbooster\controllers\CBController
 {
-    public function cbInit() {
-        
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    public static function getMarginMatrixByMarginCategory($margin_category,$brand_id,$vendor_type_id){
+        $marginMatrix =  MarginMatrix::where('matrix_type','ADD TO LC')
+            ->where("vendor_types_id", $vendor_type_id)
+            ->where("status", "ACTIVE")
+			->select("store_margin_percentage", "store_margin_percentage")->get()->toArray();
+			
+		if(empty($marginMatrix)){
+		    $margin_Matrix = MarginMatrix::where('margin_category',$margin_category)
+            ->where("brands_id", $brand_id)
+            ->whereNull("vendor_types_id")
+            ->where('matrix_type','ADD TO LC')
+            ->where("status", "ACTIVE")
+			->select("store_margin_percentage", "store_margin_percentage")->get()->toArray();
+			
+			return Arr::flatten($margin_Matrix);
+		}
+		else{
+		    return Arr::flatten($marginMatrix);
+		}
+	}
     
     public function importAccountingTemplate()
 	{
@@ -125,7 +69,7 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
 		$cnt_fail = 0;
 		$file = $request->file('import_file');
 			
-		$validator = \Validator::make(
+		$validator = Validator::make(
 			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
 			['file' => 'required', 'extension' => 'required|in:csv',]
 		);

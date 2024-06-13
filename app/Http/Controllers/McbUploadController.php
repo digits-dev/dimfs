@@ -24,16 +24,15 @@ use App\Incoterm;
 use App\Currency;
 use App\SkuStatus;
 use App\SkuLegend;
-use App\ActionType;
 use App\BrandDirection;
 use App\BrandGroup;
 use App\Http\Traits\UploadTraits;
 use App\ItemClass;
 use App\Segmentation;
-use App\StatusState;
 use App\Vendor;
 use App\WorkflowSetting;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBController
@@ -60,7 +59,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 		$file = $request->file('import_file');
 		$segments = Segmentation::active()->get();
 			
-		$validator = \Validator::make(
+		$validator = Validator::make(
 			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
 			['file' => 'required', 'extension' => 'required|in:csv',]
 		);
@@ -83,10 +82,12 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$unMatch[] = $csv[0][$i];
 				}
 			}
+
+			$unmatchHeaders = json_encode($unMatch);
 			
-			// if(!empty($unMatch)) {
-			// 	return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
-			// }
+			if(!empty($unMatch)) {
+				return back()->with('error_import', "Failed ! Please check template headers, mismatched detected. $unmatchHeaders");
+			}
 
 			$appleLobs = AppleLob::active()->get();
 			$brandGroups = BrandGroup::active()->get();
@@ -348,9 +349,14 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
     
     public function importMcbTemplate()
 	{
-		$template = config('excel-template.item-master-edit');
-		$file_name = 'mcb-update-'.date("Ymd-His").'.csv';
-		return (new FastExcel([$template]))->download($file_name);
+		// $template = config('excel-template.item-master-edit');
+		$file_name = 'mcb-update-'.date("Ymd-His");//.'.csv';
+		// return (new FastExcel([$template]))->download($file_name);
+		Excel::create($file_name, function ($excel) {
+			$excel->sheet('edit', function ($sheet) {
+				$sheet->row(1, config('excel-template.item-master-edit'));
+			});
+		})->download('csv');
 	}
 	
 	public function importMcbEdit(Request $request)
@@ -361,7 +367,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 		$file = $request->file('import_file');
 		$segments = Segmentation::active()->get();
 			
-		$validator = \Validator::make(
+		$validator = Validator::make(
 			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
 			['file' => 'required', 'extension' => 'required|in:csv',]
 		);
@@ -378,13 +384,16 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$unMatch = [];
 			$header = config('excel-template.item-master-edit');
 			for ($i=0; $i < sizeof($csv[0]); $i++) {
-				if(!array_key_exists($csv[0][$i], $header)) {
+				if(!in_array($csv[0][$i], $header)) {
 					$unMatch[] = $csv[0][$i];
 				}
 			}
-			// if(!empty($unMatch)) {
-			// 	return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
-			// }
+
+			$unmatchHeaders = json_encode($unMatch);
+
+			if(!empty($unMatch)) {
+				return back()->with('error_import', "Failed ! Please check template headers, mismatched detected. $unmatchHeaders");
+			}
 
 			$appleLobs = AppleLob::active()->get();
 			$brandGroups = BrandGroup::active()->get();
@@ -421,25 +430,28 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$brand_groups = $brandGroups->where('brand_group_description', $value->brand_group)->first();
 					$brand_directions = $brandDirections->where('brand_direction_description', $value->brand_direction)->first();
 					$brand_id = $brands->where('brand_description', $value->brand_description)->first();
-					$category_id = $categories->where('category_description', $value->category_description)->first();
-
+					$category_id = $categories->where('category_description', $value->category_description)->pluck('id');
+					
 					$class_id = null;
-					if(!is_null($value->class_description))
+					if(!is_null($value->class_description)){
 					    $class_id = $classes->where('class_description', $value->class_description);
-					if(!is_null($category_id->id))
-					    $class_id->where('categories_id', $category_id->id)->first();
+					}
+					if(count($category_id) > 0){
+						$class_id->where('categories_id', $category_id)->pluck('id');
+					}
 					
 					$subclass_id = null;
 					if(!is_null($value->subclass_description))
 					    $subclass_id = $subClasses->where('subclass_description', $value->subclass_description);
-					if(!is_null($class_id))
-					    $subclass_id->where('classes_id', $class_id->id)->first();
+					if(!is_null($class_id) && count($class_id) > 0)
+					    $subclass_id->where('classes_id', $class_id)->pluck('id');
 					
 					$margin_category_id = null;
 					if(!is_null($value->margin_category))
 					    $margin_category_id = $marginCategories->where('margin_category_description', $value->margin_category);
-					if(!is_null($subclass_id))
-					    $margin_category_id->where('subclasses_id', $subclass_id->id)->first();
+					if(!is_null($subclass_id) && count($subclass_id) > 0){
+					    $margin_category_id->where('subclasses_id', $subclass_id)->pluck('id');
+					}
 					
 					$warehouse_category_id = $warehouseCategories->where('warehouse_category_description', $value->wh_category_description)->first();
 					$model_specific_id = $modelSpecifics->where('model_specific_description', $value->model_specific_description)->first();
@@ -531,10 +543,10 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'brand_directions_id' => $brand_directions->id,
 						'apple_report_inclusion' => $value->apple_report_inclusion,
 						'brands_id' => $brand_id->id,
-						'categories_id' => $category_id->id,
-						'classes_id' => $class_id->id,
-						'subclasses_id' => $subclass_id->id,
-						'margin_categories_id' => $margin_category_id->id,
+						'categories_id' => $category_id,
+						'classes_id' => $class_id,
+						'subclasses_id' => $subclass_id,
+						'margin_categories_id' => $margin_category_id,
 						'warehouse_categories_id' => $warehouse_category_id->id,
 						'compatibility' => $value->compatibility,
 						'model_number' => $value->model_number,

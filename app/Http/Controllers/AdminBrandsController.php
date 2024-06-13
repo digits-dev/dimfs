@@ -1,8 +1,7 @@
-<?php namespace App\Http\Controllers;
+<?php 
 
-	use Session;
-	use Request;
-	use DB;
+	namespace App\Http\Controllers;
+
 	use CRUDBooster;
 	use App\Brand;
 

@@ -157,9 +157,9 @@ trait ItemTraits {
 			return $export;
 	}
 
-	public function getItemUpdateReadOnly(){
+	public function getItemUpdateReadOnly($table='item_masters'){
 		$access =  ExportPrivilege::where('cms_privileges_id',CRUDBooster::myPrivilegeId())
-			->where('table_name','item_masters')
+			->where('table_name',$table)
 			->where('action_types_id',4) //update-read-only
 			->get(['report_header','report_query'])
 			->toArray();
@@ -199,9 +199,9 @@ trait ItemTraits {
 			return $values;
 	}
 
-	public function getItemUpdate(){
+	public function getItemUpdate($table='item_masters'){
 		$access =  ExportPrivilege::where('cms_privileges_id',CRUDBooster::myPrivilegeId())
-			->where('table_name','item_masters')
+			->where('table_name',$table)
 			->where('action_types_id',2) //update
 			->get(['report_header','report_query'])
 			->toArray();

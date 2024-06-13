@@ -17,8 +17,6 @@
 	use App\Platform;
 	use App\Size;
 	use App\WorkflowSetting;
-	use Carbon\Carbon;
-	use Illuminate\Support\Facades\Input;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Arr;
 	use Rap2hpoutre\FastExcel\FastExcel;
@@ -721,6 +719,47 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			
 	}
 
+	public function exportMargin(){
+	    
+	    $margins = ItemMaster::marginMonitoring();
+
+		$marginMonitoring = $margins->get();
+
+		$marginMonitoring->transform(function($item){
+			return [
+				'Product ID' => $item->digits_code,
+				'INITIAL WRR DATE (YYYY-MM-DD)' => $item->initial_wrr_date,
+				'LATEST WRR DATE (YYYY-MM-DD)' => $item->latest_wrr_date,
+				'MOQ' => $item->moq,
+				'CURRENCY' => $item->currency_code,
+				'SUPPLIER COST' => $item->purchase_price,
+				'ITEM DESCRIPTION' => $item->item_description,
+				'BRAND' => $item->brand_description,
+				'MARGIN CATEGORY' => $item->margin_category_description,
+				'CATEGORY' => $item->category_description,
+				'SUBCLASS' => $item->subclass_description,
+				'CURRENT SRP' => $item->current_srp,
+				'DG SRP' => $item->promo_srp,
+				'PRICE CHANGE' => $item->price_change,
+				'PRICE CHANGE DATE' => $item->effective_date,
+				'STORE COST' => $item->dtp_rf,
+				'STORE MARGIN (%)' => $item->dtp_rf_percentage,
+				'LANDED COST' => $item->landed_cost,
+				'WORKING STORE COST' => $item->working_dtp_rf,
+				'WORKING STORE MARGIN (%)' => $item->working_dtp_rf_percentage,
+				'WORKING LANDED COST' => $item->working_landed_cost,
+				'DURATION FROM' => $item->duration_from,
+				'DURATION TO' => $item->duration_to,
+				'SUPPORT TYPE' => $item->support_type_description,
+				'LANDED COST VIA SEA' => $item->landed_cost_sea
+			];
+		});
+
+		$filename = 'Export Margin Monitoring '.date("Ymd-His").'.xlsx';
+		return (new FastExcel($marginMonitoring))->download($filename);
+		
+	}
+
 	public function exportAllItems() {
 		$allItems = ItemMaster::generateExport();
 		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(), ["ACCTG HEAD","MCB TL","ADVANCED","REPORTS","ECOMM STORE MDSG TL"])){
@@ -803,251 +842,6 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 	    return view('item-master.mcb-upload',$data);
 	}
 
-	public function importWRRTemplate()
-	{
-		Excel::create('wrr-date-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) {
-			$excel->sheet('wrr', function ($sheet) {
-				$sheet->row(1, array('DIGITS CODE','LATEST WRR DATE'));
-				$sheet->row(2, array('80000001','yyyy-mm-dd'));
-			});
-		})->download('csv');
-	}
-	
-	public function importECOMTemplate()
-	{
-		Excel::create('ecom-details-'.date("Ymd").'-'.date("h.i.sa"), function ($excel) {
-			$excel->sheet('ecom', function ($sheet) {
-				$sheet->row(1, array('DIGITS CODE', 'LENGTH','WIDTH','HEIGHT','WEIGHT'));
-				$sheet->row(2, array('80000001', '1.25','1.25','1.25','1.25'));
-			});
-		})->download('csv');
-	}
-
-	public function importWRR(Request $request)
-	{
-		$errors = array();
-		$cnt_success = 0;
-		$cnt_fail = 0;
-		$file = $request->file('import_file');
-			
-		$validator = \Validator::make(
-			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
-			['file' => 'required', 'extension' => 'required|in:csv',]
-		);
-
-		if ($validator->fails()) {
-			return back()->with('error_import', 'Failed ! Please check required file extension.');
-		}
-
-		if (Input::hasFile('import_file')) {
-			$path = Input::file('import_file')->getRealPath();
-			
-			$csv = array_map('str_getcsv', file($path));
-			$dataExcel = Excel::load($path, function($reader) {})->get();
-			
-			$unMatch = [];
-			$header = array('DIGITS CODE','LATEST WRR DATE');
-
-			for ($i=0; $i < sizeof($csv[0]); $i++) {
-				if (! in_array($csv[0][$i], $header)) {
-					$unMatch[] = $csv[0][$i];
-				}
-			}
-
-			if(!empty($unMatch)) {
-				return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
-			}
-			
-			if(!empty($dataExcel) && $dataExcel->count()) {
-
-				foreach ($dataExcel as $key => $value) {
-					$data = array();
-					$line_item = 0;	
-					$line_item = $key+1;
-
-					$existingItem = ItemMaster::where('digits_code', intval($value->digits_code))->first();
-
-					if(empty($existingItem)){
-						array_push($errors, 'Line '.$line_item.': with digits code "'.$value->digits_code.'" not found in item master.');
-					}
-
-					if(is_null($value->latest_wrr_date)){
-						array_push($errors, 'Line '.$line_item.': with digits code "'.$value->digits_code.'" has blank wrr date.');
-					}
-
-					$dateObj = \DateTime::createFromFormat("Y-m-d", $value->latest_wrr_date);
-					if (!$dateObj){
-						array_push($errors, 'Line '.$line_item.': could not parse latest wrr date "'.$value->latest_wrr_date.'".');
-						// throw new \UnexpectedValueException("Could not parse the date: $value->latest_wrr_date");
-					}
-
-					if(empty($existingItem->initial_wrr_date) || is_null($existingItem->initial_wrr_date)){
-						$data = [
-							'initial_wrr_date' => date('Y-m-d', strtotime((string)$value->latest_wrr_date)),
-							'latest_wrr_date' => date('Y-m-d', strtotime((string)$value->latest_wrr_date))
-						];
-					}
-					else{
-						$data = self::getLatestWRRDate($value->digits_code, $value->latest_wrr_date);
-					}
-
-					try {
-						if(empty($errors)){
-							$cnt_success++;
-							ItemMaster::where('digits_code', intval($value->digits_code))->update($data);
-						}
-						
-					} catch (\Exception $e) {
-						$cnt_fail++;
-						array_push($errors, 'Line '.$line_item.': with error '.$e->errorInfo[2]);
-					}
-				}
-			}
-		}
-
-		if(empty($errors)){
-			return back()->with('success_import', 'Success ! ' . $cnt_success . ' item(s) were updated successfully.');
-		}
-		else{
-			return back()->with('error_import', implode("<br>", $errors));
-		}
-
-	}
-	
-	public function importECOM(Request $request)
-	{
-	    $errors = array();
-		$cnt_success = 0;
-		$cnt_fail = 0;
-		$file = $request->file('import_file');
-			
-		$validator = \Validator::make(
-			['file' => $file, 'extension' => strtolower($file->getClientOriginalExtension()),],
-			['file' => 'required', 'extension' => 'required|in:csv',]
-		);
-
-		if ($validator->fails()) {
-			return back()->with('error_import', 'Failed ! Please check required file extension.');
-		}
-
-		if (Input::hasFile('import_file')) {
-			$path = Input::file('import_file')->getRealPath();
-			
-			$csv = array_map('str_getcsv', file($path));
-			$dataExcel = Excel::load($path, function($reader) {})->get();
-			
-			$unMatch = [];
-			$header = array('DIGITS CODE','LENGTH','WIDTH','HEIGHT','WEIGHT');
-
-			for ($i=0; $i < sizeof($csv[0]); $i++) {
-				if (! in_array($csv[0][$i], $header)) {
-					$unMatch[] = $csv[0][$i];
-				}
-			}
-
-			if(!empty($unMatch)) {
-				return back()->with('error_import', 'Failed ! Please check template headers, mismatched detected.');
-			}
-			
-			if(!empty($dataExcel) && $dataExcel->count()) {
-
-				foreach ($dataExcel as $key => $value) {
-					$data = array();
-					$line_item = 0;	
-					$line_item = $key+1;
-					
-					$existingItem = ItemMaster::where('digits_code', intval($value->digits_code))->first();
-					
-					if(empty($existingItem)){
-						array_push($errors, 'Line '.$line_item.': with digits code "'.$value->digits_code.'" not found in item master.');
-					}
-					
-					if(empty($value->length)){
-						array_push($errors, 'Line '.$line_item.': blank item length.');
-					}
-					
-					if(empty($value->width)){
-						array_push($errors, 'Line '.$line_item.': blank item width.');
-					}
-					
-					if(empty($value->height)){
-						array_push($errors, 'Line '.$line_item.': blank item height.');
-					}
-					
-					if(empty($value->weight)){
-						array_push($errors, 'Line '.$line_item.': blank item weight.');
-					}
-					
-					if(!preg_match('/^[0-9]+\.[0-9]{2}$/', number_format($value->length, 2, '.', ''))){
-					    array_push($errors, 'Line '.$line_item.': with length: "'.$value->length.'" should have 2 decimal places only.');
-					}
-					
-					if(!preg_match('/^[0-9]+\.[0-9]{2}$/', number_format($value->width, 2, '.', ''))){
-					    array_push($errors, 'Line '.$line_item.': with width: "'.$value->width.'" should have 2 decimal places only.');
-					}
-					
-					if(!preg_match('/^[0-9]+\.[0-9]{2}$/', number_format($value->height, 2, '.', ''))){
-					    array_push($errors, 'Line '.$line_item.': with height: "'.$value->height.'" should have 2 decimal places only.');
-					}
-					
-					if(!preg_match('/^[0-9]+\.[0-9]{2}$/', number_format($value->weight, 2, '.', ''))){
-					    array_push($errors, 'Line '.$line_item.': with weight: "'.$value->weight.'" should have 2 decimal places only.');
-					}
-					
-					else{
-					    $data["item_length"] = number_format($value->length, 2, '.', '');
-					    $data["item_width"] = number_format($value->width, 2, '.', '');
-					    $data["item_height"] = number_format($value->height, 2, '.', '');
-					    $data["item_weight"] = number_format($value->weight, 2, '.', '');
-					}
-
-					try {
-						if(empty($errors)){
-							$cnt_success++;
-							ItemMaster::where('digits_code', intval($value->digits_code))->update($data);
-						}
-						
-					} catch (\Exception $e) {
-						$cnt_fail++;
-						array_push($errors, 'Line '.$line_item.': with error '.$e->errorInfo[2]);
-					}
-				}
-			}
-		}
-
-		if(empty($errors)){
-			return back()->with('success_import', 'Success ! ' . $cnt_success . ' item(s) were updated successfully.');
-		}
-		else{
-			return back()->with('error_import', implode("<br>", $errors));
-		}
-	}
-
-	public function getLatestWRRDate($digits_code, $latest_wrr_date)
-	{
-		$data = array();
-		$existingItemLatestWRR = ItemMaster::where('digits_code', intval($digits_code))->value('latest_wrr_date');
-		$first = new Carbon((string)$existingItemLatestWRR);
-		$second = new Carbon((string)$latest_wrr_date);
-		
-		if($first->gte($second)){
-			$data = [
-				'latest_wrr_date' => $existingItemLatestWRR
-			];
-		}
-		elseif(!is_null($latest_wrr_date)){
-			$data = [
-				'latest_wrr_date' => date('Y-m-d', strtotime((string)$latest_wrr_date))
-			];
-		}
-		else{
-			$data = [
-				'latest_wrr_date' => $existingItemLatestWRR
-			];
-		}
-		return $data;
-	}
-
 	public function getExistingUPC(Request $request)
 	{
 		$data = array();
@@ -1061,12 +855,10 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			$data['item'] = $existingItem;
 		}
 
-		echo json_encode($data);
-		exit;
+		return json_encode($data);
 	}
 
-	public function getExistingDigitsCode(Request $request)
-	{
+	public function getExistingDigitsCode(Request $request) {
 		$data = array();
 		$data['status_no'] = 0;
 		$data['message'] ='No digits code found!';
@@ -1077,12 +869,10 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			$data['message'] ='Existing digits code found!';
 		}
 
-		echo json_encode($data);
-		exit;
+		return json_encode($data);
 	}
 	
-	public function compareCurrentSRP(Request $request)
-	{
+	public function compareCurrentSRP(Request $request) {
 	    $data = array();
 		$data['status_no'] = 0;
 		$data['message'] ='Price is greater than current srp!';
@@ -1092,12 +882,10 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			$data['status_no'] = 1;
 		}
 
-		echo json_encode($data);
-		exit;
+		return json_encode($data);
 	}
 
-	public function sendApprovedItemEmailNotif()
-	{
+	public function sendApprovedItemEmailNotif() {
 		$data = array();
 		$data['name'] = 'User';
 		$data['date_today'] = date('Y-m-d');
@@ -1114,131 +902,6 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		
 		CRUDBooster::sendEmail(['to'=>'bpg@digits.ph','data'=>$data,'template'=>'approved_items_ecom_notification','attachments'=>[]]);
 	
-	}
-	
-	public function exportMargin(){
-	    
-	    $db_con = mysqli_connect(
-			env('DB_HOST'), 
-			env('DB_USERNAME'), 
-			env('DB_PASSWORD'), 
-			env('DB_DATABASE'), 
-			env('DB_PORT')
-		);
-
-		if(!$db_con) {
-			die('Could not connect: ' . mysqli_error($db_con));
-		}
-
-		$item_header = array('DIGITS CODE',
-            'INITIAL WRR DATE (YYYY-MM-DD)',
-            'LATEST WRR DATE (YYYY-MM-DD)',
-            'MOQ',
-            'CURRENCY',
-            'SUPPLIER COST',
-            'ITEM DESCRIPTION',
-            'BRAND',
-            'MARGIN CATEGORY',
-            'CATEGORY',
-            'SUBCLASS',
-            'CURRENT SRP',
-            'DG SRP',
-            'PRICE CHANGE',
-            'PRICE CHANGE DATE',
-            'STORE COST',
-            'STORE MARGIN (%)',
-            'LANDED COST',
-            'WORKING STORE COST',
-            'WORKING STORE MARGIN (%)',
-            'WORKING LANDED COST',
-            'DURATION FROM',
-            'DURATION TO',
-            'SUPPORT TYPE',
-            'LANDED COST VIA SEA'
-        );
-        
-        $filename = "Export DIMFSv3.0 Margin Monitoring - ".date("Ymd H:i:s"). ".csv";
-
-		header("Content-Disposition: attachment; filename=\"$filename\"");
-		header("Content-Type: text/csv; charset=UTF-16LE");
-
-		$out = fopen("php://output", 'w');
-		$flag = false;
-
-		
-		$sql_query = "SELECT `digits_code`,
-		    `initial_wrr_date`,
-		    `latest_wrr_date`,
-		    `moq`,
-		    `currencies_1`.currency_code,
-		    `purchase_price`,
-		    `item_description`,
-		    `brands`.brand_description,
-		    `margin_categories`.margin_category_description,
-		    `categories`.category_description,
-		    `subclasses`.subclass_description,
-		    `current_srp`,
-		    `promo_srp`,
-		    `price_change`,
-		    `effective_date`,
-		    `dtp_rf`,
-		    `dtp_rf_percentage`,
-		    `landed_cost`,
-		    `working_dtp_rf`,
-		    `working_dtp_rf_percentage`,
-		    `working_landed_cost`,
-		    `duration_from`,
-		    `duration_to`,
-		    `support_types`.support_type_description,
-		    `landed_cost_sea`";
-		
-		$sql_query = rtrim($sql_query, ',');
-
-		$sql_query .=" FROM `item_masters` 
-			LEFT JOIN `brands` ON `item_masters`.brands_id = `brands`.id 
-			LEFT JOIN `margin_categories` ON `item_masters`.margin_categories_id = `margin_categories`.id 
-			LEFT JOIN `categories` ON `item_masters`.categories_id = `categories`.id 
-			LEFT JOIN `subclasses` ON `item_masters`.subclasses_id = `subclasses`.id
-			LEFT JOIN `currencies` as currencies_1 ON `item_masters`.currencies_id = `currencies_1`.id 
-			LEFT JOIN `support_types` ON `item_masters`.support_types_id = `support_types`.id 
-			WHERE `item_masters`.approval_status = '".$this->getStatusByDescription('APPROVED')."' AND 
-			`brands`.status = 'ACTIVE'";
-		
-		$sql_query .=" ORDER BY `item_masters`.digits_code ASC";
-        ini_set('memory_limit', '-1');
-		$resultset = mysqli_query($db_con, $sql_query) or die("Database Error:". mysqli_error($db_con));
-
-		while($row = mysqli_fetch_row($resultset)) {
-			if(!$flag) {
-			// display field/column names as first row
-			fputcsv($out, $item_header, ',', '"');
-			$flag = true;
-			}
-			$cnt_array = 0;
-			array_walk($row, 
-				function(&$str, $key) {
-				    
-					if($str == 't') $str = 'TRUE';
-					if($str == 'f') $str = 'FALSE';
-					if(in_array($key, [0])){
-        			    $str ="='$str'";
-        			}
-        // 			if(strstr($str, '"')) {
-        // 				$str = '"' . str_replace('"', '""', $str) . '"';
-        // 			}
-        			if(strstr($str, "'")) {
-        				$str = str_replace("'", '"', $str);
-        			}
-					$str = mb_convert_encoding($str, 'UTF-16LE', 'UTF-8');
-				}
-			);
-			
-			fputcsv($out, array_values($row), ',', '"');
-		}
-
-		fclose($out);
-		exit;
-		
 	}
 	
 	public static function setStoreCostPercentage(&$postdata){
@@ -1272,8 +935,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		return number_format($cwsm_percentage,4, '.', '');
 	}
 	
-	public static function getUnitsMarginPercentage(Request $request)
-	{
+	public static function getUnitsMarginPercentage(Request $request) {
 		$data = array();
 		$data['status_no'] = 0;
 		$data['message'] ='No matrix found!';
@@ -1296,8 +958,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		
 	}
 	
-	public static function getAccessoriesMarginPercentage(Request $request)
-	{
+	public static function getAccessoriesMarginPercentage(Request $request) {
 		$data = array();
 		$data['status_no'] = 0;
 		$data['message'] ='No matrix found!';
@@ -1322,27 +983,6 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		echo json_encode($data);
 		exit;
 		
-	}
-	
-	public static function getMarginMatrixByMarginCategory($margin_category,$brand_id,$vendor_type_id){
-        $marginMatrix =  MarginMatrix::where('matrix_type','ADD TO LC')
-            ->where("vendor_types_id", $vendor_type_id)
-            ->where("status", "ACTIVE")
-			->select("store_margin_percentage", "store_margin_percentage")->get()->toArray();
-			
-		if(empty($marginMatrix)){
-		    $margin_Matrix = MarginMatrix::where('margin_category',$margin_category)
-            ->where("brands_id", $brand_id)
-            ->whereNull("vendor_types_id")
-            ->where('matrix_type','ADD TO LC')
-            ->where("status", "ACTIVE")
-			->select("store_margin_percentage", "store_margin_percentage")->get()->toArray();
-			
-			return Arr::flatten($margin_Matrix);
-		}
-		else{
-		    return Arr::flatten($marginMatrix);
-		}
 	}
 	
 	public static function checkStoreCost(&$postdata){ 
@@ -1462,8 +1102,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		}
 	}
 
-    public function EcomMarginPercentage(Request $request)
-	{
+    public function ecomMarginPercentage(Request $request) {
 		$data = array();  
 		$alldata = [];
 		$initial_computation = (number_format($request->current_srp , 2, '.', '') - number_format($request->landed_cost , 2, '.', '')) / number_format($request->current_srp , 2, '.', '');   
