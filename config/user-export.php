@@ -19,6 +19,7 @@ return [
         "brand_status" => "BRAND STATUS",
         "sku_status_description" => "SKU STATUS",
         "sku_legend_description" => "SKU LEGEND",
+        "brand_marketing_description" => "BRAND MARKETING",
         "item_description" => "ITEM DESCRIPTION",
         "model" => "MODEL",
         "model_specific_description" => "MODEL SPECIFIC DESCRIPTION",
@@ -109,6 +110,7 @@ return [
         "brand_status" => "BRAND STATUS",
         "sku_status_description" => "SKU STATUS",
         "sku_legend_description" => "SKU LEGEND",
+        "brand_marketing_description" => "BRAND MARKETING",
         "item_description" => "ITEM DESCRIPTION",
         "model" => "MODEL",
         "model_specific_description" => "MODEL SPECIFIC DESCRIPTION",
@@ -256,6 +258,11 @@ return [
             "label"=>"SKU LEGEND",
             "name" =>"sku_legends_id",
             "join" =>"sku_legends,sku_legend_description"
+        ],
+        "brand_marketing_description" => [ 
+            "label"=>"BRAND MARKETING",
+            "name" =>"brand_marketings_id",
+            "join" =>"brand_marketings,brand_marketing_description"
         ],
         "item_description" => [ 
             "label"=>"ITEM DESCRIPTION",
@@ -664,6 +671,13 @@ return [
             "label"=>"SKU LEGEND",
             "name" =>"sku_legends_id",
             "datatable" =>"sku_legends,sku_legend_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "brand_marketing_description" => [ 
+            "label"=>"BRAND MARKETING",
+            "name" =>"brand_marketings_id",
+            "datatable" =>"brand_marketings,brand_marketing_description",
             'datatable_where'=>"status='ACTIVE'",
             'type'=>'select2','validation'=>'required|integer|min:0',
         ],

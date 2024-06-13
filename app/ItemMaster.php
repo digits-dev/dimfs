@@ -87,6 +87,7 @@ class ItemMaster extends Model
             "brands.status as brand_status",
             "sku_statuses.sku_status_description",
             "sku_legends.sku_legend_description",
+            "brand_marketings.brand_marketing_description",
             "item_masters.item_description",
             "item_masters.model",
             "model_specifics.model_specific_description",
@@ -162,6 +163,7 @@ class ItemMaster extends Model
         ->leftJoin('brands', 'item_masters.brands_id', '=', 'brands.id')
         ->leftJoin('brand_groups', 'item_masters.brand_groups_id', '=', 'brand_groups.id')
         ->leftJoin('brand_directions', 'item_masters.brand_directions_id', '=', 'brand_directions.id')
+        ->leftJoin('brand_marketings', 'item_masters.brand_marketings_id', '=', 'brand_marketings.id')
         ->leftJoin('categories', 'item_masters.categories_id', '=', 'categories.id')
         ->leftJoin('classes', 'item_masters.classes_id', '=', 'classes.id')
         ->leftJoin('subclasses', 'item_masters.subclasses_id', '=', 'subclasses.id')
