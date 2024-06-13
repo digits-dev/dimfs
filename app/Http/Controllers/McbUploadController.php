@@ -26,6 +26,7 @@ use App\SkuStatus;
 use App\SkuLegend;
 use App\BrandDirection;
 use App\BrandGroup;
+use App\BrandMarketing;
 use App\Http\Traits\UploadTraits;
 use App\ItemClass;
 use App\Segmentation;
@@ -46,9 +47,14 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
     
     public function importItemTemplate()
 	{
-		$template = config('excel-template.item-master');
-		$file_name = 'new-item-'.date("Ymd-His").'.csv';
-		return (new FastExcel([$template]))->download($file_name);
+		// $template = config('excel-template.item-master');
+		$file_name = 'new-item-'.date("Ymd-His");//.'.csv';
+		// return (new FastExcel([$template]))->download($file_name);
+		Excel::create($file_name, function ($excel) {
+			$excel->sheet('edit', function ($sheet) {
+				$sheet->row(1, config('excel-template.item-master'));
+			});
+		})->download('csv');
 	}
 	
 	public function importItem(Request $request)
@@ -78,7 +84,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$header = config('excel-template.item-master');
 
 			for ($i=0; $i < sizeof($csv[0]); $i++) {
-				if (! in_array($csv[0][$i], array_keys($header))) {
+				if (! in_array($csv[0][$i], $header)) {
 					$unMatch[] = $csv[0][$i];
 				}
 			}
@@ -92,6 +98,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$appleLobs = AppleLob::active()->get();
 			$brandGroups = BrandGroup::active()->get();
 			$brandDirections = BrandDirection::active()->get();
+			$brandMarketings = BrandMarketing::active()->get();
 			$brands = Brand::active()->get();
 			$categories = Category::active()->get();
 			$classes = ItemClass::active()->get();
@@ -122,6 +129,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$apple_lobs_id = $appleLobs->where('apple_lob_description', $value->apple_lob)->first();
 					$brand_groups = $brandGroups->where('brand_group_description', $value->brand_group)->first();
 					$brand_directions = $brandDirections->where('brand_direction_description', $value->brand_direction)->first();
+					$brand_marketings = $brandMarketings->where('brand_marketing_description', $value->brand_marketing)->first();
 					$brand_id = $brands->where('brand_description', $value->brand_description)->first();
 					$category_id = $categories->where('category_description', $value->category_description)->first();
 					
@@ -254,6 +262,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'apple_lobs_id' => $apple_lobs_id->id,
 						'brand_groups_id' => $brand_groups->id,
 						'brand_directions_id' => $brand_directions->id,
+						'brand_marketings_id' => $brand_marketings->id,
 						'apple_report_inclusion' => $value->apple_report_inclusion,
 						'brands_id' => $brand_id->id,
 						'categories_id' => $category_id->id,
@@ -264,7 +273,6 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'warehouse_categories_id' => $warehouse_category_id->id,
 						'compatibility' => $value->compatibility,
 						'model' => $value->model,
-						// 'year_launch' => $value->year_launch,
 						'model_specifics_id' => $model_specific_id->id,
 						'sizes_id' => $size_id->id,
 						'size_value' => $value->size,
@@ -282,7 +290,6 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'currencies_id' => $currency_id->id,
 						'sku_legends_id' => $sku_legend_id->id,
 						'sku_statuses_id' => $sku_status_id->id,
-						// 'sku_classes_id' => (is_null($value->sku_class)) ? null : $sku_class_id->id,
 						'incoterms_id' => (is_null($value->incoterms)) ? null : $incoterm_id->id,
 						'current_srp' => (is_null($value->current_srp)) ? '0.00' : $value->current_srp,
 						'original_srp' => (is_null($value->original_srp)) ? '0.00' : $value->original_srp,
@@ -299,11 +306,9 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						// 'warranty_duration' => 1,
 						'btb_segmentation' => $value->beyond_the_box,
 						'dw_segmentation' => $value->digital_walker,
-						// 'online_segmentation' => $value->online,
 						'guam_segmentation' => $value->guam,
 						'dcon_segmentation' => $value->distribution_consignment,
 						'dout_segmentation' => $value->distribution_outright,
-						// 'dwmachine_segmentation' => $value->dw_machine,
 						'franchise_segmentation' => $value->franchise,
 						'newstore_segmentation' => $value->new_store,
 						'opensource_segmentation' => $value->opensource,
@@ -430,27 +435,27 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$brand_groups = $brandGroups->where('brand_group_description', $value->brand_group)->first();
 					$brand_directions = $brandDirections->where('brand_direction_description', $value->brand_direction)->first();
 					$brand_id = $brands->where('brand_description', $value->brand_description)->first();
-					$category_id = $categories->where('category_description', $value->category_description)->pluck('id');
+					$category_id = $categories->where('category_description', $value->category_description)->first();
 					
 					$class_id = null;
 					if(!is_null($value->class_description)){
 					    $class_id = $classes->where('class_description', $value->class_description);
 					}
-					if(count($category_id) > 0){
-						$class_id->where('categories_id', $category_id)->pluck('id');
+					if(!empty($category_id) && count($category_id) > 0){
+						$class_id->where('categories_id', $category_id)->first();
 					}
 					
 					$subclass_id = null;
 					if(!is_null($value->subclass_description))
 					    $subclass_id = $subClasses->where('subclass_description', $value->subclass_description);
 					if(!is_null($class_id) && count($class_id) > 0)
-					    $subclass_id->where('classes_id', $class_id)->pluck('id');
+					    $subclass_id->where('classes_id', $class_id)->first();
 					
 					$margin_category_id = null;
 					if(!is_null($value->margin_category))
 					    $margin_category_id = $marginCategories->where('margin_category_description', $value->margin_category);
 					if(!is_null($subclass_id) && count($subclass_id) > 0){
-					    $margin_category_id->where('subclasses_id', $subclass_id)->pluck('id');
+					    $margin_category_id->where('subclasses_id', $subclass_id)->first();
 					}
 					
 					$warehouse_category_id = $warehouseCategories->where('warehouse_category_description', $value->wh_category_description)->first();
@@ -543,10 +548,10 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'brand_directions_id' => $brand_directions->id,
 						'apple_report_inclusion' => $value->apple_report_inclusion,
 						'brands_id' => $brand_id->id,
-						'categories_id' => $category_id,
-						'classes_id' => $class_id,
-						'subclasses_id' => $subclass_id,
-						'margin_categories_id' => $margin_category_id,
+						'categories_id' => $category_id->id,
+						'classes_id' => $class_id->id,
+						'subclasses_id' => $subclass_id->id,
+						'margin_categories_id' => $margin_category_id->id,
 						'warehouse_categories_id' => $warehouse_category_id->id,
 						'compatibility' => $value->compatibility,
 						'model_number' => $value->model_number,
