@@ -133,17 +133,20 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$brand_id = $brands->where('brand_description', $value->brand_description)->first();
 					$category_id = $categories->where('category_description', $value->category_description)->first();
 					
-					$class_id = $classes->where([
-						'class_description' => $value->class_description,
-						'categories_id' => $category_id->id])->first();
+					if(!is_null($value->class_description) && !is_null($category_id)){
+						$class_id = $classes->where('class_description', $value->class_description)
+							->where('categories_id', $category_id->id)->first();
+					}
 					
-					$subclass_id = $subClasses->where([
-						'subclass_description' => $value->subclass_description,
-						'classes_id' => $class_id->id])->first();
+					if(!is_null($value->subclass_description) && !is_null($class_id)){
+						$subclass_id = $subClasses->where('subclass_description', $value->subclass_description)
+							->where('classes_id', $class_id->id)->first();
+					}
 					
-					$margin_category_id = $marginCategories->where([
-						'margin_category_description' => $value->margin_category_description,
-						'subclasses_id' => $subclass_id->id])->first();
+					if(!is_null($value->margin_category_description) && !is_null($subclass_id)){
+						$margin_category_id = $marginCategories->where('margin_category_description', $value->margin_category_description)
+							->where('subclasses_id', $subclass_id->id)->first();
+					}
 					
 					$warehouse_category_id = $warehouseCategories->where('warehouse_category_description', $value->wh_category_description)->first();
 					$model_specific_id = $modelSpecifics->where('model_specific_description', $value->model_specific_description)->first();
@@ -161,9 +164,8 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						$incoterm_id = $incoterms->where('incoterms_description', $value->incoterms)->first();
 					}
 
-					$vendor_id = $vendors->where([
-						'vendor_name' => $value->vendor_name,
-						'brands_id' => $brand_id->id])->first();
+					$vendor_id = $vendors->where('vendor_name', $value->vendor_name)
+						->where('brands_id', $brand_id->id)->first();
 					//---------------------------
 					if(!empty($existingUPC)){
 						array_push($errors, 'Line '.$line_item.': existing upc code "'.$value->upc_code.'" has been detected.');
