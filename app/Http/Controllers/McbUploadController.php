@@ -142,7 +142,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'classes_id' => $class_id->id])->first();
 					
 					$margin_category_id = $marginCategories->where([
-						'margin_category_description' => $value->margin_category,
+						'margin_category_description' => $value->margin_category_description,
 						'subclasses_id' => $subclass_id->id])->first();
 					
 					$warehouse_category_id = $warehouseCategories->where('warehouse_category_description', $value->wh_category_description)->first();
@@ -199,10 +199,10 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						array_push($errors, 'Line '.$line_item.': with subclass "'.$value->subclass.'" is not found in submaster.');
 					}
 					if(empty($margin_category_id)){
-						array_push($errors, 'Line '.$line_item.': with margin category "'.$value->margin_category.'" is not found in submaster.');
+						array_push($errors, 'Line '.$line_item.': with margin category "'.$value->margin_category_description.'" is not found in submaster.');
 					}
 					if(empty($warehouse_category_id)){
-						array_push($errors, 'Line '.$line_item.': with wh category "'.$value->warehouse_category.'" is not found in submaster.');
+						array_push($errors, 'Line '.$line_item.': with wh category "'.$value->wh_category_description.'" is not found in submaster.');
 					}
 					if(empty($value->model)){
 						array_push($errors, 'Line '.$line_item.': model can\'t be null or blank.');
@@ -436,31 +436,27 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$brand_directions = $brandDirections->where('brand_direction_description', $value->brand_direction)->first();
 					$brand_id = $brands->where('brand_description', $value->brand_description)->first();
 					$category_id = $categories->where('category_description', $value->category_description)->first();
-					
+
 					$class_id = null;
-					if(!is_null($value->class_description)){
-					    $class_id = $classes->where('class_description', $value->class_description);
-					}
-					if(!empty($category_id) && count($category_id) > 0){
-						$class_id->where('categories_id', $category_id)->first();
+					if(!is_null($value->class_description) && !empty($category_id)){
+					    $class_id = $classes->where('class_description', $value->class_description)
+							->where('categories_id', $category_id->id)->first();
 					}
 					
 					$subclass_id = null;
-					if(!is_null($value->subclass_description))
-					    $subclass_id = $subClasses->where('subclass_description', $value->subclass_description);
-					if(!is_null($class_id) && count($class_id) > 0)
-					    $subclass_id->where('classes_id', $class_id)->first();
-					
-					$margin_category_id = null;
-					if(!is_null($value->margin_category))
-					    $margin_category_id = $marginCategories->where('margin_category_description', $value->margin_category);
-					if(!is_null($subclass_id) && count($subclass_id) > 0){
-					    $margin_category_id->where('subclasses_id', $subclass_id)->first();
+					if(!is_null($value->subclass_description) && !is_null($class_id)){
+					    $subclass_id = $subClasses->where('subclass_description', $value->subclass_description)
+							->where('classes_id', $class_id->id)->first();
 					}
+
+					$margin_category_id = null;
+					if(!is_null($value->margin_category_description) && !is_null($subclass_id)){
+						$margin_category_id = $marginCategories->where('margin_category_description', $value->margin_category_description)
+							->where('subclasses_id', $subclass_id->id)->first();
+					}			
 					
 					$warehouse_category_id = $warehouseCategories->where('warehouse_category_description', $value->wh_category_description)->first();
 					$model_specific_id = $modelSpecifics->where('model_specific_description', $value->model_specific_description)->first();
-
 					$size_id = $sizes->where('size_code', $value->size_code)->first();
 					$color_id = $colors->where('color_description', $value->main_color_description)->first();
 					$uom_id = $uoms->where('uom_code', $value->uom_code)->first();
