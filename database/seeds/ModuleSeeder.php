@@ -19,6 +19,24 @@ class ModuleSeeder extends Seeder
                 'table_name' => 'item_models',
                 'controller' => 'AdminItemModelsController',
             ],
+            [
+                'name' => 'Brand Group',
+                'path' => 'brand_groups',
+                'table_name' => 'brand_groups',
+                'controller' => 'AdminBrandGroupsController',
+            ],
+            [
+                'name' => 'Brand Direction',
+                'path' => 'brand_directions',
+                'table_name' => 'brand_directions',
+                'controller' => 'AdminBrandDirectionsController',
+            ],
+            [
+                'name' => 'Brand Marketing',
+                'path' => 'brand_marketings',
+                'table_name' => 'brand_marketings',
+                'controller' => 'AdminBrandMarketingsController',
+            ],
         ];
 
         foreach ($data as $k => $d) {

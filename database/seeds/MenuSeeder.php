@@ -19,7 +19,28 @@ class MenuSeeder extends Seeder
                 'type' => 'Route',
                 'path' => 'AdminItemModelsControllerGetIndex',
                 'parent_id' => $submaster->id,
-                'sorting' => 99
+                'sorting' => 29
+            ],
+            [
+                'name' => 'Brand Group',
+                'type' => 'Route',
+                'path' => 'AdminBrandGroupsControllerGetIndex',
+                'parent_id' => $submaster->id,
+                'sorting' => 30
+            ],
+            [
+                'name' => 'Brand Direction',
+                'type' => 'Route',
+                'path' => 'AdminBrandDirectionsControllerGetIndex',
+                'parent_id' => $submaster->id,
+                'sorting' => 31
+            ],
+            [
+                'name' => 'Brand Marketing',
+                'type' => 'Route',
+                'path' => 'AdminBrandMarketingsControllerGetIndex',
+                'parent_id' => $submaster->id,
+                'sorting' => 32
             ],
         ];
 
