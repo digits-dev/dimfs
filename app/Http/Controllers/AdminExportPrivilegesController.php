@@ -4,11 +4,10 @@
 
 	use App\ExportPrivilege;
 	use App\UserPrivilege;
-	use Session;
 	use DB;
 	use CRUDBooster;
 	use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+	use Illuminate\Support\Facades\Validator;
 
 	class AdminExportPrivilegesController extends \crocodicstudio\crudbooster\controllers\CBController {
 		
@@ -74,7 +73,27 @@ use Illuminate\Support\Facades\Validator;
 	    }
 		
 	    public function actionButtonSelected($id_selected,$button_name) {
-	        //Your code here
+	        switch ($button_name) {
+				case 'set_status_ACTIVE':
+
+					ExportPrivilege::whereIn('id',$id_selected)->update([
+						'status'=>'ACTIVE', 
+						'updated_at' => date('Y-m-d H:i:s'), 
+						'updated_by' => CRUDBooster::myId()
+					]);
+					break;
+				case 'set_status_INACTIVE':
+
+					ExportPrivilege::whereIn('id',$id_selected)->update([
+						'status'=>'INACTIVE', 
+						'updated_at' => date('Y-m-d H:i:s'), 
+						'updated_by' => CRUDBooster::myId()
+					]);
+					break;
+				default:
+					# code...
+					break;
+			}    
 	            
 	    }
 		
