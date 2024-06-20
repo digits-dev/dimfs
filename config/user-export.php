@@ -29,6 +29,7 @@ return [
         "category_description" => "CATEGORY DESCRIPTION",
         "class_description" => "CLASS DESCRIPTION",
         "subclass_description" => "SUBCLASS DESCRIPTION",
+        "margin_category_description" => "MARGIN CATEGORY DESCRIPTION",
         "warehouse_category_description" => "WH CATEGORY DESCRIPTION",
         "original_srp" => "ORIGINAL SRP",
         "current_srp" => "CURRENT SRP",

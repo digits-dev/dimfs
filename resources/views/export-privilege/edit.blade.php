@@ -1,5 +1,5 @@
 @extends('crudbooster::admin_template')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha512-SFaNb3xC08k/Wf6CRM1J+O/vv4YWyrPBSdy0o+1nqKzf+uLrIBnaeo8aYoAAOd31nMNHwX8zwVwTMbbCJjA8Kg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @push('head')
 
 @endpush
@@ -74,14 +74,10 @@
 
 @endsection
 
-
 @push('bottom')
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha512-SFaNb3xC08k/Wf6CRM1J+O/vv4YWyrPBSdy0o+1nqKzf+uLrIBnaeo8aYoAAOd31nMNHwX8zwVwTMbbCJjA8Kg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function() {
-            $("#modules").trigger('change');
-
+           
             $("#modules").change(function () {
                 let selectedTable = $(this).find(':selected').data('table');
                 $('.tableName').val(selectedTable);
@@ -132,6 +128,8 @@
 
                 });
             });
+
+            $("#modules").trigger('change');
         });
     </script>
 @endpush

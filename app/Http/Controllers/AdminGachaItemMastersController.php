@@ -552,4 +552,21 @@
 			return $item;
 		}
 
+		public function getApiItems($secret_key) {
+			if ($secret_key != config('key-api.secret_key')) {
+				return response([
+					'message' => 'Error: Bad Request',
+				], 404);
+			}
+	
+			$created_items = GachaItemMaster::GenerateExport()
+				->whereBetween(DB::raw('DATE(approved_at_acct)'), [date('Y-m-d',strtotime("-1 days")), date('Y-m-d')])
+				->get()
+				->toArray();
+				
+			return response()->json([
+				'created_items' => $created_items
+			]);
+		}
+
 	}
