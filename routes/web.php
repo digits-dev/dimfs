@@ -120,5 +120,5 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
 });
 
 Route::get('/item_masters/api/get-items/{secret_key}', 'AdminItemMastersController@getApiItems')->name('get_api_items');
-Route::get('/gasha_item_masters/api/get-items/{secret_key}', 'AdminGachaItemMastersController@getApiItems')->name('get_api_items');
-Route::get('/rma_item_masters/api/get-items/{secret_key}', 'AdminRmaItemMastersController@getApiItems')->name('get_api_items');
+Route::get('/gasha_item_masters/api/get-items/{secret_key}', 'AdminGachaItemMastersController@getApiItems')->name('get_api_gacha_items');
+Route::get('/rma_item_masters/api/get-items/{secret_key}', 'AdminRmaItemMastersController@getApiItems')->name('get_api_rma_items');
