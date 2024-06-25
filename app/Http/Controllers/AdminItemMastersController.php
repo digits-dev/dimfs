@@ -118,7 +118,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['COST ACCTG','SALES ACCTG'])){
 			    $this->index_button[] = ["title"=>"POS Format","label"=>"POS Format",'color'=>'warning',"icon"=>"fa fa-cart-plus","url"=>CRUDBooster::mainpath('export-pos').'?'.urldecode(http_build_query(@$_GET))];
 			}
-			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['WHS TL','SDM TM','WHS TM'])){
+			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['WHS TL','WIMS TM','WHS TM'])){
 			    $this->index_button[] = ["title"=>"BAR Format","label"=>"BAR Format",'color'=>'default',"icon"=>"fa fa-qrcode","url"=>CRUDBooster::mainpath('export-bartender').'?'.urldecode(http_build_query(@$_GET))];
 			}
 		
