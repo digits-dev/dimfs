@@ -112,7 +112,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 // 			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['ADVANCED'])){
 // 			    $this->index_button[] = ["title"=>"Export Outright","label"=>"Export Outright",'color'=>'primary',"icon"=>"fa fa-download","url"=>CRUDBooster::mainpath('export-margin')];
 // 			}
-			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['MCB TM','WIMS TL','REPORTS','ECOMM STORE MDSG TM','MCB TL','COST ACCTG'])){
+			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['BRAND MDSG TM','SDM TL','REPORTS','ECOMM STORE MDSG TM','MCB TL','COST ACCTG'])){
 			    $this->index_button[] = ["title"=>"Import Module","label"=>"Import Module",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-view')];
 			}
 			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['COST ACCTG','SALES ACCTG'])){
@@ -176,7 +176,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 	public function hook_query_index(&$query) {
 		//Your code here
 		
-		if(!CRUDBooster::isSuperadmin() && (in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","MCB TM","ACCTG HEAD","ADVANCED","REPORTS","ECOMM STORE MDSG TL"]))){
+		if(!CRUDBooster::isSuperadmin() && (in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","BRAND MDSG TM","ACCTG HEAD","ADVANCED","REPORTS","ECOMM STORE MDSG TL"]))){
         	$query->where('approval_status',$this->getStatusByDescription('APPROVED'));
         }
 		else if(!CRUDBooster::isSuperadmin() && (!in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","ACCTG HEAD","ADVANCED","REPORTS","ECOMM STORE MDSG TL"]))){
@@ -373,7 +373,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		    
 		}
 		
-		elseif(CRUDBooster::isSuperadmin() || CRUDBooster::myPrivilegeName() == "MCB TM"){
+		elseif(CRUDBooster::isSuperadmin() || CRUDBooster::myPrivilegeName() == "BRAND MDSG TM"){
 		    if(($existingItem->price_change != $postdata['price_change'] && $postdata['price_change'] != '') || ($postdata['effective_date']) != '') {
 		        ItemCurrentPriceChange::insert([
     		        'item_masters_id' => $postdata["id"],
@@ -789,7 +789,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 
 	public function importWRRView()
 	{
-		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(),["WIMS TL","REPORTS"])) {    
+		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(),["SDM TL","REPORTS"])) {    
 			CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
 		}
 
@@ -808,7 +808,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 
 	public function importSKULegendView()
 	{
-		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(),["MCB TM","MCB TL"])) {   
+		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(),["BRAND MDSG TM","MCB TL"])) {   
 			CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
 		}
 		$data['page_title'] = 'Import Item SKU Legend/Segmentation';
