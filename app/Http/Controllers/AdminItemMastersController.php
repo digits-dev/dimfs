@@ -112,7 +112,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 // 			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['ADVANCED'])){
 // 			    $this->index_button[] = ["title"=>"Export Outright","label"=>"Export Outright",'color'=>'primary',"icon"=>"fa fa-download","url"=>CRUDBooster::mainpath('export-margin')];
 // 			}
-			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['BRAND MDSG TM','SDM TL','REPORTS','ECOMM STORE MDSG TM','MCB TL','COST ACCTG'])){
+			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['BRAND MDSG TM','WIMS TL','REPORTS','ECOMM STORE MDSG TM','MCB TL','COST ACCTG'])){
 			    $this->index_button[] = ["title"=>"Import Module","label"=>"Import Module",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-view')];
 			}
 			if(CRUDBooster::isSuperadmin() || in_array(CRUDBooster::myPrivilegeName(),['COST ACCTG','SALES ACCTG'])){
@@ -789,7 +789,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 
 	public function importWRRView()
 	{
-		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(),["SDM TL","REPORTS"])) {    
+		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(),["WIMS TL","REPORTS"])) {    
 			CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
 		}
 
