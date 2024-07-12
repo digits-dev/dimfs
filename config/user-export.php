@@ -941,98 +941,98 @@ return [
             "label"=>"ACEFAST",
             "name" =>"af_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "btb_segmentation" => [ 
             "label"=>"BEYOND THE BOX",
             "name" =>"btb_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "dw_segmentation" => [ 
             "label"=>"DIGITAL WALKER",
             "name" =>"dw_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "opensource_segmentation" => [ 
             "label"=>"OPENSOURCE",
             "name" =>"opensource_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "service_center" => [ 
             "label"=>"SERVICE CENTER",
             "name" =>"svc_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "lazada" => [ 
             "label"=>"LAZADA",
             "name" =>"laz_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "shopee" => [ 
             "label"=>"SHOPEE",
             "name" =>"spe_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "tiktok" => [ 
             "label"=>"TIKTOK",
             "name" =>"tik_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "website" => [ 
             "label"=>"WEBSITE",
             "name" =>"web_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "dcon_segmentation" => [ 
             "label"=>"DISTRIBUTION CONSIGNMENT",
             "name" =>"dcon_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "dout_segmentation" => [ 
             "label"=>"DISTRIBUTION OUTRIGHT",
             "name" =>"dout_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "franchise_segmentation" => [ 
             "label"=>"FRANCHISE",
             "name" =>"franchise_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "guam_segmentation" => [ 
             "label"=>"GUAM",
             "name" =>"guam_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "newstore_segmentation" => [ 
             "label"=>"NEW STORE",
             "name" =>"newstore_segmentation",
             'type'=>'select-custom','validation'=>'required',
-            'datatable'=>'sku_legends,sku_legend_description',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
         ],
         "vendor_name" => [ 

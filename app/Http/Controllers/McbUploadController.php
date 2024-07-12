@@ -30,6 +30,7 @@ use App\BrandMarketing;
 use App\Http\Traits\UploadTraits;
 use App\ItemClass;
 use App\Segmentation;
+use App\SegmentationLegend;
 use App\Vendor;
 use App\WorkflowSetting;
 use Illuminate\Support\Facades\Input;
@@ -116,6 +117,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$skuLegends = SkuLegend::active()->get();
 			$incoterms = Incoterm::active()->get();
 			$vendors = Vendor::active()->get();
+			$segmentLegends = SegmentationLegend::active()->get();
 						
 			if(!empty($dataExcel) && $dataExcel->count()) {
 
@@ -250,7 +252,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						$seg = $value_segment->import_header_name;
 						$seg_description = $value_segment->segmentation_description;
 						$seg_value = $value_segment->$seg;
-						$legendExists = $skuLegends->where('sku_legend_description', $seg_value)->first();
+						$legendExists = $segmentLegends->where('segment_legend_description', $seg_value)->first();
 						if(empty($legendExists) && !empty($seg_value)){
 							array_push($errors, "Line $line_item : with segmentation $seg_value at column $seg_description not found in submaster.");
 						}
@@ -420,6 +422,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$currencies = Currency::active()->get();
 			$skuStatuses = SkuStatus::active()->get();
 			$skuLegends = SkuLegend::active()->get();
+			$segmentLegends = SegmentationLegend::active()->get();
 			// $incoterms = Incoterm::active()->get();
 			// $vendors = Vendor::active()->get();
 			
@@ -527,7 +530,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						$seg = $value_segment->import_header_name;
 						$seg_description = $value_segment->segmentation_description;
 						$seg_value = $value_segment->$seg;
-						$legendExists = $skuLegends->where('sku_legend_description', $seg_value)->first();
+						$legendExists = $segmentLegends->where('segment_legend_description', $seg_value)->first();
 						if(empty($legendExists) && !empty($seg_value)){
 							array_push($errors, "Line $line_item : with segmentation $seg_value at column $seg_description not found in submaster.");
 						}
