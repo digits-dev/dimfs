@@ -176,10 +176,10 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 	public function hook_query_index(&$query) {
 		//Your code here
 		
-		if(!CRUDBooster::isSuperadmin() && (in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","BRAND MDSG TM","ACCTG HEAD","ADVANCED","REPORTS","ECOMM STORE MDSG TL"]))){
+		if(!CRUDBooster::isSuperadmin() && (in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","ACCTG HEAD","ADVANCED","REPORTS","ECOMM STORE MDSG TL","WIMS TL"]))){
         	$query->where('approval_status',$this->getStatusByDescription('APPROVED'));
         }
-		else if(!CRUDBooster::isSuperadmin() && (!in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","ACCTG HEAD","ADVANCED","REPORTS","ECOMM STORE MDSG TL"]))){
+		else if(!CRUDBooster::isSuperadmin() && (!in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","ACCTG HEAD","ADVANCED","REPORTS","ECOMM STORE MDSG TL","WIMS TL"]))){
 		    $query->where('approval_status',$this->getStatusByDescription('APPROVED'))
 		        ->where('inventory_types_id','!=',$this->getInventoryType('INACTIVE'))
 		        ->where('sku_statuses_id','!=',$this->getSkuStatus('INVALID'));
@@ -762,7 +762,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 
 	public function exportAllItems() {
 		$allItems = ItemMaster::generateExport();
-		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(), ["ACCTG HEAD","MCB TL","ADVANCED","REPORTS","ECOMM STORE MDSG TL"])){
+		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(), ["ACCTG HEAD","MCB TL","ADVANCED","REPORTS","ECOMM STORE MDSG TL","WIMS TL"])){
 			$exportItems = $allItems->where('item_masters.sku_statuses_id','!=',$this->getSkuStatus("INVALID"))
 				->where('item_masters.inventory_types_id','!=',$this->getInventoryType("INACTIVE"))->get();
 		}
