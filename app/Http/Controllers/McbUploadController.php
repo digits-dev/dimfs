@@ -99,7 +99,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$appleLobs = AppleLob::active()->get();
 			$brandGroups = BrandGroup::active()->get();
 			$brandDirections = BrandDirection::active()->get();
-			$brandMarketings = BrandMarketing::active()->get();
+			// $brandMarketings = BrandMarketing::active()->get();
 			$brands = Brand::active()->get();
 			$categories = Category::active()->get();
 			$classes = ItemClass::active()->get();
@@ -131,7 +131,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$apple_lobs_id = $appleLobs->where('apple_lob_description', $value->apple_lob)->first();
 					$brand_groups = $brandGroups->where('brand_group_description', $value->brand_group)->first();
 					$brand_directions = $brandDirections->where('brand_direction_description', $value->brand_direction)->first();
-					$brand_marketings = $brandMarketings->where('brand_marketing_description', $value->brand_marketing)->first();
+					// $brand_marketings = $brandMarketings->where('brand_marketing_description', $value->brand_marketing)->first();
 					$brand_id = $brands->where('brand_description', $value->brand_description)->first();
 					$category_id = $categories->where('category_description', $value->category_description)->first();
 					
@@ -266,7 +266,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'apple_lobs_id' => $apple_lobs_id->id,
 						'brand_groups_id' => $brand_groups->id,
 						'brand_directions_id' => $brand_directions->id,
-						'brand_marketings_id' => $brand_marketings->id,
+						// 'brand_marketings_id' => $brand_marketings->id,
 						'apple_report_inclusion' => $value->apple_report_inclusion,
 						'brands_id' => $brand_id->id,
 						'categories_id' => $category_id->id,
@@ -297,7 +297,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'incoterms_id' => (is_null($value->incoterms)) ? null : $incoterm_id->id,
 						'current_srp' => (is_null($value->current_srp)) ? '0.00' : $value->current_srp,
 						'original_srp' => (is_null($value->original_srp)) ? '0.00' : $value->original_srp,
-						// 'promo_srp' => (is_null($value->dg_srp)) ? null : $value->dg_srp,
+						'promo_srp' => (is_null($value->dg_srp)) ? null : $value->dg_srp,
 						'moq' => (is_null($value->moq)) ? null : $value->moq,
 						'purchase_price' => (is_null($value->supplier_cost)) ? null : $value->supplier_cost,
 						// 'dtp_rf' => (is_null($value->store_cost)) ? null : $value->store_cost,
