@@ -769,10 +769,31 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 		else{
 			$exportItems = $allItems->get();
 		}
+
 		$exportItems->transform(function($items){
 			$exportItem = [];
 			foreach ($this->getItemExport() as $newKey => $oldKey) {
-				$exportItem[$newKey] = isset($items->$oldKey) ? $items->$oldKey : null;
+				switch ($oldKey) {
+					case 'original_srp': 
+					case 'current_srp':
+					case 'dtp_rf':
+					case 'dtp_rf_percentage':
+					case 'landed_cost':
+					case 'purchase_price':
+					case 'moq':
+					case 'working_landed_cost':
+					case 'working_ecom_store_margin':
+					case 'ecom_store_margin':
+					case 'ecom_store_margin_percentage':
+					case 'working_dtp_rf':
+					case 'working_dtp_rf_percentage':
+						$exportItem[$newKey] = isset($items->$oldKey) ?  $items->$oldKey + 0.00 : null;
+					break;
+					
+					default:
+						$exportItem[$newKey] = isset($items->$oldKey) ? $items->$oldKey : null;
+					break;
+				}
 			}	
 			return $exportItem;
 		});
