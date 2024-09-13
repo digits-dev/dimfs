@@ -41,6 +41,11 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
     Route::get('/item_master_approvals/export-pending', 'AdminItemMasterApprovalsController@exportPendingItems')->name('exportPendingItems');
     Route::get('/ecom_price_changes/export-all', 'AdminEcomPriceChangesController@exportAllEcomChanges')->name('exportAllEcomChanges');
     
+    //RMA import
+    Route::get('/rma_item_masters/import-rma-view', 'AdminRmaItemMastersController@importRmaView')->name('importRmaView');
+    Route::post('/rma_item_masters/upload-rma', 'RmaUploadController@importRma')->name('upload.rma');
+    Route::get('/rma_item_masters/import-rma-template', 'RmaUploadController@downloadRmaImportTemplate')->name('upload.rma-template');
+
     //imports - item master
     Route::get('/item_masters/import-view', 'AdminItemMastersController@importView')->name('importView');
     Route::get('/item_masters/import-wrr-view', 'AdminItemMastersController@importWRRView')->name('importWRRView');

@@ -2,7 +2,7 @@
 
 	use Session;
 	use Request;
-	use DB;
+	use Illuminate\Support\Facades\DB;
 	use CRUDBooster;
 	use Excel;
 	use App\Counter;
@@ -278,6 +278,7 @@
 	        */
 	        $this->index_button = array();
 
+			$this->index_button[] = ["title"=>"Import Module","label"=>"Import Module",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-rma-view')];
 
 
 	        /* 
@@ -518,5 +519,10 @@
 			]);
 		}
 
+		public function importRmaView(){
+
+			$data['page_title'] = 'Import Module';
+	    	return view('item-master.rma-upload',$data);
+		}
 
 	}
