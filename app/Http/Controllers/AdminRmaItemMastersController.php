@@ -137,7 +137,7 @@
     			'datatable_where'=>"status='ACTIVE'"
 			];
 // 			$this->form[] = ['label'=>'Store Category','name'=>'rma_store_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6','datatable'=>'rma_store_categories,store_category_description'];
-			$this->form[] = ['label'=>'Margin Category','name'=>'rma_margin_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6','datatable'=>'rma_margin_categories,margin_category_description'];
+			// $this->form[] = ['label'=>'Margin Category','name'=>'rma_margin_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6','datatable'=>'rma_margin_categories,margin_category_description'];
 			// $this->form[] = ['label'=>'Warehouse Category','name'=>'warehouse_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
     		// 	'datatable'=>'warehouse_categories,warehouse_category_description',
     		// 	'datatable_where'=>"status='ACTIVE'"
