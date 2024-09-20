@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('admin/login');
 });
+
+
+//New Checking of Password and Change Password Routes.
+Route::post('/change-password', 'CBHook@changePassword')->name('change-password');
+Route::post('/check-password', 'CBHook@passwordValidation')->name('check-password');
+
 Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\CBBackend'],'prefix' => config('crudbooster.ADMIN_PATH')], function () {
     //item master
     Route::get('/getBrandCode/{id}','AdminBrandsController@getBrandCode')->name('getBrandCode');
