@@ -61,15 +61,25 @@ $(':input[type="number"]').on('wheel', function() {
 });
 /*force to 2 decimal places & 1 decimal point*/
 $(':input[type="number"]').on('keypress', function(event) {
+    const key = event.which || event.keyCode;
+    const value = this.value;
+    const isDecimal = value.includes('.');
 
-    if(this.value.indexOf(".") > -1 && (this.value.split('.')[1].length > 1)) {
-        swal('Warning !', "**Two (2) decimal places only!");
+    // Allow backspace, delete, tab, escape, enter, and arrow keys
+    if (key === 8 || key === 9 || key === 27 || key === 13 || (key >= 35 && key <= 40)) {
+        return; // Allow these keys
+    }
+
+    // Allow only numbers and one decimal point
+    if ((key !== 46 || isDecimal) && (key < 48 || key > 57)) {
         event.preventDefault();
     }
-    if((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)){
+
+    // Check if there are already two decimal places
+    if (isDecimal && value.split('.')[1].length >= 2 && key !== 8) {
+        swal('Warning !', "**Two (2) decimal places only!")
         event.preventDefault();
     }
-    this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
 });
 
 $(':input[type="number"]').on("paste",function(event) {
