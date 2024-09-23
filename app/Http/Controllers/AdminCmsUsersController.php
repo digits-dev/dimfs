@@ -39,9 +39,12 @@ class AdminCmsUsersController extends \crocodicstudio\crudbooster\controllers\CB
 		$this->form[] = ["label"=>"Email","name"=>"email",'type'=>'email',"width" => "col-md-6",'validation'=>'required|email|unique:cms_users,email,'.CRUDBooster::getCurrentId(),'readonly'=>(CRUDBooster::getCurrentMethod() == "getProfile") ? true : false];		
 		$this->form[] = ["label"=>"Photo","name"=>"photo","type"=>"upload","help"=>"Recommended resolution is 200x200px","width" => "col-md-6",'validation'=>'image|max:1000','resize_width'=>90,'resize_height'=>90];											
 		$this->form[] = ["label"=>"Privilege","name"=>"id_cms_privileges","type"=>"select","datatable"=>"cms_privileges,name","width" => "col-md-6",'required'=>true];						
-		$this->form[] = ["label"=>"Password","name"=>"password","type"=>"password","width" => "col-md-6","help"=>"Please leave empty if not changed"];
+		// $this->form[] = ["label"=>"Password","name"=>"password","type"=>"password","width" => "col-md-6","help"=>"Please leave empty if not changed"];
 		if((CRUDBooster::isSuperadmin() || CRUDBooster::myPrivilegeName() == "ADMIN") && (in_array(CRUDBooster::getCurrentMethod(),['getEdit','postEditSave']))){
 		    $this->form[] = ["label"=>"Status","name"=>"status","type"=>"select","validation"=>"required","width"=>"col-sm-6","dataenum"=>"ACTIVE;INACTIVE"];
+		}
+		if(in_array(CRUDBooster::getCurrentMethod(), ['getAdd', 'getEdit','postEditSave', 'getDetail'])) {
+			$this->form[] = array("label"=>"Password","name"=>"password","type"=>"password",'width'=>'col-sm-4',"help"=>"Please leave empty if not changed");
 		}
 		# END FORM DO NOT REMOVE THIS LINE
 		
@@ -127,5 +130,10 @@ class AdminCmsUsersController extends \crocodicstudio\crudbooster\controllers\CB
             $postdata['name'] = $postdata['first_name'].' '.$postdata['last_name'];
 		}
 		$postdata["updated_by"]=CRUDBooster::myId();
+	}
+
+	public function showChangePassword(){
+		$data['page_title'] = 'Change Password' ;
+		return view('user-account.change-password',$data);
 	}
 }

@@ -128,6 +128,9 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
     Route::post('export_privileges/create/save','AdminExportPrivilegesController@saveExport')->name('export-privileges.save');
     Route::post('export_privileges/get/table-columns','AdminExportPrivilegesController@getTableColumns')->name('export-privileges.getTableColumns');
     Route::post('export_privileges/get/user-table-columns','AdminExportPrivilegesController@getUserTableColumns')->name('export-privileges.getUserTableColumns');
+
+    //Change Password View
+    Route::get('show-change-pass', 'AdminCmsUsersController@showChangePassword')->name('change-password');
 });
 
 Route::get('/item_masters/api/get-items/{secret_key}', 'AdminItemMastersController@getApiItems')->name('get_api_items');

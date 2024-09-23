@@ -527,6 +527,7 @@
         function handleChangePassForm(){
             const email = $('#email').val();
             const password = $('#password').val();
+            const confirmPassword = $('#confirm_password').val();
             const newPassword = $('#new_password').val();
 
             fetch('/change-password', {
@@ -535,7 +536,7 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token for security
                 },
-                body: JSON.stringify({ email, password, new_password: newPassword })
+                body: JSON.stringify({ email, password, confirm_password:confirmPassword, new_password: newPassword })
             })
             .then(response => {
                 if (!response.ok) {
