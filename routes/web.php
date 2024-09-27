@@ -19,8 +19,8 @@ Route::get('/', function () {
 
 
 //New Checking of Password and Change Password Routes.
-Route::post('/change-password', 'CBHook@changePassword')->name('change-password');
-Route::post('/check-password', 'CBHook@passwordValidation')->name('check-password');
+Route::post('/change-password', 'AdminCmsUsersController@changePassword')->name('change-password');
+Route::post('/check-password', 'AdminCmsUsersController@passwordValidation')->name('check-password');
 
 Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\CBBackend'],'prefix' => config('crudbooster.ADMIN_PATH')], function () {
     //item master
