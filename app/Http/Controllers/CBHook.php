@@ -1,8 +1,13 @@
 <?php 
 namespace App\Http\Controllers;
 
+use App\PasswordHistory;
+use App\User;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Session;
 use Request;
 use CRUDBooster;

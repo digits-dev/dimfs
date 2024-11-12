@@ -16,6 +16,7 @@ class GachaItemMaster extends Model
             "gacha_brands.brand_description",
             "gacha_categories.category_description",
             "gacha_vendor_types.vendor_type_code",
+            "gacha_vendor_groups.vendor_group_description",
             "gacha_inventory_types.inventory_type_description",
             "gacha_item_masters.current_srp",
             "gacha_item_masters.initial_wrr_date",
@@ -25,6 +26,7 @@ class GachaItemMaster extends Model
         ->leftJoin('gacha_brands', 'gacha_item_masters.gacha_brands_id', '=', 'gacha_brands.id')
         ->leftJoin('gacha_categories', 'gacha_item_masters.gacha_categories_id', '=', 'gacha_categories.id')
         ->leftJoin('gacha_vendor_types', 'gacha_item_masters.gacha_vendor_types_id', '=', 'gacha_vendor_types.id')
+        ->leftJoin('gacha_vendor_groups', 'gacha_item_masters.gacha_vendor_groups_id', '=', 'gacha_vendor_groups.id')
         ->leftJoin('gacha_inventory_types', 'gacha_item_masters.gacha_inventory_types_id', '=', 'gacha_inventory_types.id')
         ->leftJoin('cms_users as createdby', 'gacha_item_masters.created_by', '=', 'createdby.id')
         ->leftJoin('cms_users as updatedby', 'gacha_item_masters.updated_by', '=', 'updatedby.id')

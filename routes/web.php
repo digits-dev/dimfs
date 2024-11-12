@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('admin/login');
 });
+
+
+//New Checking of Password and Change Password Routes.
+Route::post('/change-password', 'AdminCmsUsersController@changePassword')->name('change-password');
+Route::post('/check-password', 'AdminCmsUsersController@passwordValidation')->name('check-password');
+
 Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\CBBackend'],'prefix' => config('crudbooster.ADMIN_PATH')], function () {
     //item master
     Route::get('/getBrandCode/{id}','AdminBrandsController@getBrandCode')->name('getBrandCode');
@@ -41,6 +47,11 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
     Route::get('/item_master_approvals/export-pending', 'AdminItemMasterApprovalsController@exportPendingItems')->name('exportPendingItems');
     Route::get('/ecom_price_changes/export-all', 'AdminEcomPriceChangesController@exportAllEcomChanges')->name('exportAllEcomChanges');
     
+    //RMA import
+    Route::get('/rma_item_masters/import-rma-view', 'AdminRmaItemMastersController@importRmaView')->name('importRmaView');
+    Route::post('/rma_item_masters/upload-rma', 'RmaUploadController@importRma')->name('upload.rma');
+    Route::get('/rma_item_masters/import-rma-template', 'RmaUploadController@downloadRmaImportTemplate')->name('upload.rma-template');
+
     //imports - item master
     Route::get('/item_masters/import-view', 'AdminItemMastersController@importView')->name('importView');
     Route::get('/item_masters/import-wrr-view', 'AdminItemMastersController@importWRRView')->name('importWRRView');
@@ -117,6 +128,9 @@ Route::group(['middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\C
     Route::post('export_privileges/create/save','AdminExportPrivilegesController@saveExport')->name('export-privileges.save');
     Route::post('export_privileges/get/table-columns','AdminExportPrivilegesController@getTableColumns')->name('export-privileges.getTableColumns');
     Route::post('export_privileges/get/user-table-columns','AdminExportPrivilegesController@getUserTableColumns')->name('export-privileges.getUserTableColumns');
+
+    //Change Password View
+    Route::get('show-change-pass', 'AdminCmsUsersController@showChangePassword')->name('change-password');
 });
 
 Route::get('/item_masters/api/get-items/{secret_key}', 'AdminItemMastersController@getApiItems')->name('get_api_items');

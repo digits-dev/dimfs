@@ -2,7 +2,7 @@
 
 	use Session;
 	use Request;
-	use DB;
+	use Illuminate\Support\Facades\DB;
 	use CRUDBooster;
 	use Excel;
 	use App\Counter;
@@ -73,8 +73,8 @@
 			$this->col[] = ["label"=>"Subclass","name"=>"rma_subclasses_id","join"=>"rma_subclasses,subclass_description"];
 			$this->col[] = ["label"=>"Model","name"=>"model"];
 			$this->col[] = ["label"=>"Model Specific Description","name"=>"rma_model_specifics_id","join"=>"rma_model_specifics,model_specific_description"];
-			$this->col[] = ["label"=>"Actual Color","name"=>"actual_color"];
-			$this->col[] = ["label"=>"Size","name"=>"size"];
+			// $this->col[] = ["label"=>"Actual Color","name"=>"actual_color"];
+			// $this->col[] = ["label"=>"Size","name"=>"size"];
 			$this->col[] = ["label"=>"UOM","name"=>"rma_uoms_id","join"=>"rma_uoms,uom_code"];
 			$this->col[] = ["label"=>"Inventory Type","name"=>"inventory_types_id","join"=>"inventory_types,inventory_type_description"];
 			$this->col[] = ['label'=>'Store Cost','name'=>'dtp_rf'];
@@ -137,26 +137,26 @@
     			'datatable_where'=>"status='ACTIVE'"
 			];
 // 			$this->form[] = ['label'=>'Store Category','name'=>'rma_store_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6','datatable'=>'rma_store_categories,store_category_description'];
-// 			$this->form[] = ['label'=>'Margin Category','name'=>'rma_margin_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6','datatable'=>'rma_margin_categories,margin_category_description'];
-			$this->form[] = ['label'=>'Warehouse Category','name'=>'warehouse_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
-    			'datatable'=>'warehouse_categories,warehouse_category_description',
-    			'datatable_where'=>"status='ACTIVE'"
-			];
+			// $this->form[] = ['label'=>'Margin Category','name'=>'rma_margin_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6','datatable'=>'rma_margin_categories,margin_category_description'];
+			// $this->form[] = ['label'=>'Warehouse Category','name'=>'warehouse_categories_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
+    		// 	'datatable'=>'warehouse_categories,warehouse_category_description',
+    		// 	'datatable_where'=>"status='ACTIVE'"
+			// ];
 			$this->form[] = ['label'=>'Model','name'=>'model','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-6'];
 			$this->form[] = ['label'=>'Model Specific','name'=>'rma_model_specifics_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
     			'datatable'=>'rma_model_specifics,model_specific_description',
     			'datatable_where'=>"status='ACTIVE'"
 			];
-			$this->form[] = ['label'=>'Colors','name'=>'colors_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
-    			'datatable'=>'colors,color_description',
-    			'datatable_where'=>"status='ACTIVE'"
-			];
-			$this->form[] = ['label'=>'Actual Color','name'=>'actual_color','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-6'];
-			$this->form[] = ['label'=>'Size Value','name'=>'size_value','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-6'];
-			$this->form[] = ['label'=>'Size','name'=>'sizes_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
-			    'datatable'=>'sizes,size_description',
-			    'datatable_where'=>"status='ACTIVE'"
-			];
+			// $this->form[] = ['label'=>'Colors','name'=>'colors_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
+    		// 	'datatable'=>'colors,color_description',
+    		// 	'datatable_where'=>"status='ACTIVE'"
+			// ];
+			// $this->form[] = ['label'=>'Actual Color','name'=>'actual_color','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-6'];
+			// $this->form[] = ['label'=>'Size Value','name'=>'size_value','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-6'];
+			// $this->form[] = ['label'=>'Size','name'=>'sizes_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
+			//     'datatable'=>'sizes,size_description',
+			//     'datatable_where'=>"status='ACTIVE'"
+			// ];
 			$this->form[] = ['label'=>'UOM','name'=>'rma_uoms_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-6',
 			    'datatable'=>'rma_uoms,uom_code',
 			    'datatable_where'=>"status='ACTIVE'"
@@ -278,6 +278,7 @@
 	        */
 	        $this->index_button = array();
 
+			$this->index_button[] = ["title"=>"Import Module","label"=>"Import Module",'color'=>'info',"icon"=>"fa fa-upload","url"=>CRUDBooster::mainpath('import-rma-view')];
 
 
 	        /* 
@@ -424,9 +425,9 @@
 	        $postdata['digits_code'] = $item_code;
             $postdata["created_by"]=CRUDBooster::myId();
             
-            $size = Size::where('id',$postdata["sizes_id"])->value('size_code');
+            // $size = Size::where('id',$postdata["sizes_id"])->value('size_code');
 		
-    		$postdata["size"]=($postdata["size_value"] == 0)? $size : $postdata["size_value"].''.$size;
+    		// $postdata["size"]=($postdata["size_value"] == 0)? $size : $postdata["size_value"].''.$size;
     		$postdata["warranties_id"] = 0;
     		$postdata["warranty_duration"] = 0;
     		$postdata["sku_statuses_id"] = $this->active;
@@ -458,10 +459,10 @@
 	    public function hook_before_edit(&$postdata,$id) {        
 	        //Your code here
             $postdata["updated_by"]=CRUDBooster::myId();
-            if(!empty($postdata["sizes_id"]) && !empty($postdata["size_value"])){
-    			$size = Size::where('id',$postdata["sizes_id"])->value('size_code');
-    			$postdata["size"]=($postdata["size_value"] == 0)? $size : $postdata["size_value"].''.$size;
-    		}
+            // if(!empty($postdata["sizes_id"]) && !empty($postdata["size_value"])){
+    		// 	$size = Size::where('id',$postdata["sizes_id"])->value('size_code');
+    		// 	$postdata["size"]=($postdata["size_value"] == 0)? $size : $postdata["size_value"].''.$size;
+    		// }
     		
 	    }
 
@@ -518,5 +519,10 @@
 			]);
 		}
 
+		public function importRmaView(){
+
+			$data['page_title'] = 'Import Module';
+	    	return view('item-master.rma-upload',$data);
+		}
 
 	}
