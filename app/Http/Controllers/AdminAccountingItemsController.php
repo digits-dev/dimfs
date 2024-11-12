@@ -74,13 +74,13 @@ use crocodicstudio\crudbooster\helpers\CRUDBooster;
 
 		public function hook_before_add(&$postdata) {
 	        //Your code here
-			$postdata["digits_code"] = Counter::getCode('code_5');
+			$postdata["digits_code"] = Counter::getCode('code_1');
             $postdata["created_by"] = CRUDBooster::myId();
 			$postdata["created_at"] = date("Y-m-d H:i:s");
 	    }
 
 		public function hook_after_add($id) {
-	        Counter::incrementColumn('code_5');
+	        Counter::incrementColumn('code_1');
 	    }
 
 		public function hook_before_edit(&$postdata,$id) {
