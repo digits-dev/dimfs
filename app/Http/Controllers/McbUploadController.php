@@ -474,9 +474,9 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					if(empty($existingDigitsCode)){
 						array_push($errors, 'Line '.$line_item.': item code "'.$value->digits_code.'" not found.');
 					}
-					if($existingUPCCode > 1){
-						array_push($errors, 'Line '.$line_item.': duplicate upc code has been detected.');
-					}
+					// if($existingUPCCode > 1){
+					// 	array_push($errors, 'Line '.$line_item.': duplicate upc code has been detected.');
+					// }
 					if(strlen($value->item_description) > 60 && !empty($value->item_description)){
 						array_push($errors, 'Line '.$line_item.': item description exceed 60 characters.');
 					}
