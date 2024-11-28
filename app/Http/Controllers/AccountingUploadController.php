@@ -357,14 +357,15 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
 	public static function setStoreCostUploadPercentage($upload_values, $item_details){
 		$csm_percentage = 0.0000;
 
-        if(empty($item_details->promo_srp)) {
+        if(empty($item_details->promo_srp) || $item_details->promo_srp ==='0.00' || $item_details->promo_srp === 0.00) {
             $csm_percentage = ($item_details->current_srp - $upload_values->store_cost)/$item_details->current_srp;
+        }else{
+            $csm_percentage = ($item_details->promo_srp - $upload_values->store_cost)/$item_details->promo_srp;
         }
         
-        if ($item_details->promo_srp !== null && $item_details->promo_srp !== '' && $item_details->promo_srp != 0) {
-            $csm_percentage = ($item_details->promo_srp - $upload_values->store_cost)/$item_details->promo_srp;
-            
-        }
+        // if(!empty($item_details->promo_srp)){
+        //     $csm_percentage = ($item_details->promo_srp - $upload_values->store_cost)/$item_details->promo_srp;
+        // }
         
         return number_format($csm_percentage , 4, '.', '');
         
@@ -373,14 +374,16 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
     // ADDED BY LEWIE
     public static function setEcomStoreCostUploadPercentage($upload_values, $item_details){
         $csm_percentage = 0.0000;
-        if(empty($item_details->promo_srp)) {
+        if(empty($item_details->promo_srp) || $item_details->promo_srp ==='0.00' || $item_details->promo_srp === 0.00) {
             $csm_percentage = ($item_details->current_srp - $upload_values->ecom_store_cost)/$item_details->current_srp;
+        }else{
+            $csm_percentage = ($item_details->promo_srp - $upload_values->ecom_store_cost)/$item_details->promo_srp;
         }
         
-        if ($item_details->promo_srp !== null && $item_details->promo_srp !== '' && $item_details->promo_srp != 0) {
-            $csm_percentage = ($item_details->promo_srp - $upload_values->ecom_store_cost)/$item_details->promo_srp;
+        // if(!empty($item_details->promo_srp)){
+        //     $csm_percentage = ($item_details->promo_srp - $upload_values->ecom_store_cost)/$item_details->promo_srp;
             
-        }
+        // }
         
         return number_format($csm_percentage , 4, '.', '');
     }
@@ -389,14 +392,16 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
 	public static function setWorkingStoreCostUploadPercentage($upload_values, $item_details){
 		$cwsm_percentage = 0.0000;
         
-		if(empty($item_details->promo_srp)) {
+		if(empty($item_details->promo_srp) || $item_details->promo_srp ==='0.00' || $item_details->promo_srp === 0.00) {
             $cwsm_percentage = ($item_details->current_srp - $upload_values->working_store_cost)/$item_details->current_srp;
+        }else{
+            $cwsm_percentage = ($item_details->promo_srp - $upload_values->working_store_cost)/$item_details->promo_srp;
         }
         
-        if ($item_details->promo_srp !== null && $item_details->promo_srp !== '' && $item_details->promo_srp != 0) {
-            $cwsm_percentage = ($item_details->promo_srp - $upload_values->working_store_cost)/$item_details->promo_srp;
+        // if(!empty($item_details->promo_srp)){
+        //     $cwsm_percentage = ($item_details->promo_srp - $upload_values->working_store_cost)/$item_details->promo_srp;
             
-        }
+        // }
 		
 		return number_format($cwsm_percentage,4, '.', '');
 	}
@@ -405,14 +410,17 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
     public static function setWorkingEcomStoreCostUploadPercentage($upload_values, $item_details){
 		$cwsm_percentage = 0.0000;
         
-		if(empty($item_details->promo_srp)) {
+		if(empty($item_details->promo_srp) || $item_details->promo_srp ==='0.00' || $item_details->promo_srp === 0.00) {
             $cwsm_percentage = ($item_details->current_srp - $upload_values->working_ecom_store_cost)/$item_details->current_srp;
+        }else{
+            $cwsm_percentage = ($item_details->promo_srp - $upload_values->working_ecom_store_cost)/$item_details->promo_srp;
+
         }
         
-        if ($item_details->promo_srp !== null && $item_details->promo_srp !== '' && $item_details->promo_srp != 0) {
-            $cwsm_percentage = ($item_details->promo_srp - $upload_values->working_ecom_store_cost)/$item_details->promo_srp;
+        // if(!empty($item_details->promo_srp)){
+        //     $cwsm_percentage = ($item_details->promo_srp - $upload_values->working_ecom_store_cost)/$item_details->promo_srp;
             
-        }
+        // }
 		
 		return number_format($cwsm_percentage,4, '.', '');
 	}
@@ -420,7 +428,7 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
 	
 	public static function checkUntStoreCost($upload_values, $item_details){
 	    
-	    if(empty($item_details->promo_srp)){
+	    if(empty($item_details->promo_srp) || $item_details->promo_srp ==='0.00' || $item_details->promo_srp === 0.00){
 			$csm = ($item_details->current_srp - $upload_values->store_cost) / $item_details->current_srp; //sm%
             $ccsm = self::getComputedUploadMarginPercentage(number_format($csm,4, '.', ''), $item_details->margin_categories_id, "UNITS", $item_details->brands_id);
             if(number_format($csm,7, '.', '') < 0){
@@ -447,7 +455,7 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
 	
 	public static function checkLocalStoreCost($upload_values, $item_details){
 	    
-	    if(empty($item_details->promo_srp) || is_null($item_details->promo_srp)){
+	    if(empty($item_details->promo_srp) || is_null($item_details->promo_srp) || $item_details->promo_srp ==='0.00' || $item_details->promo_srp === 0.00){
 	        \Log::debug('test item: '.$item_details->digits_code);
 	        \Log::debug('test lc: '.$upload_values->landed_cost);
 	        \Log::debug('test brand: '.$item_details->brands_id);
@@ -489,7 +497,7 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
 	
 	public static function checkAccStoreCost($upload_values, $item_details, $dtp_rf_percentage){
 	    
-	    if(empty($item_details->promo_srp)){
+	    if(empty($item_details->promo_srp) || $item_details->promo_srp ==='0.00' || $item_details->promo_srp === 0.00){
 		
 			$csm = ($item_details->current_srp - $upload_values->landed_cost) / $item_details->current_srp;
 			$ccsm = self::getComputedMarginPercentage(number_format($csm,4, '.', ''), $item_details->margin_categories_id, "ACCESSORIES", $item_details->brands_id);
@@ -545,7 +553,7 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
 	    if(in_array($item_details->vendor_types_id, [3,4,5,6])){
             return 0;
         }
-	    if(empty($item_details->promo_srp)){
+	    if(empty($item_details->promo_srp) || $item_details->promo_srp ==='0.00' || $item_details->promo_srp === 0.00){
 			$csm = ($item_details->current_srp - $upload_values->working_store_cost) / $item_details->current_srp;
             $ccsm = self::getComputedUploadMarginPercentage(number_format($csm,4, '.', ''), $item_details->margin_categories_id, "UNITS", $item_details->brands_id);
             if(number_format($csm,7, '.', '') < 0){
@@ -574,7 +582,7 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
 	    if(in_array($item_details->vendor_types_id, [3,4,5,6])){
             return 0;
         }
-	    if(empty($item_details->promo_srp)){
+	    if(empty($item_details->promo_srp) || $item_details->promo_srp ==='0.00' || $item_details->promo_srp === 0.00){
 		
 			$csm = ($item_details->current_srp - $upload_values->working_landed_cost) / $item_details->current_srp;
 			$ccsm = self::getComputedMarginPercentage(number_format($csm,4, '.', ''), $item_details->margin_categories_id, "ACCESSORIES", $item_details->brands_id);
@@ -601,7 +609,7 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
 	    if(in_array($item_details->vendor_types_id, [3,4,5,6])){
             return 0;
         }
-	    if(empty($item_details->promo_srp)){
+	    if(empty($item_details->promo_srp) || $item_details->promo_srp ==='0.00' || $item_details->promo_srp === 0.00){
 		
 			$csm = ($item_details->current_srp - $upload_values->working_landed_cost) / $item_details->current_srp;
 			$ccsm = self::getComputedEcomMarginPercentage(number_format($csm,4, '.', ''), $item_details->margin_categories_id, "ACCESSORIES", $item_details->brands_id);
