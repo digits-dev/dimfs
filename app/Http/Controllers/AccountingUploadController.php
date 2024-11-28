@@ -377,7 +377,7 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
             $csm_percentage = ($item_details->current_srp - $upload_values->ecom_store_cost)/$item_details->current_srp;
         }
         
-        if(!empty($item_details->promo_srp)){
+        if ($item_details->promo_srp !== null && $item_details->promo_srp !== '' && $item_details->promo_srp != 0) {
             $csm_percentage = ($item_details->promo_srp - $upload_values->ecom_store_cost)/$item_details->promo_srp;
             
         }
@@ -393,7 +393,7 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
             $cwsm_percentage = ($item_details->current_srp - $upload_values->working_store_cost)/$item_details->current_srp;
         }
         
-        if(!empty($item_details->promo_srp)){
+        if ($item_details->promo_srp !== null && $item_details->promo_srp !== '' && $item_details->promo_srp != 0) {
             $cwsm_percentage = ($item_details->promo_srp - $upload_values->working_store_cost)/$item_details->promo_srp;
             
         }
@@ -409,7 +409,7 @@ class AccountingUploadController extends \crocodicstudio\crudbooster\controllers
             $cwsm_percentage = ($item_details->current_srp - $upload_values->working_ecom_store_cost)/$item_details->current_srp;
         }
         
-        if(!empty($item_details->promo_srp)){
+        if ($item_details->promo_srp !== null && $item_details->promo_srp !== '' && $item_details->promo_srp != 0) {
             $cwsm_percentage = ($item_details->promo_srp - $upload_values->working_ecom_store_cost)/$item_details->promo_srp;
             
         }
