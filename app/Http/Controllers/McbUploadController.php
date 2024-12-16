@@ -42,7 +42,6 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 {
 
 	use UploadTraits;
-	use ItemTraits;
     
     public function __construct() {
 		DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
