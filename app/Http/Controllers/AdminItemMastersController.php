@@ -856,7 +856,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 
 	public function importItemMcbView()
 	{
-		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","MCB TM"])) {
+		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","BRAND MDSG TM"])) {
 			CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
 		}
 		$data['page_title'] = 'MCB Bulk Update';
