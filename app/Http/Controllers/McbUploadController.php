@@ -27,6 +27,7 @@ use App\SkuLegend;
 use App\BrandDirection;
 use App\BrandGroup;
 use App\BrandMarketing;
+use App\Http\Traits\ItemTraits;
 use App\Http\Traits\UploadTraits;
 use App\ItemClass;
 use App\Segmentation;
@@ -41,6 +42,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 {
 
 	use UploadTraits;
+	use ItemTraits;
     
     public function __construct() {
 		DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
@@ -596,6 +598,12 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'updated_by' => CRUDBooster::myId(),
 						'updated_at' => date('Y-m-d H:i:s')
 					];
+
+					if(substr($value->digits_code, 0, 1) == '5'){ //digits_code starts with 5
+						$data['approved_by'] = 1;
+						$data['approved_at'] = date('Y-m-d H:i:s');
+						$data['approval_status'] = $this->getStatusByDescription('APPROVED');
+					}
 
 					$update_data = array_filter($data, 'strlen');
 					

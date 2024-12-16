@@ -774,7 +774,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			$exportItem = [];
 			foreach ($this->getItemExport() as $newKey => $oldKey) {
 				switch ($oldKey) {
-					case 'original_srp': 
+					case 'original_srp':
 					case 'current_srp':
 					case 'dtp_rf':
 					case 'dtp_rf_percentage':
@@ -794,12 +794,12 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 						$exportItem[$newKey] = isset($items->$oldKey) ? $items->$oldKey : null;
 					break;
 				}
-			}	
+			}
 			return $exportItem;
 		});
 
 		$filename = 'Export DIMFSv3.0 All Items '.date("Ymd-His").'.xlsx';
-		return (new FastExcel($exportItems))->download($filename);	
+		return (new FastExcel($exportItems))->download($filename);
 	}
 
 	public function importView()
@@ -856,7 +856,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 
 	public function importItemMcbView()
 	{
-		if(!CRUDBooster::isSuperadmin() && CRUDBooster::myPrivilegeName() != "MCB TL") {   
+		if(!CRUDBooster::isSuperadmin() && !in_array(CRUDBooster::myPrivilegeName(), ["MCB TL","MCB TM"])) {
 			CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
 		}
 		$data['page_title'] = 'MCB Bulk Update';
