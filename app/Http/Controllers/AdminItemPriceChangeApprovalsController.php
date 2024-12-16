@@ -296,26 +296,26 @@
                     'approved_at' => date('Y-m-d H:i:s')
                 ]);
                 
-                // foreach($items as $item){
-                //     ItemMaster::where('id', $item->item_masters_id)->update([
-                //         'dtp_rf' 				    => $item->store_cost,
-                //         'dtp_rf_percentage' 	    => $item->store_cost_percentage,
-                //         'working_dtp_rf' 			=> $item->working_store_cost,
-                //         'working_dtp_rf_percentage' => $item->working_store_cost_percentage,
-                //         'ecom_store_margin' 				    => $item->ecom_store_margin,
-                //         'ecom_store_margin_percentage' 	        => $item->ecom_store_margin_percentage,
-                //         'working_ecom_store_margin' 			=> $item->working_ecom_store_margin,
-                //         'working_ecom_store_margin_percentage'  => $item->working_ecom_store_margin_percentage,
-                //         'landed_cost' 				=> $item->landed_cost,
-                //         'landed_cost_sea' 			=> $item->landed_cost_sea,
-                //         'actual_landed_cost' 		=> $item->actual_landed_cost,
-                //         'working_landed_cost'		=> $item->working_landed_cost,
-                //         'updated_by'                => CRUDBooster::myId(),
-                //         'updated_at'                => date('Y-m-d H:i:s')
-                //     ]);
-                //     $itemCode = ItemMaster::where('id', $item->item_masters_id)->value('digits_code');
-                //     $this->sendApprovedNotification($itemCode, $item->updated_by);
-                // }
+                foreach($items as $item){
+                    ItemMaster::where('id', $item->item_masters_id)->update([
+                        'dtp_rf' 				    => $item->store_cost,
+                        'dtp_rf_percentage' 	    => $item->store_cost_percentage,
+                        'working_dtp_rf' 			=> $item->working_store_cost,
+                        'working_dtp_rf_percentage' => $item->working_store_cost_percentage,
+                        'ecom_store_margin' 				    => $item->ecom_store_margin,
+                        'ecom_store_margin_percentage' 	        => $item->ecom_store_margin_percentage,
+                        'working_ecom_store_margin' 			=> $item->working_ecom_store_margin,
+                        'working_ecom_store_margin_percentage'  => $item->working_ecom_store_margin_percentage,
+                        'landed_cost' 				=> $item->landed_cost,
+                        'landed_cost_sea' 			=> $item->landed_cost_sea,
+                        'actual_landed_cost' 		=> $item->actual_landed_cost,
+                        'working_landed_cost'		=> $item->working_landed_cost,
+                        'updated_by'                => CRUDBooster::myId(),
+                        'updated_at'                => date('Y-m-d H:i:s')
+                    ]);
+                    $itemCode = ItemMaster::where('id', $item->item_masters_id)->value('digits_code');
+                    $this->sendApprovedNotification($itemCode, $item->updated_by);
+                }
 	        }   
 	        else if($button_name == 'reject'){
 	            ItemPriceChangeApproval::whereIn('id',$id_selected)->update([
