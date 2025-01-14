@@ -80,6 +80,13 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 					if($key=="size_description"){
 						$this->form[]=config("user-export.forms.size_value");
 					}
+					if($key=="upc_code"){
+						$this->form[]=[
+							"label" => "UPC CODE-1",
+							"name" => "upc_code",
+							'type'=>'text'
+						];
+					}
 					$value+=['width'=>'col-sm-6'];
 					$this->form[] = $value;
 				}
