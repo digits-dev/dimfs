@@ -425,7 +425,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 			$skuLegends = SkuLegend::active()->get();
 			$segmentLegends = SegmentationLegend::active()->get();
 			// $incoterms = Incoterm::active()->get();
-			// $vendors = Vendor::active()->get();
+			$vendors = Vendor::active()->get();
 			
 			if(!empty($dataExcel) && $dataExcel->count()) {
 
@@ -442,7 +442,8 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					$brand_directions = $brandDirections->where('brand_direction_description', $value->brand_direction)->first();
 					$brand_id = $brands->where('brand_description', $value->brand_description)->first();
 					$category_id = $categories->where('category_description', $value->category_description)->first();
-
+					$support_id = DB::table('support_types')->where('support_type_description', $value->support_type)->first();
+					$vendors_id = $vendors->where('vendor_name',$value->vendor_name)->first();
 					$class_id = null;
 					if(!is_null($value->class_description) && !empty($category_id)){
 					    $class_id = $classes->where('class_description', $value->class_description)
@@ -576,6 +577,12 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'sku_statuses_id' => $sku_status_id->id,
 						'current_srp' => $value->current_srp,
 						'original_srp' => $value->original_srp,
+						'price_change'     => $value->price_change,
+						'effective_date'   => date('Y-m-d', strtotime($value->price_change_date)),
+						'support_types_id' => $support_id->id,
+						'duration_from'    => $value->duration_from,
+						'duration_to'      => $value->duration_to,
+						'vendors_id'       => $vendors_id->id,
 						'promo_srp' => $value->dg_srp,
 						'moq' => $value->moq,
 						'purchase_price' => $value->supplier_cost,
