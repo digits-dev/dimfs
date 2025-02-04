@@ -397,7 +397,7 @@ function itemDescriptionCount() {
     var count = $('#item_description').val().length;
     $("#id_item_description").html('Character Count: '+ count);
 
-    if(count > 50) {
+    if(count > 60) {
         
         $("#id_item_description").css("color", "red");
         $('#item_description').css('border-color', 'red');
@@ -416,22 +416,8 @@ function itemDescriptionCount() {
 $(':input[type="number"]').on('wheel', function() {
     $(this).blur();
 });
-/*force to 2 decimal places & 1 decimal point*/
-// $(':input[type="number"]').on('keypress', function(event) {
-
-//     if(this.value.indexOf(".") > -1 && (this.value.split('.')[1].length > 1)) {
-//         swal('Warning !', "**Two (2) decimal places only!");
-//         event.preventDefault();
-//     }
-//     if((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)){
-//         event.preventDefault();
-//     }
-//     this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-// });
 
 $(':input[type="number"]').on("paste",function(event) {
-    /*event.preventDefault();*/
-    /*this.value = parseFloat(this.value).toFixed(2);*/
 });
 
 $('#upc_code').focusout( function() {
@@ -668,9 +654,9 @@ $('#size_value').on('keyup', function() {
 $('#item_description').on('keyup', function(event) {
     itemDescriptionCount();
     var count = this.value.length;
-    if(count > 50){
+    if(count > 60){
         if(event.which != 8){
-            swal('Warning !', '**Please limit the Item Description to 50 characters.');
+            swal('Warning !', '**Please limit the Item Description to 60 characters.');
         }
     }
 });
@@ -685,7 +671,7 @@ $('form').submit(function(event) {
         let srp_end1 = original_srp.substr(-2);
         let srp_end2 = original_srp.substr(-5);
 
-        if(description_count <= 50) {
+        if(description_count <= 60) {
             if(srp_end2.indexOf('.') >= 0 && original_srp != '90.00' && vendor_type != 'LOCAL CONSIGNMENT' && !is_reclass){
                 $('#original_srp').focus();
                 swal('Warning !', "**Please check the Original SRP.\nPrice of regular item  must be ending in 90.");
@@ -700,7 +686,7 @@ $('form').submit(function(event) {
         }
         else {
             $('#item_description').focus();
-            swal('Warning !', '**Please limit the Item Description to 50 characters.');
+            swal('Warning !', '**Please limit the Item Description to 60 characters.');
         }
 
         event.preventDefault();
@@ -708,9 +694,9 @@ $('form').submit(function(event) {
 
     if(edit_action){
         let description_count = $('#item_description').val().length;
-        if(description_count > 50) {
+        if(description_count > 60) {
             $('#item_description').focus();
-            swal('Warning !', '**Please limit the Item Description to 50 characters.');
+            swal('Warning !', '**Please limit the Item Description to 60 characters.');
         }
         // if(document.getElementById("landed_cost")){
             
