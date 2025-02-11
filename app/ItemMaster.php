@@ -157,7 +157,8 @@ class ItemMaster extends Model
             "approvedby.name as approvedby as approved_by",
             "item_masters.approved_at",
             "updatedby.name as updatedby",
-            "item_masters.updated_at as updateddate"
+            "item_masters.updated_at as updateddate",
+            "item_masters.device_type"
         )
         ->leftJoin('apple_lobs', 'item_masters.apple_lobs_id', '=', 'apple_lobs.id')
         ->leftJoin('brands', 'item_masters.brands_id', '=', 'brands.id')

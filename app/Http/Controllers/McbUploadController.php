@@ -324,6 +324,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'spe_segmentation' => $value->shopee,
 						'tik_segmentation' => $value->tiktok,
 						'has_serial' => $value->serial_code,
+						'device_type' => $value->device_type,
 						'imei_code1' => '0',
 						'imei_code2' => '0',
 						'approval_status' => $this->getStatusByDescription("PENDING"),
@@ -601,6 +602,7 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'spe_segmentation' => $value->shopee,
 						'tik_segmentation' => $value->tiktok,
 						'has_serial' => $value->serial_code,
+						'device_type' => $value->device_type,
 						'updated_by' => CRUDBooster::myId(),
 						'updated_at' => date('Y-m-d H:i:s')
 					];

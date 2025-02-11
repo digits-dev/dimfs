@@ -71,7 +71,7 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			}
 		}
 		if(in_array(CRUDBooster::getCurrentMethod(), ['getEdit', 'postEditSave'])){
-			foreach (config("user-export.forms") as $key => $value) {
+			foreach (config("user-export.forms_update") as $key => $value) {
 				
 				if(in_array($key, $this->getItemUpdateReadOnly())){
 					$value+=['readonly'=>true];
@@ -79,13 +79,6 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 				if (in_array($key, $this->getItemUpdate())) {
 					if($key=="size_description"){
 						$this->form[]=config("user-export.forms.size_value");
-					}
-					if($key=="upc_code"){
-						$this->form[]=[
-							"label" => "UPC CODE-1",
-							"name" => "upc_code",
-							'type'=>'text'
-						];
 					}
 					$value+=['width'=>'col-sm-6'];
 					$this->form[] = $value;
@@ -141,6 +134,22 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
                 $('#duration_to').css('pointer-events','none');
                 $('.open-datetimepicker').css('pointer-events','none');
             }
+
+			function updateDeviceTypeRequired() {
+				if ($('input[name=\"serialized[]\"]:checked').length) {
+					$('input[name=\"device_type\"]').attr('required', true);
+				} else {
+					$('input[name=\"device_type\"]').removeAttr('required');
+				}
+			}
+
+			// Run the function on page load (in case checkboxes are already checked)
+			updateDeviceTypeRequired();
+
+			// Attach the function to the change event of checkboxes
+			$(document).on('change', 'input[name=\"serialized[]\"]', function() {
+				updateDeviceTypeRequired();
+			});
 		});";
 		
 		$this->load_js = array();
@@ -196,7 +205,6 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 	public function hook_before_add(&$postdata) {        
 		//Your code here
 		$size = Size::where('id',$postdata["sizes_id"])->value('size_code');
-		
 		$postdata["size"]=($postdata["size_value"] == 0)? $size : $postdata["size_value"].''.$size;
 		$postdata["created_by"] = CRUDBooster::myId();
 		$postdata["subcategories_id"] = 0;

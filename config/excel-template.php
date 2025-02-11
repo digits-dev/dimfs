@@ -55,7 +55,8 @@ return [
         "VENDOR NAME",
         "SERIAL CODE",
         "IMEI CODE 1",
-        "IMEI CODE 2"    
+        "IMEI CODE 2",
+        "DEVICE TYPE"    
     ],
     "item-master-edit" => [
         "DIGITS CODE",
@@ -90,6 +91,7 @@ return [
         "DURATION TO",
         "SUPPORT TYPE",
         "VENDOR TYPE CODE",
+        "VENDOR NAME",
         "MOQ",
         "CURRENCY",
         "SUPPLIER COST",
@@ -117,7 +119,8 @@ return [
         "FRANCHISE",
         "GUAM",
         "NEW STORE",
-        "SERIAL CODE"
+        "SERIAL CODE",
+        "DEVICE TYPE" 
     ],
     "gashapon-item-master" => [
         "JAN NUMBER",

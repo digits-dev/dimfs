@@ -51,7 +51,7 @@
     		# START FORM DO NOT REMOVE THIS LINE
     		$this->form = [];
 			if(in_array(CRUDBooster::getCurrentMethod(), ['getEdit', 'postEditSave'])){
-				foreach (config("user-export.forms") as $key => $value) {
+				foreach (config("user-export.forms_update") as $key => $value) {
 					
 					if(in_array($key, $this->getItemUpdateReadOnly('item_master_approvals'))){
 						$value+=['readonly'=>true];

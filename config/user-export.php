@@ -82,6 +82,7 @@ return [
         "vendor_group_status" => "VENDOR GROUP STATUS",
         "warranty_duration" => "WARRANTY DURATION",
         "warranty_description" => "WARRANTY DURATION TYPE",
+        "device_type" => "DEVICE TYPE",
         "has_serial" => "SERIAL CODE",
         "imei_code1" => "IMEI CODE 1",
         "imei_code2" => "IMEI CODE 2",
@@ -173,6 +174,7 @@ return [
         "vendor_group_status" => "VENDOR GROUP STATUS",
         "warranty_duration" => "WARRANTY DURATION",
         "warranty_description" => "WARRANTY DURATION TYPE",
+        "device_type" => "DEVICE TYPE",
         "has_serial" => "SERIAL CODE",
         "imei_code1" => "IMEI CODE 1",
         "imei_code2" => "IMEI CODE 2",
@@ -525,6 +527,10 @@ return [
             "label"=>"WARRANTY DURATION TYPE",
             "name" =>"warranties_id",
             "join" =>"warranties,warranty_description"
+        ],
+        "device_type" => [ 
+            "label"=>"DEVICE TYPE",
+            "name" =>"device_type"
         ],
         "has_serial" => [ 
             "label"=>"SERIAL CODE",
@@ -1076,7 +1082,540 @@ return [
             "name" =>"serialized",
             'type'=>'checkbox','validation'=>'min:0',
             'datatable'=>'item_identifiers,item_identifier',
+			'datatable_where'=>"id='1'"
+        ],
+        "device_type" => [ 
+            "label" => "DEVICE TYPE",
+            "name" => "device_type",
+            "type" => "radio",
+            "validation" => "min:0",
+            "dataenum" => "SERIAL;IMEI", 
+        ],
+        // "imei_code1" => [ 
+        //     "label"=>"IMEI CODE 1",
+        //     "name" =>"imei_code1"
+        // ],
+        // "imei_code2" => [ 
+        //     "label"=>"IMEI CODE 2",
+        //     "name" =>"imei_code2"
+        // ],
+    ],
+
+    "forms_update" => [
+        "digits_code" => [
+            "label" => "DIGITS CODE",
+            "name" => "digits_code",
+            "type"=>"text",
+            "validation"=>"min:8|max:8",
+            "readonly"=>"readonly",
+        ],
+        "inventory_type_code" => [
+            "label" => "INVENTORY TYPE",
+            "name" => "inventory_types_id",
+            "datatable" => "inventory_types,inventory_type_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+            'help'=>'*If category description is STORE DEMO, please select TRADE',
+        ],
+        "upc_code" => [
+            "label" => "UPC CODE-1",
+            "name" => "upc_code",
+            'type'=>'text'
+        ],
+        "upc_code2" => [
+            "label" => "UPC CODE-2",
+            "name" => "upc_code2",
+            'type'=>'text',
+            'validation'=>'max:60|unique:item_masters,upc_code2',
+        ],
+        "upc_code3" => [
+            "label" => "UPC CODE-3",
+            "name" => "upc_code3",
+            'type'=>'text',
+            'validation'=>'max:60|unique:item_masters,upc_code3',
+        ],
+        "upc_code4" => [
+            "label" => "UPC CODE-4",
+            "name" => "upc_code4",
+            'type'=>'text',
+            'validation'=>'max:60|unique:item_masters,upc_code4',
+        ],
+        "upc_code5" => [
+            "label" => "UPC CODE-5",
+            "name" => "upc_code5",
+            'type'=>'text',
+            'validation'=>'max:60|unique:item_masters,upc_code5',
+        ],
+        "supplier_item_code" => [ 
+            "label"=>"SUPPLIER ITEM CODE",
+            "name" => "supplier_item_code",
+            'type'=>'text',
+            'validation'=>'required|min:2|max:60',
+        ],
+        "model_number" => [ 
+            "label"=>"MODEL NUMBER",
+            "name" =>"model_number",
+            'type'=>'text',
+        ],
+        "initial_wrr_date" => [ 
+            "label"=>"INITIAL WRR DATE (YYYY-MM-DD)",
+            "name" =>"initial_wrr_date",
+            'type'=>'date','validation'=>'date',
+        ],
+        "latest_wrr_date" => [ 
+            "label"=>"LATEST WRR DATE (YYYY-MM-DD)",
+            "name" =>"latest_wrr_date",
+            'type'=>'date','validation'=>'date',
+        ],
+        "brand_group_description" => [ 
+            "label"=>"BRAND GROUP",
+            "name" =>"brand_groups_id",
+            "datatable" =>"brand_groups,brand_group_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "brand_direction_description" => [ 
+            "label"=>"BRAND DIRECTION",
+            "name" =>"brand_directions_id",
+            "datatable" =>"brand_directions,brand_direction_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "brand_description" => [ 
+            "label"=>"BRAND DESCRIPTION",
+            "name" =>"brands_id",
+            "datatable" =>"brands,brand_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        // "brand_status" => [ 
+        //     "label"=>"BRAND STATUS",
+        //     "name" =>"brands_id",
+        //     "datatable" =>"brands,status"
+        // ],
+        "sku_status_description" => [ 
+            "label"=>"SKU STATUS",
+            "name" =>"sku_statuses_id",
+            "datatable" =>"sku_statuses,sku_status_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "sku_legend_description" => [ 
+            "label"=>"SKU LEGEND",
+            "name" =>"sku_legends_id",
+            "datatable" =>"sku_legends,sku_legend_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "brand_marketing_description" => [ 
+            "label"=>"BRAND MARKETING",
+            "name" =>"brand_marketings_id",
+            "datatable" =>"brand_marketings,brand_marketing_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "item_description" => [ 
+            "label"=>"ITEM DESCRIPTION",
+            "name" =>"item_description",
+            'type'=>'text','validation'=>'required|min:3|max:60'
+        ],
+        "model" => [ 
+            "label"=>"MODEL",
+            "name" =>"model",
+            'type'=>'text','validation'=>'required|min:2|max:60',
+        ],
+        "model_specific_description" => [ 
+            "label"=>"MODEL SPECIFIC DESCRIPTION",
+            "name" =>"model_specifics_id",
+            "datatable" =>"model_specifics,model_specific_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "compatibility" => [ 
+            "label"=>"COMPATIBILITY",
+            "name" =>"compatibility",
+            'type'=>'select2-multiple','validation'=>'required',
+            'datatable'=>'model_specifics,model_specific_description',
+            'datatable_where'=>"status='ACTIVE'",
+		    'multiple'=>'multiple',
+        ],
+        "apple_lob" => [ 
+            "label"=>"APPLE LOB",
+            "name" =>"apple_lobs_id",
+            "datatable" =>"apple_lobs,apple_lob_description",
+            'datatable_where'=>"status!='INACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "apple_report_inclusion" => [ 
+            "label"=>"APPLE REPORT INCLUSION",
+            "name" =>"apple_report_inclusion",
+            "type"=>"select2",
+			"validation"=>"required",
+			"dataenum"=>"0;1",
+        ],
+        "category_description" => [ 
+            "label"=>"CATEGORY DESCRIPTION",
+            "name" =>"categories_id",
+            "datatable" =>"categories,category_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "class_description" => [ 
+            "label"=>"CLASS DESCRIPTION",
+            "name" =>"classes_id",
+            "datatable" =>"classes,class_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "subclass_description" => [ 
+            "label"=>"SUBCLASS DESCRIPTION",
+            "name" =>"subclasses_id",
+            "datatable" =>"subclasses,subclass_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "warehouse_category_description" => [ 
+            "label"=>"WH CATEGORY DESCRIPTION",
+            "name" =>"warehouse_categories_id",
+            "datatable" =>"warehouse_categories,warehouse_category_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "original_srp" => [ 
+            "label"=>"ORIGINAL SRP",
+            "name" =>"original_srp",
+            'type'=>'number','validation'=>'required|min:0.00',
+            'step'=>'0.01',
+			'help'=>'*SRP must be ending in 90, unless otherwise stated or something similar',
+        ],
+        "current_srp" => [ 
+            "label"=>"CURRENT SRP",
+            "name" =>"current_srp",
+            'type'=>'number','validation'=>'required|min:0',
+            'readonly'=>'readonly',
+        ],
+        "promo_srp" => [ 
+            "label"=>"DG SRP",
+            "name" =>"promo_srp",
+            'type'=>'number','step'=>'0.01'
+        ],
+        "price_change" => [ 
+            "label"=>"PRICE CHANGE",
+            "name" =>"price_change",
+            'type'=>'number','step'=>'0.01'
+        ],
+        "effective_date" => [ 
+            "label"=>"PRICE CHANGE DATE",
+            "name" =>"effective_date",
+            'type'=>'date','validation'=>'date',
+        ],
+        "dtp_rf" => [ 
+            "label"=>"STORE COST",
+            "name" =>"dtp_rf",
+            'type'=>'number','validation'=>'required|min:0.00',
+            'step'=>'0.01'
+        ],
+        "dtp_rf_percentage" => [ 
+            "label"=>"STORE MARGIN (%)",
+            "name" =>"dtp_rf_percentage",
+            'type'=>'number','validation'=>'min:0.00',
+            'step'=>'0.0001'
+        ],
+        "ecom_store_margin" => [ 
+            "label"=>"ECOMM - STORE COST",
+            "name" =>"ecom_store_margin",
+            'type'=>'number','validation'=>'required|min:0.00',
+            'step'=>'0.01'
+        ],
+        "ecom_store_margin_percentage" => [ 
+            "label"=>"ECOMM - STORE MARGIN (%)",
+            "name" =>"ecom_store_margin_percentage",
+            'type'=>'number','validation'=>'min:0.00',
+            'step'=>'0.0001'
+        ],
+        "landed_cost" => [ 
+            "label"=>"LANDED COST",
+            "name" =>"landed_cost",
+            'type'=>'number','step'=>'0.01'
+        ],
+        "working_dtp_rf" => [ 
+            "label"=>"WORKING STORE COST",
+            "name" =>"working_dtp_rf",
+            'type'=>'number','step'=>'0.01'
+        ],
+        "working_dtp_rf_percentage" => [ 
+            "label"=>"WORKING STORE MARGIN (%)",
+            "name" =>"working_dtp_rf_percentage",
+            'type'=>'number','step'=>'0.0001'
+        ],
+        "working_ecom_store_margin" => [ 
+            "label"=>"ECOMM - WORKING STORE COST",
+            "name" =>"working_ecom_store_margin",
+            'type'=>'number','validation'=>'required|min:0.00',
+            'step'=>'0.01'
+        ],
+        "working_ecom_store_margin_percentage" => [ 
+            "label"=>"ECOMM - WORKING STORE MARGIN (%)",
+            "name" =>"working_ecom_store_margin_percentage",
+            'type'=>'number','validation'=>'min:0.00',
+            'step'=>'0.0001'
+        ],
+        "working_landed_cost" => [ 
+            "label"=>"WORKING LANDED COST",
+            "name" =>"working_landed_cost",
+            'type'=>'number','step'=>'0.01'
+        ],
+        "duration_from" => [ 
+            "label"=>"DURATION FROM",
+            "name" =>"duration_from",
+            'type'=>'date-custom'
+        ],
+        "duration_to" => [ 
+            "label"=>"DURATION TO",
+            "name" =>"duration_to",
+            'type'=>'date-custom'
+        ],
+        "support_type_description" => [ 
+            "label"=>"SUPPORT TYPE",
+            "name" =>"support_types_id",
+            "datatable" =>"support_types,support_type_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2'
+        ],
+        "vendor_type_code" => [ 
+            "label"=>"VENDOR TYPE CODE",
+            "name" =>"vendor_types_id",
+            "datatable" =>"vendor_types,vendor_type_code",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "moq" => [ 
+            "label"=>"MOQ",
+            "name" =>"moq",
+            'type'=>'number','validation'=>'required|min:0'
+        ],
+        // "incoterms_code" => [ 
+        //     "label"=>"INCOTERMS",
+        //     "name" =>"vendors_id",
+        //     "datatable" =>"vendors,incoterms_id,incoterms,incoterms_code",
+        //     'type'=>'select2',
+        // ],
+        "currency_code" => [ 
+            "label"=>"CURRENCY",
+            "name" =>"currencies_id",
+            "datatable" =>"currencies,currency_code",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "purchase_price" => [ 
+            "label"=>"SUPPLIER COST",
+            "name" =>"purchase_price",
+            'type'=>'number','validation'=>'required|min:0',
+            'step'=>'0.01'
+        ],
+        "size_value" => [ 
+            "label"=>"SIZE",
+            "name" =>"size_value",
+            'type'=>'number','validation'=>'required|min:0','step'=>'0.01',
+            'help'=>'Enter zero (0) if size description is N/A'
+        ],
+        "size_description" => [ 
+            "label"=>"SIZE DESCRIPTION",
+            "name" =>"sizes_id",
+            'datatable'=>'sizes,size_description',
+			'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required',
+        ],
+        "item_length" => [ 
+            "label"=>"LENGTH [CM]",
+            "name" =>"item_length",
+            'type'=>'number','validation'=>'required|min:0.00','step'=>'0.01',
+            'help'=>'*must be in cm (centimeter).'
+        ],
+        "item_width" => [ 
+            "label"=>"WIDTH [CM]",
+            "name" =>"item_width",
+            'type'=>'number','validation'=>'required|min:0.00','step'=>'0.01',
+            'help'=>'*must be in cm (centimeter).'
+        ],
+        "item_height" => [ 
+            "label"=>"HEIGHT [CM]",
+            "name" =>"item_height",
+            'type'=>'number','validation'=>'required|min:0.00','step'=>'0.01',
+            'help'=>'*must be in cm (centimeter).'
+        ],
+        "item_weight" => [ 
+            "label"=>"WEIGHT [KG]",
+            "name" =>"item_weight",
+            'type'=>'number','validation'=>'required|min:0.00','step'=>'0.01',
+            'help'=>'*must be in kg (kilogram).'
+        ],
+        "actual_color" => [ 
+            "label"=>"ACTUAL COLOR",
+            "name" =>"actual_color",
+            'type'=>'text','validation'=>'required|min:2|max:50'
+        ],
+        "color_description" => [ 
+            "label"=>"MAIN COLOR DESCRIPTION",
+            "name" =>"colors_id",
+            "datatable" =>"colors,color_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0'
+        ],
+        "uom_code" => [ 
+            "label"=>"UOM CODE",
+            "name" =>"uoms_id",
+            "datatable" =>"uoms,uom_code",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "acefast" => [ 
+            "label"=>"ACEFAST",
+            "name" =>"af_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
 			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "btb_segmentation" => [ 
+            "label"=>"BEYOND THE BOX",
+            "name" =>"btb_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "dw_segmentation" => [ 
+            "label"=>"DIGITAL WALKER",
+            "name" =>"dw_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "opensource_segmentation" => [ 
+            "label"=>"OPENSOURCE",
+            "name" =>"opensource_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "service_center" => [ 
+            "label"=>"SERVICE CENTER",
+            "name" =>"svc_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "lazada" => [ 
+            "label"=>"LAZADA",
+            "name" =>"laz_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "shopee" => [ 
+            "label"=>"SHOPEE",
+            "name" =>"spe_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "tiktok" => [ 
+            "label"=>"TIKTOK",
+            "name" =>"tik_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "website" => [ 
+            "label"=>"WEBSITE",
+            "name" =>"web_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "dcon_segmentation" => [ 
+            "label"=>"DISTRIBUTION CONSIGNMENT",
+            "name" =>"dcon_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "dout_segmentation" => [ 
+            "label"=>"DISTRIBUTION OUTRIGHT",
+            "name" =>"dout_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "franchise_segmentation" => [ 
+            "label"=>"FRANCHISE",
+            "name" =>"franchise_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "guam_segmentation" => [ 
+            "label"=>"GUAM",
+            "name" =>"guam_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "newstore_segmentation" => [ 
+            "label"=>"NEW STORE",
+            "name" =>"newstore_segmentation",
+            'type'=>'select-custom','validation'=>'required',
+            'datatable'=>'segmentation_legends,segment_legend_description',
+			'datatable_where'=>"status='ACTIVE'"
+        ],
+        "vendor_name" => [ 
+            "label"=>"VENDOR NAME",
+            "name" =>"vendors_id",
+            "datatable" =>"vendors,vendor_name",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        // "vendor_status" => [ 
+        //     "label"=>"VENDOR STATUS",
+        //     "name" =>"vendors_id",
+        //     "datatable" =>"vendors,status"
+        // ],
+        "vendor_group_name" => [ 
+            "label"=>"VENDOR GROUP NAME",
+            "name" =>"vendor_groups_id",
+            "datatable" =>"vendor_groups,vendor_group_name",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        // "vendor_group_status" => [ 
+        //     "label"=>"VENDOR GROUP STATUS",
+        //     "name" =>"vendor_groups_id",
+        //     "datatable" =>"vendor_groups,status"
+        // ],
+        "warranty_duration" => [ 
+            "label"=>"WARRANTY DURATION",
+            "name" =>"warranty_duration",
+            'type'=>'number','validation'=>'required|integer|min:0'
+        ],
+        "warranty_description" => [ 
+            "label"=>"WARRANTY DURATION TYPE",
+            "name" =>"warranties_id",
+            "datatable" =>"warranties,warranty_description",
+            'datatable_where'=>"status='ACTIVE'",
+            'type'=>'select2','validation'=>'required|integer|min:0',
+        ],
+        "has_serial" => [ 
+            "label"=>"SERIALIZED",
+            "name" =>"serialized",
+            'type'=>'checkbox','validation'=>'min:0',
+            'datatable'=>'item_identifiers,item_identifier',
+			'datatable_where'=>"id='1'"
+        ],
+        "device_type" => [ 
+            "label" => "DEVICE TYPE",
+            "name" => "device_type",
+            "type" => "radio",
+            "validation" => "min:0",
+            "dataenum" => "SERIAL;IMEI", 
         ],
         // "imei_code1" => [ 
         //     "label"=>"IMEI CODE 1",
