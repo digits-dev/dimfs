@@ -77,6 +77,7 @@ return [
         "MODEL",
         "MODEL SPECIFIC DESCRIPTION",
         "COMPATIBILITY",
+        "APPLE LOB",
         "MARGIN CATEGORY DESCRIPTION",
         "CATEGORY DESCRIPTION",
         "CLASS DESCRIPTION",

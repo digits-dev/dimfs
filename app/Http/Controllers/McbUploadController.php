@@ -483,6 +483,9 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 					if(strlen($value->item_description) > 60 && !empty($value->item_description)){
 						array_push($errors, 'Line '.$line_item.': item description exceed 60 characters.');
 					}
+					if(empty($apple_lobs_id)){
+						array_push($errors, 'Line '.$line_item.': with apple lob "'.$value->apple_lob.'" is not found in submaster.');
+					}
 					if(empty($brand_id) && !empty($value->brand_description)){
 						array_push($errors, 'Line '.$line_item.': with brand "'.$value->brand_description.'" is not found in submaster.');
 					}
