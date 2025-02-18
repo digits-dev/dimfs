@@ -59,26 +59,27 @@
 			$this->col[] = ['label'=>'MSRP JPY','name'=>'msrp'];
 			$this->col[] = ['label'=>'CURRENT SRP','name'=>'current_srp'];
 			$this->col[] = ['label'=>'NUMBER OF TOKENS','name'=>'no_of_tokens'];
-			if(!in_array(CRUDBooster::myPrivilegeName(),['IC TM','REPORTS'])){
-				if(!in_array(CRUDBooster::myPrivilegeName(),['IC TM','REPORTS, WIMS TL'])){
+			if(!in_array(CRUDBooster::myPrivilegeName(),['IC TM','REPORTS','WHS TM','WHS TL','AUD'])){
+				if(!in_array(CRUDBooster::myPrivilegeName(),['IC TM','REPORTS, WIMS TL','WHS TM','WHS TL','AUD'])){
 					$this->col[] = ['label'=>'LC PER CARTON','name'=>'lc_per_carton'];
 					$this->col[] = ['label'=>'LC PER PC','name'=>'lc_per_pc'];
 					$this->col[] = ['label'=>'LC MARGIN PER PC (%)','name'=>'lc_margin_per_pc'];
 				}
-			$this->col[] = ['label'=>'SC PER PC','name'=>'store_cost'];
-			$this->col[] = ['label'=>'SC MARGIN PER PC (%)','name'=>'sc_margin'];
-			$this->col[] = ['label'=>'PCS PER CTN','name'=>'pcs_ctn'];
-			$this->col[] = ['label'=>'DP PER CTN','name'=>'dp_ctn'];
-			$this->col[] = ['label'=>'PCS PER DP','name'=>'pcs_dp'];
-			$this->col[] = ['label'=>'MOQ','name'=>'moq'];
-			$this->col[] = ['label'=>'ORDER CTN','name'=>'no_of_ctn'];
-			$this->col[] = ['label'=>'NUMBER OF ASSORT','name'=>'no_of_assort'];
-			$this->col[] = ['label'=>'COUNTRY OF ORIGIN','name'=>'gacha_countries_id','join'=>'gacha_countries,country_code'];
-			$this->col[] = ['label'=>'INCOTERMS','name'=>'gacha_incoterms_id','join'=>'gacha_incoterms,incoterm_description'];
+			
+				$this->col[] = ['label'=>'SC PER PC','name'=>'store_cost'];
+				$this->col[] = ['label'=>'SC MARGIN PER PC (%)','name'=>'sc_margin'];
+				$this->col[] = ['label'=>'PCS PER CTN','name'=>'pcs_ctn'];
+				$this->col[] = ['label'=>'DP PER CTN','name'=>'dp_ctn'];
+				$this->col[] = ['label'=>'PCS PER DP','name'=>'pcs_dp'];
+				$this->col[] = ['label'=>'MOQ','name'=>'moq'];
+				$this->col[] = ['label'=>'ORDER CTN','name'=>'no_of_ctn'];
+				$this->col[] = ['label'=>'NUMBER OF ASSORT','name'=>'no_of_assort'];
+				$this->col[] = ['label'=>'COUNTRY OF ORIGIN','name'=>'gacha_countries_id','join'=>'gacha_countries,country_code'];
+				$this->col[] = ['label'=>'INCOTERMS','name'=>'gacha_incoterms_id','join'=>'gacha_incoterms,incoterm_description'];
 			}
 			$this->col[] = ['label'=>'CURRENCY','name'=>'currencies_id','join'=>'currencies,currency_code'];
-			if(!in_array(CRUDBooster::myPrivilegeName(),['REPORTS'])){
-			$this->col[] = ['label'=>'SUPPLIER COST','name'=>'supplier_cost'];
+			if(!in_array(CRUDBooster::myPrivilegeName(),['REPORTS','WHS TM','WHS TL','AUD'])){
+				$this->col[] = ['label'=>'SUPPLIER COST','name'=>'supplier_cost'];
 			}
 			$this->col[] = ['label'=>'UOM CODE','name'=>'gacha_uoms_id','join'=>'gacha_uoms,uom_code'];
 			$this->col[] = ['label'=>'INVENTORY TYPE','name'=>'gacha_inventory_types_id','join'=>'gacha_inventory_types,inventory_type_description'];
@@ -89,7 +90,7 @@
 			$this->col[] = ['label'=>'BATTERY','name'=>'battery'];
 			$this->col[] = ["label"=>"CREATED BY","name"=>"created_by","join"=>"cms_users,name"];
 			$this->col[] = ["label"=>"CREATED DATE","name"=>"created_at"];
-			if(!in_array(CRUDBooster::myPrivilegeName(),['IC TM','REPORTS'])){
+			if(!in_array(CRUDBooster::myPrivilegeName(),['IC TM','REPORTS','WHS TM','WHS TL','AUD'])){
 			$this->col[] = ["label"=>"APPROVED BY","name"=>"approved_by","join"=>"cms_users,name"];
 			$this->col[] = ["label"=>"APPROVED DATE","name"=>"approved_at"];
 			$this->col[] = ["label"=>"APPROVED BY ACCTNG","name"=>"approved_by_acct","join"=>"cms_users,name"];
