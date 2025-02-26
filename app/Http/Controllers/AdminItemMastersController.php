@@ -1216,9 +1216,14 @@ class AdminItemMastersController extends \crocodicstudio\crudbooster\controllers
 			->whereBetween(DB::raw('DATE(approved_at)'), [date('Y-m-d',strtotime("-1 days")), date('Y-m-d')])
 			->get()
 			->toArray();
+		$updated_items = ItemMaster::GenerateExport()
+			->whereBetween(DB::raw('DATE(updated_at)'), [date('Y-m-d',strtotime("-1 days")), date('Y-m-d')])
+			->get()
+			->toArray();
 			
 		return response()->json([
-			'created_items' => $created_items
+			'created_items' => $created_items,
+			'updated_items' => $updated_items
 		]);
 	}
 }
