@@ -323,8 +323,8 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'laz_segmentation' => $value->lazada,
 						'spe_segmentation' => $value->shopee,
 						'tik_segmentation' => $value->tiktok,
-						'has_serial' => $value->serial_code,
-						'device_type' => $value->device_type,
+						'has_serial' => $value->product_type,
+						'device_type' => $value->device_uid,
 						'imei_code1' => '0',
 						'imei_code2' => '0',
 						'approval_status' => $this->getStatusByDescription("PENDING"),
@@ -604,8 +604,8 @@ class McbUploadController extends \crocodicstudio\crudbooster\controllers\CBCont
 						'laz_segmentation' => $value->lazada,
 						'spe_segmentation' => $value->shopee,
 						'tik_segmentation' => $value->tiktok,
-						'has_serial' => $value->serial_code,
-						'device_type' => $value->device_type,
+						'has_serial' => $value->product_type,
+						'device_type' => $value->device_uid,
 						'updated_by' => CRUDBooster::myId(),
 						'updated_at' => date('Y-m-d H:i:s')
 					];

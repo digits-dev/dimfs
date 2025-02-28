@@ -82,10 +82,8 @@ return [
         "vendor_group_status" => "VENDOR GROUP STATUS",
         "warranty_duration" => "WARRANTY DURATION",
         "warranty_description" => "WARRANTY DURATION TYPE",
-        "device_type" => "DEVICE TYPE",
-        "has_serial" => "SERIAL CODE",
-        "imei_code1" => "IMEI CODE 1",
-        "imei_code2" => "IMEI CODE 2",
+        "has_serial" => "PRODUCT TYPE",
+        "device_type" => "DEVICE UID",
         "createdby" => "CREATED BY",
         "createddate" => "CREATED DATE",
         "approved_by" => "APPROVED BY",
@@ -174,10 +172,8 @@ return [
         "vendor_group_status" => "VENDOR GROUP STATUS",
         "warranty_duration" => "WARRANTY DURATION",
         "warranty_description" => "WARRANTY DURATION TYPE",
-        "device_type" => "DEVICE TYPE",
-        "has_serial" => "SERIAL CODE",
-        "imei_code1" => "IMEI CODE 1",
-        "imei_code2" => "IMEI CODE 2",
+        "has_serial" => "PRODUCT TYPE",
+        "device_type" => "DEVICE UID",
         "createdby" => "CREATED BY",
         "createddate" => "CREATED DATE",
         "approved_by" => "APPROVED BY",
@@ -528,21 +524,13 @@ return [
             "name" =>"warranties_id",
             "join" =>"warranties,warranty_description"
         ],
-        "device_type" => [ 
-            "label"=>"DEVICE TYPE",
-            "name" =>"device_type"
-        ],
         "has_serial" => [ 
-            "label"=>"SERIAL CODE",
+            "label"=>"PRODUCT TYPE",
             "name" =>"has_serial"
         ],
-        "imei_code1" => [ 
-            "label"=>"IMEI CODE 1",
-            "name" =>"imei_code1"
-        ],
-        "imei_code2" => [ 
-            "label"=>"IMEI CODE 2",
-            "name" =>"imei_code2"
+        "device_type" => [ 
+            "label"=>"DEVICE UID",
+            "name" =>"device_type"
         ],
         "createdby" => [ 
             "label"=>"CREATED BY",
@@ -1078,14 +1066,14 @@ return [
             'type'=>'select2','validation'=>'required|integer|min:0',
         ],
         "has_serial" => [ 
-            "label"=>"SERIALIZED",
+            "label"=>"PRODUCT TYPE",
             "name" =>"serialized",
             'type'=>'checkbox','validation'=>'min:0',
             'datatable'=>'item_identifiers,item_identifier',
 			'datatable_where'=>"id='1'"
         ],
         "device_type" => [ 
-            "label" => "DEVICE TYPE",
+            "label" => "DEVICE UID",
             "name" => "device_type",
             "type" => "radio",
             "validation" => "min:0",
@@ -1604,14 +1592,14 @@ return [
             'type'=>'select2','validation'=>'required|integer|min:0',
         ],
         "has_serial" => [ 
-            "label"=>"SERIALIZED",
+            "label"=>"PRODUCT TYPE",
             "name" =>"serialized",
             'type'=>'checkbox','validation'=>'min:0',
             'datatable'=>'item_identifiers,item_identifier',
 			'datatable_where'=>"id='1'"
         ],
         "device_type" => [ 
-            "label" => "DEVICE TYPE",
+            "label" => "DEVICE UID",
             "name" => "device_type",
             "type" => "radio",
             "validation" => "min:0",

@@ -53,10 +53,8 @@ return [
         "GUAM",
         "NEW STORE",
         "VENDOR NAME",
-        "SERIAL CODE",
-        "IMEI CODE 1",
-        "IMEI CODE 2",
-        "DEVICE TYPE"    
+        "PRODUCT TYPE",
+        "DEVICE UID"    
     ],
     "item-master-edit" => [
         "DIGITS CODE",
@@ -120,8 +118,8 @@ return [
         "FRANCHISE",
         "GUAM",
         "NEW STORE",
-        "SERIAL CODE",
-        "DEVICE TYPE" 
+        "PRODUCT TYPE",
+        "DEVICE UID"   
     ],
     "gashapon-item-master" => [
         "JAN NUMBER",
