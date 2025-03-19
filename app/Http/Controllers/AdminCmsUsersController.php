@@ -41,8 +41,8 @@ class AdminCmsUsersController extends \crocodicstudio\crudbooster\controllers\CB
 
 		# START FORM DO NOT REMOVE THIS LINE
 		$this->form = array(); 		
-		$this->form[] = ["label"=>"First Name","name"=>"first_name","type"=>"text","width" => "col-md-6",'validation'=>'required|alpha_spaces','readonly'=>(CRUDBooster::getCurrentMethod() == "getProfile") ? true : false];
-		$this->form[] = ["label"=>"Last Name","name"=>"last_name","type"=>"text","width" => "col-md-6",'validation'=>'required|alpha_spaces','readonly'=>(CRUDBooster::getCurrentMethod() == "getProfile") ? true : false];
+		$this->form[] = ["label"=>"First Name","name"=>"first_name","type"=>"text","width" => "col-md-6",'validation'=>'required|alpha_spaces|min:2','readonly'=>(CRUDBooster::getCurrentMethod() == "getProfile") ? true : false];
+		$this->form[] = ["label"=>"Last Name","name"=>"last_name","type"=>"text","width" => "col-md-6",'validation'=>'required|alpha_spaces|min:2','readonly'=>(CRUDBooster::getCurrentMethod() == "getProfile") ? true : false];
 		$this->form[] = ["label"=>"Email","name"=>"email",'type'=>'email',"width" => "col-md-6",'validation'=>'required|email|unique:cms_users,email,'.CRUDBooster::getCurrentId(),'readonly'=>(CRUDBooster::getCurrentMethod() == "getProfile") ? true : false];		
 		$this->form[] = ["label"=>"Photo","name"=>"photo","type"=>"upload","help"=>"Recommended resolution is 200x200px","width" => "col-md-6",'validation'=>'image|max:1000','resize_width'=>90,'resize_height'=>90];											
 		$this->form[] = ["label"=>"Privilege","name"=>"id_cms_privileges","type"=>"select","datatable"=>"cms_privileges,name","width" => "col-md-6",'required'=>true];						
